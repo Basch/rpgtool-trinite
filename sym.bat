@@ -1,0 +1,1 @@
+@php.exe E:\Prog\PHP\envolduphenix_v4\bin\console %*
