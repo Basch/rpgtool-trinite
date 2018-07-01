@@ -16,26 +16,17 @@ class User extends BaseUser
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $email;
-
-    public function getId()
+    public function __construct()
     {
-        return $this->id;
+        parent::__construct();
+        $this->setName('');
     }
 
     public function getName(): ?string
@@ -50,27 +41,4 @@ class User extends BaseUser
         return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
 }
