@@ -27,6 +27,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->setName('');
+        $this->addRole('ROLE_USER');
     }
 
     public function getName(): ?string

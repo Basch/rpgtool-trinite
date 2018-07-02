@@ -12,8 +12,16 @@ class MainController extends Controller
      */
     public function index()
     {
+
+        $pages = [
+          [
+            'name' => 'feuille de personnage',
+            'link' => 'character.sheet'
+          ]
+        ];
+
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
+            'pages' => $pages,
         ]);
     }
 }
