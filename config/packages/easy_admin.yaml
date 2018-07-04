@@ -4,8 +4,15 @@ easy_admin:
         brand_color: '#1b556c'
         menu:
             - User
+            - Zodiac
 
     entities:
         User:
             label: 'Utilisateurs'
             class: App\Entity\User
+
+        Zodiac:
+            label: 'Zodiaque'
+            class: App\Entity\Zodiac
+            list:
+                sort: ['id', 'ASC']

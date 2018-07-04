@@ -14,7 +14,7 @@
     Liste des pages :
     <ul>
         {% for page in pages %}
-        <li>{{ page.name }}<code><a href="{{ path( page.link ) }}">{{ path( page.link ) }}</a></code></li>
+        <li>{{ page.name }}<code><a href="{{ page.link }}">{{ page.link }}</a></code></li>
         {% endfor %}
 
     </ul>

@@ -15,30 +15,30 @@ class UserFixtures extends Fixture
             'username' => 'basch',
             'password' => 'pass',
             'email' => 'ced_46000@hotmail.com',
-            'roles' => ['ROLE_SUPER_ADMIN'],
+            'roles' => [ 'ROLE_SUPER_ADMIN' ],
         ],
     ];
 
     private $passwordEncoder;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct( UserPasswordEncoderInterface $passwordEncoder )
     {
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function load(ObjectManager $manager)
+    public function load( ObjectManager $manager )
     {
-        foreach ($this->usersdata as $userdata) {
+        foreach ( $this->usersdata as $userdata ) {
             $user = new User();
-            $user->setUsername($userdata['username']);
-            $user->setEnabled(1);
+            $user->setUsername( $userdata['username'] );
+            $user->setEnabled( 1 );
             $user->setPassword(
-                $this->passwordEncoder->encodePassword($user, $userdata['password'])
+                $this->passwordEncoder->encodePassword( $user, $userdata['password'] )
             );
-            $user->setEmail($userdata['email']);
-            $user->setRoles($userdata['roles']);
+            $user->setEmail( $userdata['email'] );
+            $user->setRoles( $userdata['roles'] );
 
-            $manager->persist($user);
+            $manager->persist( $user );
         }
 
         $manager->flush();

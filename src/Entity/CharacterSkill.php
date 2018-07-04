@@ -21,6 +21,18 @@ class CharacterSkill
      */
     private $level;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CharacterSheet", inversedBy="characterSkills")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $characterSheet;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Skill", inversedBy="characterSkills")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $skill;
+
     public function getId()
     {
         return $this->id;
@@ -34,6 +46,30 @@ class CharacterSkill
     public function setLevel(int $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getCharacterSheet(): ?CharacterSheet
+    {
+        return $this->characterSheet;
+    }
+
+    public function setCharacterSheet(?CharacterSheet $characterSheet): self
+    {
+        $this->characterSheet = $characterSheet;
+
+        return $this;
+    }
+
+    public function getSkill(): ?Skill
+    {
+        return $this->skill;
+    }
+
+    public function setSkill(?Skill $skill): self
+    {
+        $this->skill = $skill;
 
         return $this;
     }

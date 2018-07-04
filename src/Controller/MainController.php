@@ -15,8 +15,8 @@ class MainController extends Controller
 
         $pages = [
           [
-            'name' => 'feuille de personnage',
-            'link' => 'character.sheet'
+            'name' => 'feuilles de personnage',
+            'link' => $this->generateUrl('character.sheet.list'),
           ]
         ];
 

@@ -1,10 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block title %}Feuille de personnage{% endblock %}
 
 {% block body %}
-<div class="row">
-  <div class="col-6"></div>
-  <div class="col-6">ok</div>
-</div>
+    <div class="row">
+        <div class="col-6">
+            <ul>
+            {% for characterZodiac in characterSheet.characterZodiacs %}
+                <li>{{ characterZodiac.zodiac.name }} - {{ characterZodiac.level }}</li>
+                <ul>
+                {% for characterSkill in characterSheet.characterSkills  if characterSkill.skill.zodiac == characterZodiac.zodiac %}
+
+                    <li>{{ characterSkill.skill.name }}{{ characterSkill.skill.domainRelated ? '*' }} :: {{ characterSkill.skill.open ? 'o' : 'f' }} :: {{ characterSkill.level }}</li>
+
+                {% endfor %}
+                </ul>
+            {% endfor %}
+            </ul>
+
+        </div>
+        <div class="col-6">ok</div>
+    </div>
 {% endblock %}

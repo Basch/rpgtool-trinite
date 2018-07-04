@@ -28,9 +28,15 @@ class Zodiac
      */
     private $characterZodiacs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="zodiac", orphanRemoval=true)
+     */
+    private $skills;
+
     public function __construct()
     {
         $this->characterZodiacs = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId()
@@ -75,6 +81,37 @@ class Zodiac
             // set the owning side to null (unless already changed)
             if ($characterZodiac->getZodiac() === $this) {
                 $characterZodiac->setZodiac(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Skill[]
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
+            $skill->setZodiac($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        if ($this->skills->contains($skill)) {
+            $this->skills->removeElement($skill);
+            // set the owning side to null (unless already changed)
+            if ($skill->getZodiac() === $this) {
+                $skill->setZodiac(null);
             }
         }
 

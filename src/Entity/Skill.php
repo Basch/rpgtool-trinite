@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,6 +32,22 @@ class Skill
      * @ORM\Column(type="boolean")
      */
     private $open;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Zodiac", inversedBy="skills")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $zodiac;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CharacterSkill", mappedBy="skill", orphanRemoval=true)
+     */
+    private $characterSkills;
+
+    public function __construct()
+    {
+        $this->characterSkills = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -68,6 +86,49 @@ class Skill
     public function setOpen(bool $open): self
     {
         $this->open = $open;
+
+        return $this;
+    }
+
+    public function getZodiac(): ?Zodiac
+    {
+        return $this->zodiac;
+    }
+
+    public function setZodiac(?Zodiac $zodiac): self
+    {
+        $this->zodiac = $zodiac;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CharacterSkill[]
+     */
+    public function getCharacterSkills(): Collection
+    {
+        return $this->characterSkills;
+    }
+
+    public function addCharacterSkill(CharacterSkill $characterSkill): self
+    {
+        if (!$this->characterSkills->contains($characterSkill)) {
+            $this->characterSkills[] = $characterSkill;
+            $characterSkill->setSkill($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterSkill(CharacterSkill $characterSkill): self
+    {
+        if ($this->characterSkills->contains($characterSkill)) {
+            $this->characterSkills->removeElement($characterSkill);
+            // set the owning side to null (unless already changed)
+            if ($characterSkill->getSkill() === $this) {
+                $characterSkill->setSkill(null);
+            }
+        }
 
         return $this;
     }

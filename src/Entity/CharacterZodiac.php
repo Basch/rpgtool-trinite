@@ -22,13 +22,13 @@ class CharacterZodiac
     private $level;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CharacterSheet", inversedBy="characterZodiacs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\CharacterSheet", inversedBy="characterZodiacs", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $characterSheet;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Zodiac", inversedBy="characterZodiacs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Zodiac", inversedBy="characterZodiacs", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $zodiac;
