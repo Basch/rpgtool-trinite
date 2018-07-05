@@ -5,6 +5,7 @@ easy_admin:
         menu:
             - User
             - Zodiac
+            - Skill
 
     entities:
         User:
@@ -14,5 +15,11 @@ easy_admin:
         Zodiac:
             label: 'Zodiaque'
             class: App\Entity\Zodiac
+            list:
+                sort: ['id', 'ASC']
+
+        Skill:
+            label: 'Compétences'
+            class: App\Entity\Skill
             list:
                 sort: ['id', 'ASC']

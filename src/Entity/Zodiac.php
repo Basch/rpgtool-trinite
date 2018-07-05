@@ -39,6 +39,11 @@ class Zodiac
         $this->skills = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     public function getId()
     {
         return $this->id;

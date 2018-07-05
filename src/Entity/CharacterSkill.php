@@ -33,6 +33,11 @@ class CharacterSkill
      */
     private $skill;
 
+    public function __toString()
+    {
+        return 'CharacterSkill #'.$this->getId();
+    }
+
     public function getId()
     {
         return $this->id;

@@ -33,6 +33,11 @@ class CharacterZodiac
      */
     private $zodiac;
 
+    public function __toString()
+    {
+        return 'CharacterZodiac #'.$this->getId();
+    }
+
     public function getId()
     {
         return $this->id;
