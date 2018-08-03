@@ -33,10 +33,21 @@ class CharacterSheet
      */
     private $characterSkills;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campaign", inversedBy="characterSheets")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $campaign;
+
     public function __construct()
     {
         $this->characterZodiacs = new ArrayCollection();
         $this->characterSkills = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return 'p-'.$this->getId();
     }
 
     public function getId()
@@ -114,6 +125,18 @@ class CharacterSheet
                 $characterSkill->setCharacterSheet(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCampaign(): ?Campaign
+    {
+        return $this->campaign;
+    }
+
+    public function setCampaign(?Campaign $campaign): self
+    {
+        $this->campaign = $campaign;
 
         return $this;
     }
