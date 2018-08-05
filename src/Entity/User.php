@@ -26,28 +26,22 @@ class User extends BaseUser
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CharacterSheet", mappedBy="user", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="PlayerCharacter", mappedBy="user", cascade={"persist"})
      */
-    private $characterSheets;
+    private $characters;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Campaign", mappedBy="Master")
      */
     private $MasteredCampaigns;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Campaign", mappedBy="Players")
-     */
-    private $PlayedCampaigns;
-
     public function __construct()
     {
         parent::__construct();
         $this->setName('');
         $this->addRole('ROLE_USER');
-        $this->characterSheets = new ArrayCollection();
+        $this->characters = new ArrayCollection();
         $this->MasteredCampaigns = new ArrayCollection();
-        $this->PlayedCampaigns = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -63,27 +57,27 @@ class User extends BaseUser
     }
 
     /**
-     * @return Collection|CharacterSheet[]
+     * @return Collection|PlayerCharacter[]
      */
-    public function getCharacterSheets(): Collection
+    public function getCharacters(): Collection
     {
-        return $this->characterSheets;
+        return $this->characters;
     }
 
-    public function addCharacterSheet(CharacterSheet $characterSheet): self
+    public function addCharacter( PlayerCharacter $characterSheet): self
     {
-        if (!$this->characterSheets->contains($characterSheet)) {
-            $this->characterSheets[] = $characterSheet;
+        if (!$this->characters->contains($characterSheet)) {
+            $this->characters[] = $characterSheet;
             $characterSheet->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeCharacterSheet(CharacterSheet $characterSheet): self
+    public function removeCharacter( PlayerCharacter $characterSheet): self
     {
-        if ($this->characterSheets->contains($characterSheet)) {
-            $this->characterSheets->removeElement($characterSheet);
+        if ($this->characters->contains($characterSheet)) {
+            $this->characters->removeElement($characterSheet);
             // set the owning side to null (unless already changed)
             if ($characterSheet->getUser() === $this) {
                 $characterSheet->setUser(null);
@@ -129,27 +123,13 @@ class User extends BaseUser
      */
     public function getPlayedCampaigns(): Collection
     {
-        return $this->PlayedCampaigns;
-    }
-
-    public function addPlayedCampaign(Campaign $playedCampaign): self
-    {
-        if (!$this->PlayedCampaigns->contains($playedCampaign)) {
-            $this->PlayedCampaigns[] = $playedCampaign;
-            $playedCampaign->addPlayer($this);
+        $played_campaigns = new ArrayCollection();
+        foreach( $this->getCharacters() as $character ) {
+            $played_campaigns->add( $character->getCampaign() );
         }
 
-        return $this;
-    }
 
-    public function removePlayedCampaign(Campaign $playedCampaign): self
-    {
-        if ($this->PlayedCampaigns->contains($playedCampaign)) {
-            $this->PlayedCampaigns->removeElement($playedCampaign);
-            $playedCampaign->removePlayer($this);
-        }
-
-        return $this;
+        return $played_campaigns;
     }
 
 }

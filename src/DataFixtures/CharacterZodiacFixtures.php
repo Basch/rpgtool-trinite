@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\CharacterSheet;
+use App\Entity\PlayerCharacter;
 use App\Entity\CharacterZodiac;
 use App\Entity\Zodiac;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -14,19 +14,19 @@ class CharacterZodiacFixtures extends Fixture implements DependentFixtureInterfa
 
     public function load( ObjectManager $manager )
     {
-        /** @var CharacterSheet[] $characterSheets */
-        $characterSheets = $manager->getRepository( CharacterSheet::class )->findAll();
+        /** @var PlayerCharacter[] $characters */
+        $characters = $manager->getRepository( PlayerCharacter::class )->findAll();
 
         /** @var Zodiac $zodiac */
         $zodiacs = $manager->getRepository( Zodiac::class )->findAll();
 
-        foreach ( $characterSheets as $characterSheet ) foreach ( $zodiacs as $zodiac ) {
+        foreach ( $characters as $character ) foreach ( $zodiacs as $zodiac ) {
 
             $characterZodiac = new CharacterZodiac();
             $characterZodiac
                 ->setLevel( 1 )
                 ->setZodiac( $zodiac )
-                ->setCharacterSheet( $characterSheet );
+                ->setCharacter( $character );
 
             $manager->persist( $characterZodiac );
 
@@ -39,7 +39,7 @@ class CharacterZodiacFixtures extends Fixture implements DependentFixtureInterfa
     public function getDependencies()
     {
         return array(
-            CharacterSheetFixtures::class,
+            CharacterFixtures::class,
             ZodiacFixtures::class,
         );
     }

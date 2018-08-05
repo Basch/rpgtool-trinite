@@ -2,26 +2,37 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class MainController extends Controller
 {
     /**
-     * @Route("/", name="default")
+     * @Route("/", name="home")
      */
-    public function index()
+    public function campaigns()
     {
+        /** @var User $user */
+        $user = $this->getUser();
 
-        $pages = [
-          [
-            'name' => 'feuilles de personnage',
-            'link' => $this->generateUrl('character.sheet.list'),
-          ]
-        ];
+        return $this->render('pages/main/campaigns.html.twig', [
+            'mastered_campaigns' => $user->getMasteredCampaigns(),
+            'played_campaigns' => $user->getPlayedCampaigns(),
+        ]);
+    }
 
-        return $this->render('main/index.html.twig', [
-            'pages' => $pages,
+    /**
+     * @Route("/characters", name="user.characters")
+     */
+    public function characters()
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+
+        return $this->render('pages/main/characters.html.twig', [
+            'characters' => $user->getCharacters(),
         ]);
     }
 }

@@ -5,11 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CharacterSheetRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PlayerCharacterRepository")
  */
-class CharacterSheet
+class PlayerCharacter
 {
     /**
      * @ORM\Id()
@@ -19,25 +20,36 @@ class CharacterSheet
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CharacterZodiac", mappedBy="characterSheet", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\CharacterZodiac", mappedBy="character", orphanRemoval=true)
      */
     private $characterZodiacs;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="characterSheets", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="characters", cascade={"persist"})
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CharacterSkill", mappedBy="characterSheet", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\CharacterSkill", mappedBy="character", orphanRemoval=true)
      */
     private $characterSkills;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Campaign", inversedBy="characterSheets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campaign", inversedBy="characters")
      * @ORM\JoinColumn(nullable=false)
      */
     private $campaign;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -47,7 +59,7 @@ class CharacterSheet
 
     public function __toString()
     {
-        return 'p-'.$this->getId();
+        return $this->getName();
     }
 
     public function getId()
@@ -67,7 +79,7 @@ class CharacterSheet
     {
         if (!$this->characterZodiacs->contains($characterZodiac)) {
             $this->characterZodiacs[] = $characterZodiac;
-            $characterZodiac->setCharacterSheet($this);
+            $characterZodiac->setCharacter($this);
         }
 
         return $this;
@@ -78,8 +90,8 @@ class CharacterSheet
         if ($this->characterZodiacs->contains($characterZodiac)) {
             $this->characterZodiacs->removeElement($characterZodiac);
             // set the owning side to null (unless already changed)
-            if ($characterZodiac->getCharacterSheet() === $this) {
-                $characterZodiac->setCharacterSheet(null);
+            if ($characterZodiac->getCharacter() === $this) {
+                $characterZodiac->setCharacter(null);
             }
         }
 
@@ -110,7 +122,7 @@ class CharacterSheet
     {
         if (!$this->characterSkills->contains($characterSkill)) {
             $this->characterSkills[] = $characterSkill;
-            $characterSkill->setCharacterSheet($this);
+            $characterSkill->setCharacter($this);
         }
 
         return $this;
@@ -121,8 +133,8 @@ class CharacterSheet
         if ($this->characterSkills->contains($characterSkill)) {
             $this->characterSkills->removeElement($characterSkill);
             // set the owning side to null (unless already changed)
-            if ($characterSkill->getCharacterSheet() === $this) {
-                $characterSkill->setCharacterSheet(null);
+            if ($characterSkill->getCharacter() === $this) {
+                $characterSkill->setCharacter(null);
             }
         }
 
@@ -138,6 +150,29 @@ class CharacterSheet
     {
         $this->campaign = $campaign;
 
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug( string $slug ): self
+    {
+        $this->slug = $slug;
         return $this;
     }
 }

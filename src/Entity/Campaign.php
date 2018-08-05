@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CampaignRepository")
@@ -24,24 +25,26 @@ class Campaign
     private $name;
 
     /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="MasteredCampaigns")
      */
     private $Master;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="PlayedCampaigns")
+     * @ORM\OneToMany(targetEntity="PlayerCharacter", mappedBy="campaign", orphanRemoval=true)
      */
-    private $Players;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CharacterSheet", mappedBy="campaign", orphanRemoval=true)
-     */
-    private $characterSheets;
+    private $characters;
 
     public function __construct()
     {
         $this->Players = new ArrayCollection();
-        $this->characterSheets = new ArrayCollection();
+        $this->characters = new ArrayCollection();
     }
 
     public function getId()
@@ -58,6 +61,17 @@ class Campaign
     {
         $this->name = $name;
 
+        return $this;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug( string $slug ): self
+    {
+        $this->slug = $slug;
         return $this;
     }
 
@@ -78,49 +92,31 @@ class Campaign
      */
     public function getPlayers(): Collection
     {
-        return $this->Players;
-    }
-
-    public function addPlayer(User $player): self
-    {
-        if (!$this->Players->contains($player)) {
-            $this->Players[] = $player;
-        }
-
-        return $this;
-    }
-
-    public function removePlayer(User $player): self
-    {
-        if ($this->Players->contains($player)) {
-            $this->Players->removeElement($player);
-        }
-
-        return $this;
+        return new ArrayCollection(); // TODO: Configurer l'accesseur
     }
 
     /**
-     * @return Collection|CharacterSheet[]
+     * @return Collection|PlayerCharacter[]
      */
-    public function getCharacterSheets(): Collection
+    public function getCharacters(): Collection
     {
-        return $this->characterSheets;
+        return $this->characters;
     }
 
-    public function addCharacterSheet(CharacterSheet $characterSheet): self
+    public function addCharacter( PlayerCharacter $characterSheet): self
     {
-        if (!$this->characterSheets->contains($characterSheet)) {
-            $this->characterSheets[] = $characterSheet;
+        if (!$this->characters->contains($characterSheet)) {
+            $this->characters[] = $characterSheet;
             $characterSheet->setCampaign($this);
         }
 
         return $this;
     }
 
-    public function removeCharacterSheet(CharacterSheet $characterSheet): self
+    public function removeCharacter( PlayerCharacter $characterSheet): self
     {
-        if ($this->characterSheets->contains($characterSheet)) {
-            $this->characterSheets->removeElement($characterSheet);
+        if ($this->characters->contains($characterSheet)) {
+            $this->characters->removeElement($characterSheet);
             // set the owning side to null (unless already changed)
             if ($characterSheet->getCampaign() === $this) {
                 $characterSheet->setCampaign(null);

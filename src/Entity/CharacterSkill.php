@@ -22,10 +22,10 @@ class CharacterSkill
     private $level;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CharacterSheet", inversedBy="characterSkills")
+     * @ORM\ManyToOne(targetEntity="PlayerCharacter", inversedBy="characterSkills")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $characterSheet;
+    private $character;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Skill", inversedBy="characterSkills")
@@ -55,14 +55,14 @@ class CharacterSkill
         return $this;
     }
 
-    public function getCharacterSheet(): ?CharacterSheet
+    public function getCharacter(): ?PlayerCharacter
     {
-        return $this->characterSheet;
+        return $this->character;
     }
 
-    public function setCharacterSheet(?CharacterSheet $characterSheet): self
+    public function setCharacter( ?PlayerCharacter $character): self
     {
-        $this->characterSheet = $characterSheet;
+        $this->character = $character;
 
         return $this;
     }

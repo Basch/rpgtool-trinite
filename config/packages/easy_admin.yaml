@@ -4,6 +4,7 @@ easy_admin:
         brand_color: '#1b556c'
         menu:
             - User
+            - Campaign
             - Zodiac
             - Skill
 
@@ -11,6 +12,12 @@ easy_admin:
         User:
             label: 'Utilisateurs'
             class: App\Entity\User
+
+        Campaign:
+            label: 'Campagnes'
+            class: App\Entity\Campaign
+            list:
+                sort: ['id', 'ASC']
 
         Zodiac:
             label: 'Zodiaque'
@@ -23,3 +30,4 @@ easy_admin:
             class: App\Entity\Skill
             list:
                 sort: ['id', 'ASC']
+

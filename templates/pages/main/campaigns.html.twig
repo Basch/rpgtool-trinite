@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block container %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Campagnes </h1>
+
+    Choisissez une campagne :<br>
+    Maitrisées:
+    <ul>
+        {% for campaign in mastered_campaigns %}
+            <li><code><a href="{{ path('main.campaign.index', { 'campaignSlug' : campaign.slug }) }}">{{ campaign.name }}</a></code></li>
+        {% endfor %}
+    </ul>
+    Jouées:
+    <ul>
+        {% for campaign in played_campaigns %}
+            <li><code><a href="{{ path('main.campaign.index', { 'campaignSlug' : campaign.slug }) }}">{{ campaign.name }}</a></code></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

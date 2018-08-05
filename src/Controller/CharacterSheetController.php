@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\CharacterSheet;
-use App\Entity\User;
-use http\Url;
+use App\Entity\PlayerCharacter;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -16,8 +14,8 @@ class CharacterSheetController extends Controller
      */
     public function list()
     {
-        /** @var CharacterSheet[] $characterSheets */
-        $characterSheets = $this->getDoctrine()->getRepository( CharacterSheet::class )->findAll();
+        /** @var PlayerCharacter[] $characterSheets */
+        $characterSheets = $this->getDoctrine()->getRepository( PlayerCharacter::class )->findAll();
 
         $pages = [];
 
@@ -29,7 +27,7 @@ class CharacterSheetController extends Controller
             ];
         }
 
-        return $this->render( 'main/index.html.twig', [
+        return $this->render( 'pages/main/campaigns.html.twig', [
             'pages' => $pages,
         ] );
     }
@@ -38,12 +36,12 @@ class CharacterSheetController extends Controller
     /**
      * @Route("/character/sheet/{characterSheet}", name="character.sheet.show")
      */
-    public function show( CharacterSheet $characterSheet )
+    public function show( PlayerCharacter $characterSheet )
     {
         //$user = current( $this->getDoctrine()->getRepository( User::class )->findAll() );
-        //$characterSheet = current( $this->getDoctrine()->getRepository( CharacterSheet::class )->findBy( [ 'user' => $user->getId() ] ) );
+        //$characterSheet = current( $this->getDoctrine()->getRepository( PlayerCharacter::class )->findBy( [ 'user' => $user->getId() ] ) );
         dump( $characterSheet );
-        return $this->render( 'character_sheet/index.html.twig', [
+        return $this->render( 'pages/character_sheet/campaigns.html.twig', [
             'characterSheet' => $characterSheet,
         ] );
     }

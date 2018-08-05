@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\CharacterSheet;
+use App\Entity\PlayerCharacter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method CharacterSheet|null find($id, $lockMode = null, $lockVersion = null)
- * @method CharacterSheet|null findOneBy(array $criteria, array $orderBy = null)
- * @method CharacterSheet[]    findAll()
- * @method CharacterSheet[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PlayerCharacter|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PlayerCharacter|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PlayerCharacter[]    findAll()
+ * @method PlayerCharacter[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CharacterSheetRepository extends ServiceEntityRepository
+class PlayerCharacterRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, CharacterSheet::class);
+        parent::__construct($registry, PlayerCharacter::class);
     }
 
 //    /**
-//     * @return CharacterSheet[] Returns an array of CharacterSheet objects
+//     * @return PlayerCharacter[] Returns an array of PlayerCharacter objects
 //     */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CharacterSheetRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?CharacterSheet
+    public function findOneBySomeField($value): ?PlayerCharacter
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

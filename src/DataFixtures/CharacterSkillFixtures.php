@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\CharacterSheet;
+use App\Entity\PlayerCharacter;
 use App\Entity\CharacterSkill;
 use App\Entity\CharacterZodiac;
 use App\Entity\Skill;
@@ -16,19 +16,19 @@ class CharacterSkillFixtures extends Fixture implements DependentFixtureInterfac
 
     public function load( ObjectManager $manager )
     {
-        /** @var CharacterSheet[] $characterSheets */
-        $characterSheets = $manager->getRepository( CharacterSheet::class )->findAll();
+        /** @var PlayerCharacter[] $characters */
+        $characters = $manager->getRepository( PlayerCharacter::class )->findAll();
 
         /** @var Skill $skill */
         $skills = $manager->getRepository( Skill::class )->findAll();
 
-        foreach( $characterSheets as $characterSheet ) foreach( $skills as $skill ){
+        foreach( $characters as $character ) foreach( $skills as $skill ){
 
             $characterSkill = new CharacterSkill();
             $characterSkill
                 ->setLevel( 0 )
                 ->setSkill( $skill )
-                ->setCharacterSheet( $characterSheet );
+                ->setCharacter( $character );
 
             $manager->persist( $characterSkill );
 
@@ -40,7 +40,7 @@ class CharacterSkillFixtures extends Fixture implements DependentFixtureInterfac
     public function getDependencies()
     {
         return array(
-            CharacterSheetFixtures::class,
+            CharacterFixtures::class,
             SkillFixtures::class,
         );
     }

@@ -9,14 +9,13 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Pages! ✅</h1>
+    <h1>Personnages</h1>
 
-    Liste des pages :
     <ul>
-        {% for page in pages %}
-        <li>{{ page.name }}<code><a href="{{ page.link }}">{{ page.link }}</a></code></li>
+        {% for character in characters %}
+            <li>{{ character.name }}<code><a href="{{ path('player.character.index', { 'characterSlug' : character.slug }) }}">{{ character.name }}</a></code></li>
         {% endfor %}
-
     </ul>
+
 </div>
 {% endblock %}

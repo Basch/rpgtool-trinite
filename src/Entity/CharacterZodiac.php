@@ -22,10 +22,10 @@ class CharacterZodiac
     private $level;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CharacterSheet", inversedBy="characterZodiacs", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PlayerCharacter", inversedBy="characterZodiacs", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $characterSheet;
+    private $character;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Zodiac", inversedBy="characterZodiacs", cascade={"persist"})
@@ -55,14 +55,14 @@ class CharacterZodiac
         return $this;
     }
 
-    public function getCharacterSheet(): ?CharacterSheet
+    public function getCharacter(): ?PlayerCharacter
     {
-        return $this->characterSheet;
+        return $this->character;
     }
 
-    public function setCharacterSheet(?CharacterSheet $characterSheet): self
+    public function setCharacter( ?PlayerCharacter $character): self
     {
-        $this->characterSheet = $characterSheet;
+        $this->character = $character;
 
         return $this;
     }
