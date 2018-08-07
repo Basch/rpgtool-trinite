@@ -2,11 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\DataFixtures\Data\SkillData;
+use App\DataFixtures\Data\AssetData;
 use App\Entity\Asset;
 use App\Entity\FireBlade;
-use App\Entity\Skill;
-use App\Entity\Zodiac;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -21,7 +19,7 @@ class AssetFixtures extends Fixture implements DependentFixtureInterface
             $asset = new Asset();
 
             /** @var FireBlade $fireBlade */
-            $fireBlade = $this->getReference('fireBlage-'. $data['fire_blade_id'] );
+            $fireBlade = $this->getReference('fireBlade-'. $data['fire_blade_id'] );
 
             $asset
                 ->setName( $data['name'] )

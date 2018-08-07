@@ -2,9 +2,8 @@
 
 namespace App\DataFixtures;
 
-use App\DataFixtures\Data\ZodiacData;
+use App\DataFixtures\Data\FireBladeData;
 use App\Entity\FireBlade;
-use App\Entity\Zodiac;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 

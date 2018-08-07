@@ -3,7 +3,7 @@
 namespace App\DataFixtures\Data;
 
 
-class SoulBladeData
+class FireBladeData
 {
     public static $DATA = [
         [

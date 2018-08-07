@@ -6,6 +6,8 @@ easy_admin:
             - User
             - Campaign
             - SideMenu
+            - FireBlade
+            - Asset
             - Zodiac
             - Skill
 
@@ -34,6 +36,18 @@ easy_admin:
         Skill:
             label: 'Compétences'
             class: App\Entity\Skill
+            list:
+                sort: ['id', 'ASC']
+
+        Asset:
+            label: 'Atouts'
+            class: App\Entity\Asset
+            list:
+                sort: ['id', 'ASC']
+
+        FireBlade:
+            label: 'Messagers'
+            class: App\Entity\FireBlade
             list:
                 sort: ['id', 'ASC']
 
