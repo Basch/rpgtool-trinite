@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,20 @@ class Asset
      */
     private $fireBlade;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\PlayerCharacter", mappedBy="assets")
+     */
+    private $characters;
+
+    public function __construct()
+    {
+        $this->characters = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
     public function getId()
     {
         return $this->id;
@@ -85,6 +101,34 @@ class Asset
     public function setFireBlade(?FireBlade $fireBlade): self
     {
         $this->fireBlade = $fireBlade;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PlayerCharacter[]
+     */
+    public function getCharacters(): Collection
+    {
+        return $this->characters;
+    }
+
+    public function addCharacter(PlayerCharacter $character): self
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters[] = $character;
+            $character->addAsset($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacter(PlayerCharacter $character): self
+    {
+        if ($this->characters->contains($character)) {
+            $this->characters->removeElement($character);
+            $character->removeAsset($this);
+        }
 
         return $this;
     }

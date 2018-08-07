@@ -15,8 +15,8 @@ class SideMenuData
         ],
         [
             'id' => 2,
-            'title' => 'Test',
-            'route' => 'home',
+            'title' => 'Atouts',
+            'route' => 'asset',
             'master' => true,
             'player' => true,
         ],

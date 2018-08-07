@@ -9,7 +9,7 @@ class CharacterSheetController extends MainController
 {
 
     /**
-     * @Route("/character-sheet", name="character-sheet")
+     * @Route("/feuille-de-personnage", name="character-sheet")
      */
     public function main() {
         if( $error = $this->control() ) { return $error; }
@@ -22,7 +22,7 @@ class CharacterSheetController extends MainController
     }
 
     /**
-     * @Route("/character-sheet/list", name="character-sheet.list")
+     * @Route("/feuille-de-personnage/liste", name="character-sheet.list")
      */
     public function list()
     {
@@ -36,7 +36,7 @@ class CharacterSheetController extends MainController
 
 
     /**
-     * @Route("/character/sheet/{characterSheet}", name="character.sheet.show")
+     * @Route("/feuille-de-personnage/{characterSheet}", name="character-sheet.show")
      */
     public function show( PlayerCharacter $characterSheet )
     {

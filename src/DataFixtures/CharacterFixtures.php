@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\DataFixtures\Data\CharacterData;
+use App\Entity\Asset;
 use App\Entity\Campaign;
 use App\Entity\PlayerCharacter;
 use App\Entity\User;
@@ -30,6 +31,13 @@ class CharacterFixtures extends Fixture implements DependentFixtureInterface
                 ->setName( $data['name'] )
                 ->setUser( $user )
                 ->setCampaign( $campaign );
+
+            foreach ( $data['assets_id'] as $asset_id ) {
+                /** @var Asset $asset */
+                $asset = $this->getReference( 'asset-'.$asset_id);
+                $character->addAsset( $asset );
+            }
+
             $manager->persist( $character );
 
             $this->setReference( 'character-'.$data['id'], $character );
@@ -41,6 +49,7 @@ class CharacterFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return array(
+            AssetFixtures::class,
             UserFixtures::class,
             CampaignFixtures::class,
         );

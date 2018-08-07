@@ -11,7 +11,7 @@ class CharacterController extends MainController
 
 
     /**
-     * @Route("/player/character/{characterSlug}", name="player.character.index")
+     * @Route("joueur/personnage/{characterSlug}", name="player.character.index")
      * @ParamConverter("character", options={"mapping"={"characterSlug"="slug"}})
      */
     public function player( PlayerCharacter $character )
@@ -23,7 +23,7 @@ class CharacterController extends MainController
     }
 
     /**
-     * @Route("/master/character/{characterSlug}", name="master.character.index")
+     * @Route("meneur/personnage/{characterSlug}", name="master.character.index")
      * @ParamConverter("character", options={"mapping"={"characterSlug"="slug"}})
      */
     public function master( PlayerCharacter $character )

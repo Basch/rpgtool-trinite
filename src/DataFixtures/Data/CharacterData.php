@@ -12,6 +12,7 @@ class CharacterData
             'user_id' => '1',
             'campaign_id' => '2',
             'name' => 'Igor',
+            'assets_id' => [ 1,3,5 ],
         ],
         [
             // Personnage de basch sur campagne de Hugo
@@ -19,6 +20,7 @@ class CharacterData
             'user_id' => '1',
             'campaign_id' => '3',
             'name' => 'L\'enquèteur Nain',
+            'assets_id' => [ 4 ],
         ],
         [
             // Personnage de vera sur campagne de Basch
@@ -26,6 +28,7 @@ class CharacterData
             'user_id' => '2',
             'campaign_id' => '1',
             'name' => 'Dame Nalek',
+            'assets_id' => [ 6,3 ],
         ],
         [
             // Personnage de vera sur campagne de Hugo
@@ -33,6 +36,7 @@ class CharacterData
             'user_id' => '2',
             'campaign_id' => '3',
             'name' => 'Heuuu',
+            'assets_id' => [ 5,1 ],
         ],
         [
             // Personnage de hugo sur campagne de basch
@@ -40,6 +44,7 @@ class CharacterData
             'user_id' => '3',
             'campaign_id' => '1',
             'name' => 'Benjiro',
+            'assets_id' => [ 5,6,7 ],
         ],
         [
             // Personnage de hugo sur campagne de vera
@@ -47,6 +52,7 @@ class CharacterData
             'user_id' => '3',
             'campaign_id' => '2',
             'name' => 'Pirate',
+            'assets_id' => [ 2,4 ],
         ],
 
 

@@ -9,20 +9,21 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Campagnes </h1>
+    <h1>Bienvenue </h1>
 
-    Choisissez une campagne :<br>
-    Maitrisées:
+    Campagnes Maitrisées:
     <ul>
         {% for campaign in mastered_campaigns %}
             <li><code><a href="{{ path('main.campaign.index', { 'campaignSlug' : campaign.slug }) }}">{{ campaign.name }}</a></code></li>
         {% endfor %}
     </ul>
-    Jouées:
+    Personnages Joués:
     <ul>
-        {% for campaign in played_campaigns %}
-            <li><code><a href="{{ path('main.campaign.index', { 'campaignSlug' : campaign.slug }) }}">{{ campaign.name }}</a></code></li>
+    {% for campaign in played_campaigns %}
+        {% for character in campaign.characters if character.user.id == app.user.id %}
+            <li><span class="text-monospace">{{ campaign.name }} : </span> <code><a href="{{ path('player.character.index', { 'characterSlug' : character.slug }) }}">{{ character.name }}</a></code></li>
         {% endfor %}
+    {% endfor %}
     </ul>
 </div>
 {% endblock %}

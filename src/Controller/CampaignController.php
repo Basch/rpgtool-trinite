@@ -12,7 +12,7 @@ class CampaignController extends MainController
 {
 
     /**
-     * @Route("campaign/{campaignSlug}", name="main.campaign.index")
+     * @Route("campagne/{campaignSlug}", name="main.campaign.index")
      * @ParamConverter("campaign", options={"mapping"={"campaignSlug"="slug"}})
      */
     public function main( Campaign $campaign ) {
@@ -29,7 +29,7 @@ class CampaignController extends MainController
 
 
     /**
-     * @Route("campaign/master/{campaignSlug}", name="master.campaign.index")
+     * @Route("meneur/campagne/{campaignSlug}", name="master.campaign.index")
      * @ParamConverter("campaign", options={"mapping"={"campaignSlug"="slug"}})
      */
     public function master( Campaign $campaign )
@@ -53,7 +53,7 @@ class CampaignController extends MainController
     }
 
     /**
-     * @Route("campaign/player/{campaignSlug}", name="player.campaign.index")
+     * @Route("joueur/campagne/{campaignSlug}", name="player.campaign.index")
      * @ParamConverter("campaign", options={"mapping"={"campaignSlug"="slug"}})
      */
     public function player( Campaign $campaign )

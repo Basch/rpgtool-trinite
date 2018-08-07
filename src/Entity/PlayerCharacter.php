@@ -51,10 +51,16 @@ class PlayerCharacter
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Asset", inversedBy="characters")
+     */
+    private $assets;
+
     public function __construct()
     {
         $this->characterZodiacs = new ArrayCollection();
         $this->characterSkills = new ArrayCollection();
+        $this->assets = new ArrayCollection();
     }
 
     public function __toString()
@@ -173,6 +179,32 @@ class PlayerCharacter
     public function setSlug( string $slug ): self
     {
         $this->slug = $slug;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Asset[]
+     */
+    public function getAssets(): Collection
+    {
+        return $this->assets;
+    }
+
+    public function addAsset(Asset $asset): self
+    {
+        if (!$this->assets->contains($asset)) {
+            $this->assets[] = $asset;
+        }
+
+        return $this;
+    }
+
+    public function removeAsset(Asset $asset): self
+    {
+        if ($this->assets->contains($asset)) {
+            $this->assets->removeElement($asset);
+        }
+
         return $this;
     }
 }

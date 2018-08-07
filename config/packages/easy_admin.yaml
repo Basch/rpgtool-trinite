@@ -5,6 +5,7 @@ easy_admin:
         menu:
             - User
             - Campaign
+            - PlayerCharacter
             - SideMenu
             - FireBlade
             - Asset
@@ -21,6 +22,24 @@ easy_admin:
             class: App\Entity\Campaign
             list:
                 sort: ['id', 'ASC']
+
+        PlayerCharacter:
+            label: 'Personnages'
+            class: App\Entity\PlayerCharacter
+            list:
+                fields:
+                    - name
+                    - user
+                    - campaign
+                    - assets
+                sort: ['id', 'ASC']
+
+            form:
+                fields:
+                    - name
+                    - user
+                    - campaign
+                    - assets
 
         Zodiac:
             label: 'Zodiaque'
