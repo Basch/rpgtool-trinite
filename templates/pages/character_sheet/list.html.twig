@@ -12,6 +12,12 @@
         <h1>{{ campaign.name }}</h1>
 
         Vous maitrisez cette campagne<br>
+        Liste des personnages
+        <ul>
+            {% for character in campaign.characters %}
+                <li><code><a href="{{ path('master.character.index', { 'characterSlug' : character.slug }) }}">{{ character.name }}</a></code></li>
+            {% endfor %}
+        </ul>
 
     </div>
 {% endblock %}

@@ -9,7 +9,7 @@ class SideMenuData
         [
             'id' => 1,
             'title' => 'Feuille de personnage',
-            'route' => 'home',
+            'route' => 'character-sheet',
             'master' => true,
             'player' => true,
         ],

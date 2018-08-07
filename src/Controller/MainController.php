@@ -3,36 +3,53 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Service\SideMenuService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class MainController extends Controller
+abstract class MainController extends Controller
 {
-    /**
-     * @Route("/", name="home")
-     */
-    public function campaigns()
-    {
-        /** @var User $user */
-        $user = $this->getUser();
+    protected $sideMenu;
 
-        return $this->render('pages/main/campaigns.html.twig', [
-            'mastered_campaigns' => $user->getMasteredCampaigns(),
-            'played_campaigns' => $user->getPlayedCampaigns(),
-        ]);
+    public function __construct( SideMenuService $sideMenu )
+    {
+        $this->sideMenu = $sideMenu;
     }
 
-    /**
-     * @Route("/characters", name="user.characters")
-     */
-    public function characters()
-    {
-        /** @var User $user */
-        $user = $this->getUser();
+    protected function controlPlayer() {
 
+        if( !$this->sideMenu->isPlayer() ){
+            $this->addFlash(
+                'warning',
+                'Vous devez être joueur pour acceder à cette page.'
+            );
+            return $this->redirectToRoute('home');
+        }
 
-        return $this->render('pages/main/characters.html.twig', [
-            'characters' => $user->getCharacters(),
-        ]);
+        return null;
+    }
+
+    protected function controlMaster() {
+
+        if( !$this->sideMenu->isMaster() ){
+            $this->addFlash(
+                'warning',
+                'Vous devez être maitre de jeu pour acceder à cette page.'
+            );
+            return $this->redirectToRoute('home');
+        }
+
+        return null;
+    }
+
+    protected function control() {
+        if( !$this->sideMenu->isMaster() && !$this->sideMenu->isPlayer() ){
+            $this->addFlash(
+                'warning',
+                'Vous devez choisir une campagne ou un personnage pour pouvoir acceder à cette page.'
+            );
+            return $this->redirectToRoute('home');
+        }
+
+        return null;
     }
 }

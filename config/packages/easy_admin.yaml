@@ -5,6 +5,7 @@ easy_admin:
         menu:
             - User
             - Campaign
+            - SideMenu
             - Zodiac
             - Skill
 
@@ -22,6 +23,11 @@ easy_admin:
         Zodiac:
             label: 'Zodiaque'
             class: App\Entity\Zodiac
+            list:
+                sort: ['id', 'ASC']
+        SideMenu:
+            label: 'Menu'
+            class: App\Entity\SideMenu
             list:
                 sort: ['id', 'ASC']
 

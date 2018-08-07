@@ -4,13 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Campaign;
 use App\Entity\User;
+use App\Service\SideMenuService;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-class CampaignController extends Controller
+class CampaignController extends MainController
 {
-
 
     /**
      * @Route("campaign/{campaignSlug}", name="main.campaign.index")
@@ -45,6 +44,9 @@ class CampaignController extends Controller
             );
             return $this->redirectToRoute('home');
         }
+
+        $this->get( SideMenuService::class )->setCampaign( $campaign );
+
         return $this->render('pages/campaign/master.html.twig', [
             'campaign' => $campaign,
         ]);

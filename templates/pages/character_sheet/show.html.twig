@@ -1,0 +1,200 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Feuille de personnage{% endblock %}
+
+{% block container %}
+    <div class="row cs-sheet">
+        <div class="col-6" >
+            <div class="d-flex justify-content-around">
+                <div>Identité : </div>
+                <div>Métier : </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                {% for characterZodiac in characterSheet.characterZodiacs %}
+                    {% set title = loop.first or loop.index == 7 %}
+                    <div class="row justify-content-end">
+                        <div class="col-6 cs-cell-title">
+                            {{ characterZodiac.zodiac.name|upper  }}
+                        </div>
+                        <div class="col-1 cs-cell-title">
+                        </div>
+                        <div class="col-1 {{ title ? 'cs-cell-title' }} ml-1">
+                            {{ title ? 'B.' }}
+                        </div>
+                        <div class="col-1 {{ title ? 'cs-cell-title' }} ml-1">
+                            {{ title ? 'V.' }}
+                        </div>
+                    </div>
+                    {% for characterSkill in characterSheet.characterSkills  if characterSkill.skill.zodiac == characterZodiac.zodiac %}
+                        <div class="row cs-row-content justify-content-end ">
+                            {% if loop.index == 2 %}
+                                <div class="col-1 text-center mr-1">
+                                    {{ characterZodiac.level }}
+                                </div>
+                            {% endif %}
+                            <div class="col-6">
+                                {{ characterSkill.skill.name|capitalize }}{{ characterSkill.skill.domainRelated ? '*' }}
+                            </div>
+                            <div class="col-1 text-center">
+                                {{ characterSkill.skill.open ? 'o' : 'f' }}
+                            </div>
+                            <div class="col-1 text-center ml-1">
+                                {{ characterSkill.level }}
+                            </div>
+                            <div class="col-1 text-center ml-1">
+                                {{ characterSkill.level + characterZodiac.level }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% if loop.index == 6 %}
+                </div>
+                <div class="col-6">
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="ml-2">
+                <div class="row">
+                    <div class="col-6 cs-brown">
+                        <div class="row" >
+                            <div class="col-12" >
+                                <h4>Theme astral</h4>
+                                Archétype : ............<br>
+                                Affinité : .............<br>
+                            </div>
+                            <div class="col-6" >
+                                Ascendants :<br>
+                                ..........<br>
+                                ..........
+                            </div>
+                            <div class="col-6" >
+                                Descendants :<br>
+                                ..........<br>
+                                ..........<br>
+                                ..........
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="col-12 cs-brown">
+                            <div class="row">
+                                <div class="col-12" >
+                                    <h4>Vie antérieure</h4>
+                                    .......................................
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 cs-brown">
+                            <div class="row">
+                                <div class="col-12" >
+                                    <h4>Experience</h4>
+                                    .......................................
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="b-red d-flex justify-content-between align-items-center" style="height: 400px;">
+
+                    <div class="cs-trinite b-red">
+                        <h4>Deva</h4>
+                        Choeur : ............<br>
+                        Karma : .............<br>
+                        Dette : ............<br>
+                        Crédits : .............<br>
+                    </div>
+                    <div class="cs-trinite align-self-end b-red">
+                        <h4>Adam'</h4>
+                        Karma : ............<br>
+                    </div>
+                    <div class="cs-trinite b-red">
+                        <h4>Archonte</h4>
+                        Légion : ............<br>
+                        Karma : .............<br>
+                        Dette : ............<br>
+                        Crédits : .............<br>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="col-12 cs-brown">
+                            <div class="row">
+                                <div class="col-12" >
+                                    <h4>Le grand livre</h4>
+                                </div>
+                                <div class="col-6" >
+                                    Versets de lumiere :<br>
+                                    ....................<br>
+                                    ....................<br>
+                                    ....................<br>
+                                    ....................<br>
+                                    ....................<br>
+                                </div>
+                                <div class="col-6" >
+                                    Versets de tenebres :<br>
+                                    ....................<br>
+                                    ....................<br>
+                                    ....................<br>
+                                    ....................<br>
+                                    ....................<br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 cs-brown">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>Le zodiaque</h4>
+                                </div>
+                                <div class="col-4">Auras</div>
+                                <div class="col-2">Corps</div>
+                                <div class="col-2">Main</div>
+                                <div class="col-2">Epee</div>
+                                <div class="col-2">Oeuil</div>
+
+                                {% for i in 0..4 %}
+
+                                <div class="col-4">..............</div>
+                                <div class="col-2">O</div>
+                                <div class="col-2">O</div>
+                                <div class="col-2">O</div>
+                                <div class="col-2">O</div>
+
+                                {% endfor %}
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 cs-brown">
+                        <div class="row">
+                            <div class="col-12">
+                            <h4>La lame-soeur</h4>
+                                Messager : ...........<br>
+                                Degats : 4<br>
+                                Description :<br>
+                                .......................<br>
+                                .......................<br>
+                                .......................<br>
+                                .......................<br>
+                                <br>
+                                Atouts<br>
+                                .......................<br>
+                                .......................<br>
+                                .......................<br>
+                                .......................<br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+{% endblock %}
