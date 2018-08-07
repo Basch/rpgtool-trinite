@@ -29,7 +29,7 @@ class SkillFixtures extends Fixture implements DependentFixtureInterface
 
             $manager->persist( $skill );
 
-            $this->addReference('skill-'.$data['id'], $zodiac);
+            $this->addReference('skill-'.$data['id'], $skill);
         }
 
         $manager->flush();
