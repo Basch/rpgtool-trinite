@@ -41,6 +41,7 @@ class Campaign
      */
     private $characters;
 
+
     public function __construct()
     {
         $this->Players = new ArrayCollection();
@@ -130,4 +131,5 @@ class Campaign
 
         return $this;
     }
+
 }
