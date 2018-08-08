@@ -228,7 +228,7 @@ class PlayerCharacter
     {
         if (!$this->assetFilters->contains($assetFilter)) {
             $this->assetFilters[] = $assetFilter;
-            $assetFilter->setPlayerCharacter($this);
+            $assetFilter->setCharacter($this);
         }
 
         return $this;
@@ -239,12 +239,30 @@ class PlayerCharacter
         if ($this->assetFilters->contains($assetFilter)) {
             $this->assetFilters->removeElement($assetFilter);
             // set the owning side to null (unless already changed)
-            if ($assetFilter->getPlayerCharacter() === $this) {
-                $assetFilter->setPlayerCharacter(null);
+            if ($assetFilter->getCharacter() === $this) {
+                $assetFilter->setCharacter(null);
             }
         }
 
         return $this;
+    }
+
+    public function getVisibleAssets(): Collection
+    {
+        $assets = clone $this->getAssets();
+        foreach ( $this->getAssetFilters() as $assetFilter ){
+            $asset = $assetFilter->getAsset();
+            if(!$assets->contains( $asset )){
+                $assets->add( $asset );
+            }
+        }
+        return $assets;
+    }
+
+    public function hasAsset( Asset $asset ): bool
+    {
+        dump($this->getAssets());
+        return $this->getAssets()->contains( $asset );
     }
 
 }

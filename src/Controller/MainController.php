@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Service\SideMenuService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

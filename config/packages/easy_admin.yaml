@@ -12,6 +12,8 @@ easy_admin:
             - AssetFilter
             - Zodiac
             - Skill
+            - Aura
+            - Job
 
     entities:
         User:
@@ -68,6 +70,17 @@ easy_admin:
         AssetFilter:
             label: 'Filtres des Atouts'
             class: App\Entity\AssetFilter
+            list:
+                sort: ['id', 'ASC']
+
+        Aura:
+            label: 'Auras'
+            class: App\Entity\Aura
+            list:
+                sort: ['id', 'ASC']
+        Job:
+            label: 'Métiers'
+            class: App\Entity\Job
             list:
                 sort: ['id', 'ASC']
 

@@ -41,16 +41,11 @@ class Campaign
      */
     private $characters;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AssetFilter", mappedBy="campaign", orphanRemoval=true)
-     */
-    private $assetFilters;
 
     public function __construct()
     {
         $this->Players = new ArrayCollection();
         $this->characters = new ArrayCollection();
-        $this->assetFilters = new ArrayCollection();
     }
 
     public function __toString()
@@ -137,34 +132,4 @@ class Campaign
         return $this;
     }
 
-    /**
-     * @return Collection|AssetFilter[]
-     */
-    public function getAssetFilters(): Collection
-    {
-        return $this->assetFilters;
-    }
-
-    public function addAssetFilter(AssetFilter $assetFilter): self
-    {
-        if (!$this->assetFilters->contains($assetFilter)) {
-            $this->assetFilters[] = $assetFilter;
-            $assetFilter->setCampaign($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAssetFilter(AssetFilter $assetFilter): self
-    {
-        if ($this->assetFilters->contains($assetFilter)) {
-            $this->assetFilters->removeElement($assetFilter);
-            // set the owning side to null (unless already changed)
-            if ($assetFilter->getCampaign() === $this) {
-                $assetFilter->setCampaign(null);
-            }
-        }
-
-        return $this;
-    }
 }
