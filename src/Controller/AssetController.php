@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Asset;
+use App\Form\AssetType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -111,8 +112,11 @@ class AssetController extends MainController
     {
         if( $error = $this->controlMaster() ) { return $error; }
 
+        $form = $this->createForm( AssetType::class, $asset );
+
         return $this->render('pages/asset/show.master.html.twig', [
             'asset' => $asset,
+            'form' => $form->createView(),
         ]);
     }
 }

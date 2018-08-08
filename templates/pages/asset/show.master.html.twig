@@ -13,5 +13,17 @@
         <h1>Atout {{ asset.name }}</h1>
 
 
+        {{ form_start(form) }}
+
+        {{ form_end(form) }}
+
+        <p>
+            Atout visible par :<br>
+            {% for filter in asset.assetFilters if filter.character.campaign.id == side_menu.campaign.id %}
+                {{ filter.character.name }},
+            {% endfor %}
+        </p>
+
+
     </div>
 {% endblock %}

@@ -6,28 +6,32 @@ easy_admin:
             - User
             - Campaign
             - PlayerCharacter
-            - SideMenu
-            - FireBlade
-            - Asset
             - AssetFilter
-            - Zodiac
-            - Skill
+
+            - Asset
             - Aura
+            - FireBlade
             - Job
+            - SideMenu
+            - Skill
+            - Zodiac
+
+
+
 
     entities:
         User:
-            label: 'Utilisateurs'
+            label: 'Users'
             class: App\Entity\User
 
         Campaign:
-            label: 'Campagnes'
+            label: 'Campaigns'
             class: App\Entity\Campaign
             list:
                 sort: ['id', 'ASC']
 
         PlayerCharacter:
-            label: 'Personnages'
+            label: 'Characters'
             class: App\Entity\PlayerCharacter
             list:
                 fields:
@@ -45,7 +49,7 @@ easy_admin:
                     - assets
 
         Zodiac:
-            label: 'Zodiaque'
+            label: 'Zodiacs'
             class: App\Entity\Zodiac
             list:
                 sort: ['id', 'ASC']
@@ -56,19 +60,19 @@ easy_admin:
                 sort: ['id', 'ASC']
 
         Skill:
-            label: 'Compétences'
+            label: 'Skills'
             class: App\Entity\Skill
             list:
                 sort: ['id', 'ASC']
 
         Asset:
-            label: 'Atouts'
+            label: 'Assets'
             class: App\Entity\Asset
             list:
                 sort: ['id', 'ASC']
 
         AssetFilter:
-            label: 'Filtres des Atouts'
+            label: 'Asset Filters'
             class: App\Entity\AssetFilter
             list:
                 sort: ['id', 'ASC']
@@ -79,13 +83,13 @@ easy_admin:
             list:
                 sort: ['id', 'ASC']
         Job:
-            label: 'Métiers'
+            label: 'Jobs'
             class: App\Entity\Job
             list:
                 sort: ['id', 'ASC']
 
         FireBlade:
-            label: 'Messagers'
+            label: 'Fire Blades'
             class: App\Entity\FireBlade
             list:
                 sort: ['id', 'ASC']

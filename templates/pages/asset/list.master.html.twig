@@ -14,7 +14,7 @@
         Liste des atouts
         <ul>
             {% for asset in assets %}
-                <li><code><a href="{{ path('home') }}">{{ asset.name }}</a></code></li>
+                <li><code><a href="{{ path('asset.show', { 'assetSlug': asset.slug }) }}">{{ asset.name }}</a></code></li>
             {% endfor %}
         </ul>
 
