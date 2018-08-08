@@ -11,6 +11,8 @@ easy_admin:
             - Asset
             - Zodiac
             - Skill
+            - Aura
+            - Job
 
     entities:
         User:
@@ -61,6 +63,17 @@ easy_admin:
         Asset:
             label: 'Atouts'
             class: App\Entity\Asset
+            list:
+                sort: ['id', 'ASC']
+
+        Aura:
+            label: 'Auras'
+            class: App\Entity\Aura
+            list:
+                sort: ['id', 'ASC']
+        Job:
+            label: 'Métiers'
+            class: App\Entity\Job
             list:
                 sort: ['id', 'ASC']
 

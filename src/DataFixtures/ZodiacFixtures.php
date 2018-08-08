@@ -10,8 +10,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 class ZodiacFixtures extends Fixture
 {
 
-
-
     public function load( ObjectManager $manager )
     {
         foreach( ZodiacData::$DATA as $data ){
