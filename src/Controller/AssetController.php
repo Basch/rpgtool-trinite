@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Asset;
-use App\Entity\PlayerCharacter;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AssetController extends MainController

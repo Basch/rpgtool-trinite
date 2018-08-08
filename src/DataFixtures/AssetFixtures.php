@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\DataFixtures\Data\AssetData;
 use App\Entity\Asset;
 use App\Entity\FireBlade;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -38,7 +39,8 @@ class AssetFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return array(
-            ZodiacFixtures::class,
+            UserFixtures::class,
+            FireBladeFixtures::class,
         );
     }
 

@@ -32,11 +32,6 @@ class Verse
     private $karma;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $cost;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $duration;
@@ -104,18 +99,6 @@ class Verse
     public function setKarma(bool $karma): self
     {
         $this->karma = $karma;
-
-        return $this;
-    }
-
-    public function getCost(): ?int
-    {
-        return $this->cost;
-    }
-
-    public function setCost(int $cost): self
-    {
-        $this->cost = $cost;
 
         return $this;
     }

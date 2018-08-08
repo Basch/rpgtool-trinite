@@ -43,15 +43,22 @@ class Asset
      */
     private $characters;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AssetFilter", mappedBy="asset", orphanRemoval=true)
+     */
+    private $assetFilters;
+
     public function __construct()
     {
         $this->characters = new ArrayCollection();
+        $this->assetFilters = new ArrayCollection();
     }
 
     public function __toString()
     {
         return $this->getName();
     }
+    
     public function getId()
     {
         return $this->id;
@@ -132,4 +139,36 @@ class Asset
 
         return $this;
     }
+
+    /**
+     * @return Collection|AssetFilter[]
+     */
+    public function getAssetFilters(): Collection
+    {
+        return $this->assetFilters;
+    }
+
+    public function addAssetFilter(AssetFilter $assetFilter): self
+    {
+        if (!$this->assetFilters->contains($assetFilter)) {
+            $this->assetFilters[] = $assetFilter;
+            $assetFilter->setAsset($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssetFilter(AssetFilter $assetFilter): self
+    {
+        if ($this->assetFilters->contains($assetFilter)) {
+            $this->assetFilters->removeElement($assetFilter);
+            // set the owning side to null (unless already changed)
+            if ($assetFilter->getAsset() === $this) {
+                $assetFilter->setAsset(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

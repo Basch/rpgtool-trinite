@@ -9,6 +9,7 @@ easy_admin:
             - SideMenu
             - FireBlade
             - Asset
+            - AssetFilter
             - Zodiac
             - Skill
 
@@ -61,6 +62,12 @@ easy_admin:
         Asset:
             label: 'Atouts'
             class: App\Entity\Asset
+            list:
+                sort: ['id', 'ASC']
+
+        AssetFilter:
+            label: 'Filtres des Atouts'
+            class: App\Entity\AssetFilter
             list:
                 sort: ['id', 'ASC']
 

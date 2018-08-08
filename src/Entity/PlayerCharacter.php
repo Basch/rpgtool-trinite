@@ -56,11 +56,19 @@ class PlayerCharacter
      */
     private $assets;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AssetFilter", mappedBy="character", orphanRemoval=true)
+     */
+    private $assetFilters;
+
+
+
     public function __construct()
     {
         $this->characterZodiacs = new ArrayCollection();
         $this->characterSkills = new ArrayCollection();
         $this->assets = new ArrayCollection();
+        $this->assetFilters = new ArrayCollection();
     }
 
     public function __toString()
@@ -207,4 +215,36 @@ class PlayerCharacter
 
         return $this;
     }
+
+    /**
+     * @return Collection|AssetFilter[]
+     */
+    public function getAssetFilters(): Collection
+    {
+        return $this->assetFilters;
+    }
+
+    public function addAssetFilter(AssetFilter $assetFilter): self
+    {
+        if (!$this->assetFilters->contains($assetFilter)) {
+            $this->assetFilters[] = $assetFilter;
+            $assetFilter->setPlayerCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssetFilter(AssetFilter $assetFilter): self
+    {
+        if ($this->assetFilters->contains($assetFilter)) {
+            $this->assetFilters->removeElement($assetFilter);
+            // set the owning side to null (unless already changed)
+            if ($assetFilter->getPlayerCharacter() === $this) {
+                $assetFilter->setPlayerCharacter(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
