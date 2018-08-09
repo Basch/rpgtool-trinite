@@ -16,7 +16,7 @@ class CharacterController extends MainController
      */
     public function player( PlayerCharacter $character )
     {
-        $this->sideMenu->setCharacter( $character );
+        $this->userData->setCharacter( $character );
         return $this->render('pages/character/player.html.twig', [
             'character' => $character,
         ]);

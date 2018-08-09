@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\DataFixtures\Data\CharacterData;
 use App\Entity\Asset;
+use App\Entity\Aura;
 use App\Entity\Campaign;
 use App\Entity\PlayerCharacter;
 use App\Entity\User;
@@ -16,7 +17,6 @@ class CharacterFixtures extends Fixture implements DependentFixtureInterface
 
     public function load( ObjectManager $manager )
     {
-
 
         foreach ( CharacterData::$DATA as $data ) {
 
@@ -32,11 +32,6 @@ class CharacterFixtures extends Fixture implements DependentFixtureInterface
                 ->setUser( $user )
                 ->setCampaign( $campaign );
 
-            foreach ( $data['assets_id'] as $asset_id ) {
-                /** @var Asset $asset */
-                $asset = $this->getReference( 'asset-'.$asset_id);
-                $character->addAsset( $asset );
-            }
 
             $manager->persist( $character );
 

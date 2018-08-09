@@ -14,8 +14,8 @@ class CharacterSheetController extends MainController
     public function main() {
         if( $error = $this->control() ) { return $error; }
 
-        if( $this->sideMenu->isPlayer() ) {
-            return $this->show( $this->sideMenu->getCharacter() );
+        if( $this->userData->isPlayer() ) {
+            return $this->show( $this->userData->getCharacter() );
         }
 
         return $this->list();
@@ -29,7 +29,7 @@ class CharacterSheetController extends MainController
         if( $error = $this->controlMaster() ) { return $error; }
 
         return $this->render('pages/character_sheet/list.html.twig', [
-            'campaign' => $this->sideMenu->getCampaign(),
+            'campaign' => $this->userData->getCampaign(),
         ]);
 
     }

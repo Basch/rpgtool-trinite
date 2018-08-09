@@ -6,7 +6,7 @@ easy_admin:
             - User
             - Campaign
             - PlayerCharacter
-            - AssetFilter
+            - FilterCharacterAsset
 
             - Asset
             - Aura
@@ -38,7 +38,6 @@ easy_admin:
                     - name
                     - user
                     - campaign
-                    - assets
                 sort: ['id', 'ASC']
 
             form:
@@ -46,7 +45,12 @@ easy_admin:
                     - name
                     - user
                     - campaign
-                    - assets
+
+        FilterCharacterAsset:
+            label: 'FilterCharacterAsset'
+            class: App\Entity\FilterCharacterAsset
+            list:
+                sort: ['id', 'ASC']
 
         Zodiac:
             label: 'Zodiacs'
@@ -68,12 +72,6 @@ easy_admin:
         Asset:
             label: 'Assets'
             class: App\Entity\Asset
-            list:
-                sort: ['id', 'ASC']
-
-        AssetFilter:
-            label: 'Asset Filters'
-            class: App\Entity\AssetFilter
             list:
                 sort: ['id', 'ASC']
 

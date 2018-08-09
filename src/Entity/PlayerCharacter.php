@@ -52,23 +52,16 @@ class PlayerCharacter
     private $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Asset", inversedBy="characters")
+     * @ORM\OneToMany(targetEntity="FilterCharacterAsset", mappedBy="playerCharacter", orphanRemoval=true)
      */
-    private $assets;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AssetFilter", mappedBy="character", orphanRemoval=true)
-     */
-    private $assetFilters;
-
+    private $filterAssets;
 
 
     public function __construct()
     {
         $this->characterZodiacs = new ArrayCollection();
         $this->characterSkills = new ArrayCollection();
-        $this->assets = new ArrayCollection();
-        $this->assetFilters = new ArrayCollection();
+        $this->filterAssets = new ArrayCollection();
     }
 
     public function __toString()
@@ -191,78 +184,35 @@ class PlayerCharacter
     }
 
     /**
-     * @return Collection|Asset[]
+     * @return Collection|FilterCharacterAsset[]
      */
-    public function getAssets(): Collection
+    public function getFilterAssets(): Collection
     {
-        return $this->assets;
+        return $this->filterAssets;
     }
 
-    public function addAsset(Asset $asset): self
+    public function addFilterAsset( FilterCharacterAsset $filterAsset): self
     {
-        if (!$this->assets->contains($asset)) {
-            $this->assets[] = $asset;
+        if (!$this->filterAssets->contains($filterAsset)) {
+            $this->filterAssets[] = $filterAsset;
+            $filterAsset->setPlayerCharacter($this);
         }
 
         return $this;
     }
 
-    public function removeAsset(Asset $asset): self
+    public function removeFilterAsset( FilterCharacterAsset $filterAsset): self
     {
-        if ($this->assets->contains($asset)) {
-            $this->assets->removeElement($asset);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|AssetFilter[]
-     */
-    public function getAssetFilters(): Collection
-    {
-        return $this->assetFilters;
-    }
-
-    public function addAssetFilter(AssetFilter $assetFilter): self
-    {
-        if (!$this->assetFilters->contains($assetFilter)) {
-            $this->assetFilters[] = $assetFilter;
-            $assetFilter->setCharacter($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAssetFilter(AssetFilter $assetFilter): self
-    {
-        if ($this->assetFilters->contains($assetFilter)) {
-            $this->assetFilters->removeElement($assetFilter);
+        if ($this->filterAssets->contains($filterAsset)) {
+            $this->filterAssets->removeElement($filterAsset);
             // set the owning side to null (unless already changed)
-            if ($assetFilter->getCharacter() === $this) {
-                $assetFilter->setCharacter(null);
+            if ($filterAsset->getPlayerCharacter() === $this) {
+                $filterAsset->setPlayerCharacter(null);
             }
         }
 
         return $this;
     }
 
-    public function getVisibleAssets(): Collection
-    {
-        $assets = clone $this->getAssets();
-        foreach ( $this->getAssetFilters() as $assetFilter ){
-            $asset = $assetFilter->getAsset();
-            if(!$assets->contains( $asset )){
-                $assets->add( $asset );
-            }
-        }
-        return $assets;
-    }
-
-    public function hasAsset( Asset $asset ): bool
-    {
-        dump($this->getAssets());
-        return $this->getAssets()->contains( $asset );
-    }
 
 }

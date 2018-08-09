@@ -13,7 +13,7 @@ class HomeController extends MainController
      */
     public function campaigns()
     {
-        $this->sideMenu->clear();
+        $this->userData->clear();
 
         /** @var User $user */
         $user = $this->getUser();

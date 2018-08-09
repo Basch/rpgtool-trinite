@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Model\FiltrableItemCharacterInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AssetRepository")
  */
-class Asset
+class Asset implements FiltrableItemCharacterInterface
 {
     /**
      * @ORM\Id()
@@ -46,19 +47,14 @@ class Asset
     private $fireBlade;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\PlayerCharacter", mappedBy="assets")
+     * @ORM\OneToMany(targetEntity="FilterCharacterAsset", mappedBy="asset", orphanRemoval=true)
      */
-    private $characters;
+    private $FilterCharacter;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AssetFilter", mappedBy="asset", orphanRemoval=true)
-     */
-    private $assetFilters;
 
     public function __construct()
     {
-        $this->characters = new ArrayCollection();
-        $this->assetFilters = new ArrayCollection();
+        $this->FilterCharacter = new ArrayCollection();
     }
 
     public function __toString()
@@ -131,62 +127,35 @@ class Asset
     }
 
     /**
-     * @return Collection|PlayerCharacter[]
+     * @return Collection|FilterCharacterAsset[]
      */
-    public function getCharacters(): Collection
+    public function getFilterCharacter(): Collection
     {
-        return $this->characters;
+        return $this->FilterCharacter;
     }
 
-    public function addCharacter(PlayerCharacter $character): self
+    public function addFilterCharacter( FilterCharacterAsset $filterCharacter): self
     {
-        if (!$this->characters->contains($character)) {
-            $this->characters[] = $character;
-            $character->addAsset($this);
+        if (!$this->FilterCharacter->contains($filterCharacter)) {
+            $this->FilterCharacter[] = $filterCharacter;
+            $filterCharacter->setAsset($this);
         }
 
         return $this;
     }
 
-    public function removeCharacter(PlayerCharacter $character): self
+    public function removeFilterCharacter( FilterCharacterAsset $filterCharacter): self
     {
-        if ($this->characters->contains($character)) {
-            $this->characters->removeElement($character);
-            $character->removeAsset($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|AssetFilter[]
-     */
-    public function getAssetFilters(): Collection
-    {
-        return $this->assetFilters;
-    }
-
-    public function addAssetFilter(AssetFilter $assetFilter): self
-    {
-        if (!$this->assetFilters->contains($assetFilter)) {
-            $this->assetFilters[] = $assetFilter;
-            $assetFilter->setAsset($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAssetFilter(AssetFilter $assetFilter): self
-    {
-        if ($this->assetFilters->contains($assetFilter)) {
-            $this->assetFilters->removeElement($assetFilter);
+        if ($this->FilterCharacter->contains($filterCharacter)) {
+            $this->FilterCharacter->removeElement($filterCharacter);
             // set the owning side to null (unless already changed)
-            if ($assetFilter->getAsset() === $this) {
-                $assetFilter->setAsset(null);
+            if ($filterCharacter->getAsset() === $this) {
+                $filterCharacter->setAsset(null);
             }
         }
 
         return $this;
     }
+
 
 }

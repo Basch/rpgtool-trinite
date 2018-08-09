@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Campaign;
 use App\Entity\User;
-use App\Service\SideMenuService;
+use App\Service\UserDataService;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -45,7 +45,7 @@ class CampaignController extends MainController
             return $this->redirectToRoute('home');
         }
 
-        $this->get( SideMenuService::class )->setCampaign( $campaign );
+        $this->get( UserDataService::class )->setCampaign( $campaign );
 
         return $this->render('pages/campaign/master.html.twig', [
             'campaign' => $campaign,
