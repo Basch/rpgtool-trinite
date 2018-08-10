@@ -9,12 +9,12 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Atouts</h1>
+        <h1>Versets</h1>
 
-        Liste des atouts
+        Liste des versets
         <ul>
-            {% for asset in items %}
-                <li><code><a href="{{ path('asset.show', { 'itemSlug': asset.slug }) }}">{{ asset.name }}</a></code></li>
+            {% for verse in items %}
+                <li><code><a href="{{ path('verse.show', { 'itemSlug': verse.slug }) }}">{{ verse.name }}</a></code></li>
             {% endfor %}
         </ul>
 

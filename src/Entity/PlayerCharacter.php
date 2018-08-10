@@ -56,12 +56,24 @@ class PlayerCharacter
      */
     private $filterAssets;
 
+    /**
+     * @ORM\OneToMany(targetEntity="FilterCharacterAura", mappedBy="playerCharacter", orphanRemoval=true)
+     */
+    private $filterAuras;
+
+    /**
+     * @ORM\OneToMany(targetEntity="FilterCharacterVerse", mappedBy="playerCharacter", orphanRemoval=true)
+     */
+    private $filterVerses;
+
 
     public function __construct()
     {
         $this->characterZodiacs = new ArrayCollection();
         $this->characterSkills = new ArrayCollection();
         $this->filterAssets = new ArrayCollection();
+        $this->filterAuras = new ArrayCollection();
+        $this->filterVerses = new ArrayCollection();
     }
 
     public function __toString()
@@ -213,6 +225,69 @@ class PlayerCharacter
 
         return $this;
     }
+
+    /**
+     * @return Collection|FilterCharacterAura[]
+     */
+    public function getFilterAuras(): Collection
+    {
+        return $this->filterAuras;
+    }
+
+    public function addFilterAura( FilterCharacterAsset $filterAura): self
+    {
+        if (!$this->filterAuras->contains($filterAura)) {
+            $this->filterAuras[] = $filterAura;
+            $filterAura->setPlayerCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFilterAura( FilterCharacterAsset $filterAura): self
+    {
+        if ($this->filterAuras->contains($filterAura)) {
+            $this->filterAuras->removeElement($filterAura);
+            // set the owning side to null (unless already changed)
+            if ($filterAura->getPlayerCharacter() === $this) {
+                $filterAura->setPlayerCharacter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FilterCharacterVerse[]
+     */
+    public function getFilterVerses(): Collection
+    {
+        return $this->filterVerses;
+    }
+
+    public function addFilterVerse( FilterCharacterVerse $filterVerse): self
+    {
+        if (!$this->filterVerses->contains($filterVerse)) {
+            $this->filterVerses[] = $filterVerse;
+            $filterVerse->setPlayerCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFilterVerse( FilterCharacterVerse $filterVerse): self
+    {
+        if ($this->filterVerses->contains($filterVerse)) {
+            $this->filterVerses->removeElement($filterVerse);
+            // set the owning side to null (unless already changed)
+            if ($filterVerse->getPlayerCharacter() === $this) {
+                $filterVerse->setPlayerCharacter(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 
 }

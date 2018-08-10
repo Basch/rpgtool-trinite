@@ -104,7 +104,6 @@ class FilterService
 
 
     public function hasItem( $item, PlayerCharacter $character = null ): bool {
-
         $class = $this->parser->getClass( $item );
         $filters = $this->getFilterListFromCharacter( $class , $character );
         $getItem = $this->getItemFunctionName( $class, $filters->first() );

@@ -6,9 +6,9 @@ use App\Model\FilterCharacterInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FilterCharacterAssetRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\FilterCharacterVerseRepository")
  */
-class FilterCharacterAsset implements FilterCharacterInterface
+class FilterCharacterVerse implements FilterCharacterInterface
 {
     /**
      * @ORM\Id()
@@ -18,13 +18,13 @@ class FilterCharacterAsset implements FilterCharacterInterface
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Asset", inversedBy="FilterCharacter")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Verse", inversedBy="FilterCharacter")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $asset;
+    private $verse;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PlayerCharacter", inversedBy="filterAssets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\PlayerCharacter", inversedBy="filterVerses")
      * @ORM\JoinColumn(nullable=false)
      */
     private $playerCharacter;
@@ -41,7 +41,7 @@ class FilterCharacterAsset implements FilterCharacterInterface
 
     public function __toString()
     {
-        return 'filterAsset'.$this->getId();
+        return 'filterVerse'.$this->getId();
     }
 
     public function getId()
@@ -49,14 +49,14 @@ class FilterCharacterAsset implements FilterCharacterInterface
         return $this->id;
     }
 
-    public function getAsset(): ?Asset
+    public function getVerse(): ?Verse
     {
-        return $this->asset;
+        return $this->verse;
     }
 
-    public function setAsset(?Asset $asset): self
+    public function setVerse( ?Verse $verse): self
     {
-        $this->asset = $asset;
+        $this->verse = $verse;
 
         return $this;
     }

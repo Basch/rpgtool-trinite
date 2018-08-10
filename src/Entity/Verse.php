@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use App\Model\FiltrableItemCharacterInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VerseRepository")
  */
-class Verse
+class Verse implements FiltrableItemCharacterInterface
 {
     /**
      * @ORM\Id()
@@ -20,6 +24,12 @@ class Verse
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     /**
      * @ORM\Column(type="text")
@@ -62,6 +72,21 @@ class Verse
      */
     private $adam;
 
+    /**
+     * @ORM\OneToMany(targetEntity="FilterCharacterVerse", mappedBy="verse", orphanRemoval=true)
+     */
+    private $FilterCharacter;
+
+    public function __construct()
+    {
+        $this->FilterCharacter = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     public function getId()
     {
         return $this->id;
@@ -76,6 +101,17 @@ class Verse
     {
         $this->name = $name;
 
+        return $this;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug( string $slug ): self
+    {
+        $this->slug = $slug;
         return $this;
     }
 
@@ -171,6 +207,37 @@ class Verse
     public function setAdam(?Adam $adam): self
     {
         $this->adam = $adam;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FilterCharacterVerse[]
+     */
+    public function getFilterCharacter(): Collection
+    {
+        return $this->FilterCharacter;
+    }
+
+    public function addFilterCharacter( FilterCharacterVerse $filterCharacter): self
+    {
+        if (!$this->FilterCharacter->contains($filterCharacter)) {
+            $this->FilterCharacter[] = $filterCharacter;
+            $filterCharacter->setVerse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFilterCharacter( FilterCharacterVerse $filterCharacter): self
+    {
+        if ($this->FilterCharacter->contains($filterCharacter)) {
+            $this->FilterCharacter->removeElement($filterCharacter);
+            // set the owning side to null (unless already changed)
+            if ($filterCharacter->getVerse() === $this) {
+                $filterCharacter->setVerse(null);
+            }
+        }
 
         return $this;
     }

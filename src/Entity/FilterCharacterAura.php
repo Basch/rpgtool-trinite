@@ -6,9 +6,9 @@ use App\Model\FilterCharacterInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FilterCharacterAssetRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\FilterCharacterAuraRepository")
  */
-class FilterCharacterAsset implements FilterCharacterInterface
+class FilterCharacterAura implements FilterCharacterInterface
 {
     /**
      * @ORM\Id()
@@ -18,13 +18,13 @@ class FilterCharacterAsset implements FilterCharacterInterface
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Asset", inversedBy="FilterCharacter")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Aura", inversedBy="FilterCharacter")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $asset;
+    private $aura;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PlayerCharacter", inversedBy="filterAssets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\PlayerCharacter", inversedBy="filterAuras")
      * @ORM\JoinColumn(nullable=false)
      */
     private $playerCharacter;
@@ -41,7 +41,7 @@ class FilterCharacterAsset implements FilterCharacterInterface
 
     public function __toString()
     {
-        return 'filterAsset'.$this->getId();
+        return 'filterAura'.$this->getId();
     }
 
     public function getId()
@@ -49,14 +49,14 @@ class FilterCharacterAsset implements FilterCharacterInterface
         return $this->id;
     }
 
-    public function getAsset(): ?Asset
+    public function getAura(): ?Aura
     {
-        return $this->asset;
+        return $this->aura;
     }
 
-    public function setAsset(?Asset $asset): self
+    public function setAura( ?Aura $aura): self
     {
-        $this->asset = $asset;
+        $this->aura = $aura;
 
         return $this;
     }

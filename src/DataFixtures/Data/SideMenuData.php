@@ -22,10 +22,17 @@ class SideMenuData
         ],
         [
             'id' => 3,
-            'title' => 'Test MJ only',
-            'route' => 'home',
+            'title' => 'Auras',
+            'route' => 'aura',
             'master' => true,
-            'player' => false,
+            'player' => true,
+        ],
+        [
+            'id' => 4,
+            'title' => 'Versets',
+            'route' => 'verse',
+            'master' => true,
+            'player' => true,
         ],
 
     ];

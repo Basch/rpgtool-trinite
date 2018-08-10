@@ -7,6 +7,8 @@ easy_admin:
             - Campaign
             - PlayerCharacter
             - FilterCharacterAsset
+            - FilterCharacterAura
+            - FilterCharacterVerse
 
             - Asset
             - Aura
@@ -14,10 +16,8 @@ easy_admin:
             - Job
             - SideMenu
             - Skill
+            - Verse
             - Zodiac
-
-
-
 
     entities:
         User:
@@ -47,10 +47,21 @@ easy_admin:
                     - campaign
 
         FilterCharacterAsset:
-            label: 'FilterCharacterAsset'
+            label: 'FilterCharacterAssets'
             class: App\Entity\FilterCharacterAsset
             list:
                 sort: ['id', 'ASC']
+
+        FilterCharacterAura:
+             label: 'FilterCharacterAuras'
+             class: App\Entity\FilterCharacterAura
+             list:
+                 sort: ['id', 'ASC']
+        FilterCharacterVerse:
+             label: 'FilterCharacterVerses'
+             class: App\Entity\FilterCharacterVerse
+             list:
+                 sort: ['id', 'ASC']
 
         Zodiac:
             label: 'Zodiacs'
@@ -85,6 +96,23 @@ easy_admin:
             class: App\Entity\Job
             list:
                 sort: ['id', 'ASC']
+
+        Verse:
+            label: 'Verse'
+            class: App\Entity\Verse
+            list:
+                sort: ['id', 'ASC']
+            form:
+                fields:
+                    - name
+                    - quote
+                    - karma
+                    - duration
+                    - verseRange
+                    - area
+                    - { property: 'stackable', type: 'choice', type_options: { choices: [{'Oui' : true}, {'Non' : false}, {'-' : null}]} }
+                    - description
+                    - adam
 
         FireBlade:
             label: 'Fire Blades'

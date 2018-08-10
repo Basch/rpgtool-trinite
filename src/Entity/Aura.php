@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Model\FiltrableItemCharacterInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuraRepository")
  */
-class Aura
+class Aura implements FiltrableItemCharacterInterface
 {
     /**
      * @ORM\Id()
@@ -36,14 +37,31 @@ class Aura
     private $sign;
 
     /**
-     * @Gedmo\Slug(fields={"id"})
+     * @Gedmo\Slug(handlers={
+     *      @Gedmo\SlugHandler(class="Gedmo\Sluggable\Handler\RelativeSlugHandler", options={
+     *          @Gedmo\SlugHandlerOption(name="relationField", value="sign"),
+     *          @Gedmo\SlugHandlerOption(name="relationSlugField", value="slug"),
+     *          @Gedmo\SlugHandlerOption(name="separator", value="")
+     *      })
+     * }, separator="-", updatable=true, fields={"id"}, prefix="aura-")
      * @ORM\Column(length=128, unique=true)
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity="FilterCharacterAura", mappedBy="aura", orphanRemoval=true)
+     */
+    private $FilterCharacter;
+
 
     public function __construct()
     {
+        $this->FilterCharacter = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return 'Aura : '.$this->getSign()->getName();
     }
 
     public function getId()
@@ -98,6 +116,35 @@ class Aura
         return $this;
     }
 
+    /**
+     * @return Collection|FilterCharacterAura[]
+     */
+    public function getFilterCharacter(): Collection
+    {
+        return $this->FilterCharacter;
+    }
 
+    public function addFilterCharacter( FilterCharacterAura $filterCharacter): self
+    {
+        if (!$this->FilterCharacter->contains($filterCharacter)) {
+            $this->FilterCharacter[] = $filterCharacter;
+            $filterCharacter->setAura($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFilterCharacter( FilterCharacterAura $filterCharacter): self
+    {
+        if ($this->FilterCharacter->contains($filterCharacter)) {
+            $this->FilterCharacter->removeElement($filterCharacter);
+            // set the owning side to null (unless already changed)
+            if ($filterCharacter->getAura() === $this) {
+                $filterCharacter->setAura(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

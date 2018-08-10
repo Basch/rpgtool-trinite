@@ -14,8 +14,8 @@
 
         Liste des atouts
         <ul>
-            {% for asset in assets %}
-                <li><code><a href="{{ path('asset.show', { 'assetSlug': asset.slug }) }}">{{ asset.name }}</a></code>{{ filter.hasItem( asset ) ? 'possédé' }}</li>
+            {% for asset in items %}
+                <li><code><a href="{{ path('asset.show', { 'itemSlug': asset.slug }) }}">{{ asset.name }}</a></code>{{ filter.hasItem( asset ) ? 'possédé' }}</li>
             {% endfor %}
         </ul>
 
