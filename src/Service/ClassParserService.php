@@ -24,6 +24,6 @@ class ClassParserService
 
         //$entityName = $this->em->getMetadataFactory()->getMetadataFor(get_class($object))->getName();
         //return $this->parseClass( $entityName );
-        return $this->parseClass( get_class($object) );
+        return  get_class($object) ;
     }
 }

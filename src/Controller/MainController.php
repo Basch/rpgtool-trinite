@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Service\FilterService;
 use App\Service\UserDataService;
-use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class MainController extends Controller

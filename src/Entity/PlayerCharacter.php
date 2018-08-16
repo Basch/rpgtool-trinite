@@ -52,28 +52,25 @@ class PlayerCharacter
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="FilterCharacterAsset", mappedBy="playerCharacter", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="FilterCharacter", mappedBy="playerCharacter", orphanRemoval=true)
      */
-    private $filterAssets;
+    private $filters;
+
 
     /**
-     * @ORM\OneToMany(targetEntity="FilterCharacterAura", mappedBy="playerCharacter", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="writer")
      */
-    private $filterAuras;
+    private $reports;
 
-    /**
-     * @ORM\OneToMany(targetEntity="FilterCharacterVerse", mappedBy="playerCharacter", orphanRemoval=true)
-     */
-    private $filterVerses;
+
 
 
     public function __construct()
     {
         $this->characterZodiacs = new ArrayCollection();
         $this->characterSkills = new ArrayCollection();
-        $this->filterAssets = new ArrayCollection();
-        $this->filterAuras = new ArrayCollection();
-        $this->filterVerses = new ArrayCollection();
+        $this->filters = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     public function __toString()
@@ -195,31 +192,32 @@ class PlayerCharacter
         return $this;
     }
 
+
     /**
-     * @return Collection|FilterCharacterAsset[]
+     * @return Collection|FilterCharacter[]
      */
-    public function getFilterAssets(): Collection
+    public function getFilterReports(): Collection
     {
-        return $this->filterAssets;
+        return $this->filters;
     }
 
-    public function addFilterAsset( FilterCharacterAsset $filterAsset): self
+    public function addFilterReport( FilterCharacter $filter): self
     {
-        if (!$this->filterAssets->contains($filterAsset)) {
-            $this->filterAssets[] = $filterAsset;
-            $filterAsset->setPlayerCharacter($this);
+        if (!$this->filters->contains($filter)) {
+            $this->filters[] = $filter;
+            $filter->setPlayerCharacter($this);
         }
 
         return $this;
     }
 
-    public function removeFilterAsset( FilterCharacterAsset $filterAsset): self
+    public function removeFilterReport( FilterCharacter $filter): self
     {
-        if ($this->filterAssets->contains($filterAsset)) {
-            $this->filterAssets->removeElement($filterAsset);
+        if ($this->filters->contains($filter)) {
+            $this->filters->removeElement($filter);
             // set the owning side to null (unless already changed)
-            if ($filterAsset->getPlayerCharacter() === $this) {
-                $filterAsset->setPlayerCharacter(null);
+            if ($filter->getPlayerCharacter() === $this) {
+                $filter->setPlayerCharacter(null);
             }
         }
 
@@ -227,67 +225,35 @@ class PlayerCharacter
     }
 
     /**
-     * @return Collection|FilterCharacterAura[]
+     * @return Collection|Report[]
      */
-    public function getFilterAuras(): Collection
+    public function getReports(): Collection
     {
-        return $this->filterAuras;
+        return $this->reports;
     }
 
-    public function addFilterAura( FilterCharacterAsset $filterAura): self
+    public function addReport(Report $report): self
     {
-        if (!$this->filterAuras->contains($filterAura)) {
-            $this->filterAuras[] = $filterAura;
-            $filterAura->setPlayerCharacter($this);
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setWriter($this);
         }
 
         return $this;
     }
 
-    public function removeFilterAura( FilterCharacterAsset $filterAura): self
+    public function removeReport(Report $report): self
     {
-        if ($this->filterAuras->contains($filterAura)) {
-            $this->filterAuras->removeElement($filterAura);
+        if ($this->reports->contains($report)) {
+            $this->reports->removeElement($report);
             // set the owning side to null (unless already changed)
-            if ($filterAura->getPlayerCharacter() === $this) {
-                $filterAura->setPlayerCharacter(null);
+            if ($report->getWriter() === $this) {
+                $report->setWriter(null);
             }
         }
 
         return $this;
     }
-
-    /**
-     * @return Collection|FilterCharacterVerse[]
-     */
-    public function getFilterVerses(): Collection
-    {
-        return $this->filterVerses;
-    }
-
-    public function addFilterVerse( FilterCharacterVerse $filterVerse): self
-    {
-        if (!$this->filterVerses->contains($filterVerse)) {
-            $this->filterVerses[] = $filterVerse;
-            $filterVerse->setPlayerCharacter($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFilterVerse( FilterCharacterVerse $filterVerse): self
-    {
-        if ($this->filterVerses->contains($filterVerse)) {
-            $this->filterVerses->removeElement($filterVerse);
-            // set the owning side to null (unless already changed)
-            if ($filterVerse->getPlayerCharacter() === $this) {
-                $filterVerse->setPlayerCharacter(null);
-            }
-        }
-
-        return $this;
-    }
-
 
 
 }

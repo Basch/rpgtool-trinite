@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Controller;
-;
-use App\Form\AssetType;
+
+use App\Model\FiltrableItemInterface;
 use App\Service\ClassParserService;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,8 +27,10 @@ abstract class GenericItemController extends MainController
 
     }
 
-    protected function getItem( string $itemSlug ){
-        return $this->getDoctrine()->getRepository( $this->getClass() )->findOneBy( ['slug' => $itemSlug] );
+    protected function getItem( string $itemSlug ): FiltrableItemInterface {
+        /** @var FiltrableItemInterface $item */
+        $item = $this->getDoctrine()->getRepository( $this->getClass() )->findOneBy( ['slug' => $itemSlug] );
+        return $item;
     }
 
     public function main() {
@@ -60,12 +62,11 @@ abstract class GenericItemController extends MainController
         ]);
     }
 
-
     public function listMaster()
     {
         if( $error = $this->controlMaster() ) { return $error; }
 
-        $items = $this->getDoctrine()->getRepository( $this->getClass() )->findAll();
+        $items = $this->getDoctrine()->getRepository( $this->getClass() )->findBy( [ 'creator' => $this->getUser() ] );
 
         return $this->render('pages/'.$this->getClassNameToLower().'/list.master.html.twig', [
             'items' => $items,
@@ -77,14 +78,14 @@ abstract class GenericItemController extends MainController
         if( $error = $this->control() ) { return $error; }
 
         if( $this->userData->isMaster() ){
-            return $this->showMaster( $itemSlug, $request );
+            return $this->editItem( $itemSlug, $request );
         }
         else {
-            return $this->showPlayer( $itemSlug );
+            return $this->showItem( $itemSlug );
         }
     }
 
-    public function showPlayer( string $itemSlug )
+    public function showItem( string $itemSlug )
     {
         $item = $this->getItem( $itemSlug );
 
@@ -104,10 +105,24 @@ abstract class GenericItemController extends MainController
 
     }
 
+    public function addItem( Request $request ) {
 
-    public function showMaster( string $itemSlug, Request $request )
+        $class = $this->getClass();
+        /** @var FiltrableItemInterface $item */
+        $item = new $class();
+        $item->setCreator( $this->getUser() );
+
+        return $this->formItem( $item, $request );
+    }
+
+    public function editItem( string $itemSlug, Request $request )
     {
         $item = $this->getItem( $itemSlug );
+
+        return $this->formItem( $item, $request );
+    }
+
+    protected function formItem( FiltrableItemInterface $item, Request $request ) {
 
         if( $error = $this->controlMaster() ) { return $error; }
 
@@ -120,6 +135,7 @@ abstract class GenericItemController extends MainController
 
             $data = $request->request->get( $this->getClassNameToLower() );
 
+            $this->filter->updateFilter( $item );
             $this->filter->updateOwners( $item, $data['owners'] ?? [] );
             $this->filter->updateViewers( $item, $data['viewers'] ?? [] );
 
@@ -127,7 +143,7 @@ abstract class GenericItemController extends MainController
             $em->flush();
 
             return $this->redirectToRoute('master.'.$this->getClassNameToLower().'.show', [
-                $this->getClassNameToLower().'Slug' => $item->getSlug()
+                'itemSlug' => $item->getSlug()
             ]);
         }
 
@@ -135,5 +151,6 @@ abstract class GenericItemController extends MainController
             'item' => $item,
             'form' => $form->createView(),
         ]);
+
     }
 }

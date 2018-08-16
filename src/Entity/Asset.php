@@ -2,16 +2,13 @@
 
 namespace App\Entity;
 
-use App\Model\FiltrableItemCharacterInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AssetRepository")
  */
-class Asset implements FiltrableItemCharacterInterface
+class Asset extends FiltrableItem
 {
     /**
      * @ORM\Id()
@@ -46,15 +43,9 @@ class Asset implements FiltrableItemCharacterInterface
      */
     private $fireBlade;
 
-    /**
-     * @ORM\OneToMany(targetEntity="FilterCharacterAsset", mappedBy="asset", orphanRemoval=true)
-     */
-    private $FilterCharacter;
-
 
     public function __construct()
     {
-        $this->FilterCharacter = new ArrayCollection();
     }
 
     public function __toString()
@@ -126,36 +117,8 @@ class Asset implements FiltrableItemCharacterInterface
         return $this;
     }
 
-    /**
-     * @return Collection|FilterCharacterAsset[]
-     */
-    public function getFilterCharacter(): Collection
-    {
-        return $this->FilterCharacter;
-    }
 
-    public function addFilterCharacter( FilterCharacterAsset $filterCharacter): self
-    {
-        if (!$this->FilterCharacter->contains($filterCharacter)) {
-            $this->FilterCharacter[] = $filterCharacter;
-            $filterCharacter->setAsset($this);
-        }
 
-        return $this;
-    }
-
-    public function removeFilterCharacter( FilterCharacterAsset $filterCharacter): self
-    {
-        if ($this->FilterCharacter->contains($filterCharacter)) {
-            $this->FilterCharacter->removeElement($filterCharacter);
-            // set the owning side to null (unless already changed)
-            if ($filterCharacter->getAsset() === $this) {
-                $filterCharacter->setAsset(null);
-            }
-        }
-
-        return $this;
-    }
 
 
 }

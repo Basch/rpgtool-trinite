@@ -2,16 +2,13 @@
 
 namespace App\Entity;
 
-use App\Model\FiltrableItemCharacterInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuraRepository")
  */
-class Aura implements FiltrableItemCharacterInterface
+class Aura extends FiltrableItem
 {
     /**
      * @ORM\Id()
@@ -30,11 +27,6 @@ class Aura implements FiltrableItemCharacterInterface
      */
     private $breath;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Zodiac", inversedBy="aura", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $sign;
 
     /**
      * @Gedmo\Slug(handlers={
@@ -49,14 +41,13 @@ class Aura implements FiltrableItemCharacterInterface
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="FilterCharacterAura", mappedBy="aura", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Zodiac")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $FilterCharacter;
-
+    private $sign;
 
     public function __construct()
     {
-        $this->FilterCharacter = new ArrayCollection();
     }
 
     public function __toString()
@@ -93,17 +84,7 @@ class Aura implements FiltrableItemCharacterInterface
         return $this;
     }
 
-    public function getSign(): ?Zodiac
-    {
-        return $this->sign;
-    }
-
-    public function setSign(Zodiac $sign): self
-    {
-        $this->sign = $sign;
-
-        return $this;
-    }
+   
 
     public function getSlug(): string
     {
@@ -116,35 +97,18 @@ class Aura implements FiltrableItemCharacterInterface
         return $this;
     }
 
-    /**
-     * @return Collection|FilterCharacterAura[]
-     */
-    public function getFilterCharacter(): Collection
+    public function getSign(): ?Zodiac
     {
-        return $this->FilterCharacter;
+        return $this->sign;
     }
 
-    public function addFilterCharacter( FilterCharacterAura $filterCharacter): self
+    public function setSign(?Zodiac $sign): self
     {
-        if (!$this->FilterCharacter->contains($filterCharacter)) {
-            $this->FilterCharacter[] = $filterCharacter;
-            $filterCharacter->setAura($this);
-        }
+        $this->sign = $sign;
 
         return $this;
     }
 
-    public function removeFilterCharacter( FilterCharacterAura $filterCharacter): self
-    {
-        if ($this->FilterCharacter->contains($filterCharacter)) {
-            $this->FilterCharacter->removeElement($filterCharacter);
-            // set the owning side to null (unless already changed)
-            if ($filterCharacter->getAura() === $this) {
-                $filterCharacter->setAura(null);
-            }
-        }
 
-        return $this;
-    }
 
 }

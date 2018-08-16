@@ -45,15 +45,21 @@ class AssetController extends GenericItemController
     public function show( string $itemSlug, Request $request ) { return parent::show( $itemSlug, $request );}
 
     /**
+     * @Route("joueur/atout/nouveau", name="asset.new")
+     */
+    public function addItem( Request $request ) { return parent::addItem( $request ); }
+
+
+    /**
      * @Route("joueur/atout/{itemSlug}", name="player.asset.show")
      */
-    public function showPlayer( string $itemSlug ) { return parent::showPlayer( $itemSlug ); }
+    public function showItem( string $itemSlug ) { return parent::showItem( $itemSlug ); }
 
     /**
      * @Route("maitre/atout/{itemSlug}", name="master.asset.show")
      */
-    public function showMaster( string $itemSlug, Request $request )
+    public function editItem( string $itemSlug, Request $request )
     {
-        return parent::showMaster( $itemSlug, $request );
+        return parent::editItem( $itemSlug, $request );
     }
 }

@@ -6,9 +6,7 @@ easy_admin:
             - User
             - Campaign
             - PlayerCharacter
-            - FilterCharacterAsset
-            - FilterCharacterAura
-            - FilterCharacterVerse
+            - FilterCharacter
 
             - Asset
             - Aura
@@ -46,22 +44,11 @@ easy_admin:
                     - user
                     - campaign
 
-        FilterCharacterAsset:
-            label: 'FilterCharacterAssets'
-            class: App\Entity\FilterCharacterAsset
+        FilterCharacter:
+            label: 'FilterCharacters'
+            class: App\Entity\FilterCharacter
             list:
                 sort: ['id', 'ASC']
-
-        FilterCharacterAura:
-             label: 'FilterCharacterAuras'
-             class: App\Entity\FilterCharacterAura
-             list:
-                 sort: ['id', 'ASC']
-        FilterCharacterVerse:
-             label: 'FilterCharacterVerses'
-             class: App\Entity\FilterCharacterVerse
-             list:
-                 sort: ['id', 'ASC']
 
         Zodiac:
             label: 'Zodiacs'

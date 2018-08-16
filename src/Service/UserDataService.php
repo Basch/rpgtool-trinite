@@ -53,6 +53,11 @@ class UserDataService
             $campaign = $this->em->getRepository( Campaign::class )->find( $this->session->get('campaign')->getId() );
             return $campaign;
         }
+        elseif ( $this->session->get('type') == 'player' ) {
+
+            $character = $this->getCharacter();
+            return $character->getCampaign();
+        }
         return null;
     }
 

@@ -40,11 +40,6 @@ class Zodiac
      */
     private $skills;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Aura", mappedBy="sign", cascade={"persist", "remove"})
-     */
-    private $aura;
-
     public function __construct()
     {
         $this->characterZodiacs = new ArrayCollection();
@@ -146,20 +141,4 @@ class Zodiac
         return $this;
     }
 
-    public function getAura(): ?Aura
-    {
-        return $this->aura;
-    }
-
-    public function setAura(Aura $aura): self
-    {
-        $this->aura = $aura;
-
-        // set the owning side of the relation if necessary
-        if ($this !== $aura->getSign()) {
-            $aura->setSign($this);
-        }
-
-        return $this;
-    }
 }

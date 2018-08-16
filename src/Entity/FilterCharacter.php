@@ -6,9 +6,9 @@ use App\Model\FilterCharacterInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FilterCharacterAuraRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\FilterCharacterRepository")
  */
-class FilterCharacterAura implements FilterCharacterInterface
+class FilterCharacter implements FilterCharacterInterface
 {
     /**
      * @ORM\Id()
@@ -18,16 +18,22 @@ class FilterCharacterAura implements FilterCharacterInterface
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Aura", inversedBy="FilterCharacter")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
-    private $aura;
+    private $item_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PlayerCharacter", inversedBy="filterAuras")
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $item_type;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\PlayerCharacter", inversedBy="filters")
      * @ORM\JoinColumn(nullable=false)
      */
     private $playerCharacter;
+
+    
 
     /**
      * @ORM\Column(type="boolean")
@@ -39,9 +45,15 @@ class FilterCharacterAura implements FilterCharacterInterface
      */
     private $owned;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campaign")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $campaign;
+
     public function __toString()
     {
-        return 'filterAura'.$this->getId();
+        return 'filterAsset'.$this->getId();
     }
 
     public function getId()
@@ -49,15 +61,25 @@ class FilterCharacterAura implements FilterCharacterInterface
         return $this->id;
     }
 
-    public function getAura(): ?Aura
+    public function getItemId() :int
     {
-        return $this->aura;
+        return $this->item_id;
     }
 
-    public function setAura( ?Aura $aura): self
+    public function setItemId( int $item_id ) :self
     {
-        $this->aura = $aura;
+        $this->item_id = $item_id;
+        return $this;
+    }
 
+    public function getItemType() :string
+    {
+        return $this->item_type;
+    }
+
+    public function setItemType( $item_type ) :self
+    {
+        $this->item_type = $item_type;
         return $this;
     }
 
@@ -105,6 +127,18 @@ class FilterCharacterAura implements FilterCharacterInterface
     public function setOwned(bool $owned): self
     {
         $this->owned = $owned;
+
+        return $this;
+    }
+
+    public function getCampaign(): ?Campaign
+    {
+        return $this->campaign;
+    }
+
+    public function setCampaign(?Campaign $campaign): self
+    {
+        $this->campaign = $campaign;
 
         return $this;
     }

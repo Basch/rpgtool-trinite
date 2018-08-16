@@ -34,6 +34,13 @@ class SideMenuData
             'master' => true,
             'player' => true,
         ],
+        [
+            'id' => 8,
+            'title' => 'Rapports',
+            'route' => 'report',
+            'master' => true,
+            'player' => true,
+        ],
 
     ];
 }

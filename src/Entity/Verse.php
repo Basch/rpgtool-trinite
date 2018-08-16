@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Model\FiltrableItemCharacterInterface;
+use App\Model\FiltrableItemMasterInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VerseRepository")
  */
-class Verse implements FiltrableItemCharacterInterface
+class Verse extends FiltrableItem
 {
     /**
      * @ORM\Id()
@@ -72,14 +72,9 @@ class Verse implements FiltrableItemCharacterInterface
      */
     private $adam;
 
-    /**
-     * @ORM\OneToMany(targetEntity="FilterCharacterVerse", mappedBy="verse", orphanRemoval=true)
-     */
-    private $FilterCharacter;
 
     public function __construct()
     {
-        $this->FilterCharacter = new ArrayCollection();
     }
 
     public function __toString()
@@ -211,34 +206,4 @@ class Verse implements FiltrableItemCharacterInterface
         return $this;
     }
 
-    /**
-     * @return Collection|FilterCharacterVerse[]
-     */
-    public function getFilterCharacter(): Collection
-    {
-        return $this->FilterCharacter;
-    }
-
-    public function addFilterCharacter( FilterCharacterVerse $filterCharacter): self
-    {
-        if (!$this->FilterCharacter->contains($filterCharacter)) {
-            $this->FilterCharacter[] = $filterCharacter;
-            $filterCharacter->setVerse($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFilterCharacter( FilterCharacterVerse $filterCharacter): self
-    {
-        if ($this->FilterCharacter->contains($filterCharacter)) {
-            $this->FilterCharacter->removeElement($filterCharacter);
-            // set the owning side to null (unless already changed)
-            if ($filterCharacter->getVerse() === $this) {
-                $filterCharacter->setVerse(null);
-            }
-        }
-
-        return $this;
-    }
 }

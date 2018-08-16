@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\FilterCharacterAura;
+use App\Entity\FilterCharacter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method FilterCharacterAura|null find($id, $lockMode = null, $lockVersion = null)
- * @method FilterCharacterAura|null findOneBy(array $criteria, array $orderBy = null)
- * @method FilterCharacterAura[]    findAll()
- * @method FilterCharacterAura[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method FilterCharacter|null find($id, $lockMode = null, $lockVersion = null)
+ * @method FilterCharacter|null findOneBy(array $criteria, array $orderBy = null)
+ * @method FilterCharacter[]    findAll()
+ * @method FilterCharacter[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class FilterCharacterAuraRepository extends ServiceEntityRepository
+class FilterCharacterRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, FilterCharacterAura::class);
+        parent::__construct($registry, FilterCharacter::class);
     }
 
 //    /**
-//     * @return FilterCharacterAsset[] Returns an array of FilterCharacterAsset objects
+//     * @return FilterCharacter[] Returns an array of FilterCharacter objects
 //     */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class FilterCharacterAuraRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?FilterCharacterAsset
+    public function findOneBySomeField($value): ?FilterCharacter
     {
         return $this->createQueryBuilder('f')
             ->andWhere('f.exampleField = :val')

@@ -2,8 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Data\UserData;
 use App\DataFixtures\Data\VerseData;
 use App\Entity\Adam;
+use App\Entity\User;
 use App\Entity\Verse;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -14,13 +16,18 @@ class VerseFixtures extends Fixture implements DependentFixtureInterface
 
     public function load( ObjectManager $manager )
     {
-        foreach( VerseData::$DATA as $data ){
+        $users_data = UserData::$DATA;
+        foreach( VerseData::$DATA as $data ) foreach ( $users_data as $user_data ) {
             $verse = new Verse();
 
             /** @var Adam $adam */
             $adam = $this->getReference( 'adam-'.$data['adam_id'] );
 
+            /** @var User $user */
+            $user = $this->getReference('user-'. $user_data['id'] );
+
             $verse
+                ->setCreator( $user )
                 ->setName( $data['name'] )
                 ->setQuote( $data['quote'] )
                 ->setKarma( $data['karma'] )
@@ -34,7 +41,7 @@ class VerseFixtures extends Fixture implements DependentFixtureInterface
             $manager->persist( $verse );
             $manager->flush();
 
-            $this->addReference('verse-'.$data['id'], $verse);
+            $this->addReference('verse-'. $user_data['id'] .'-'.$data['id'], $verse);
         }
     }
 

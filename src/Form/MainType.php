@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Asset;
 use App\Entity\SideMenu;
 use App\Service\FilterService;
+use App\Service\FilterPlayerService;
 use App\Service\UserDataService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -18,7 +19,7 @@ abstract class MainType extends AbstractType
     protected $userData;
     protected $filter;
 
-    public function __construct( UserDataService $userData, FilterService $filter )
+    public function __construct( UserDataService $userData, FilterService $filter)
     {
         $this->userData = $userData;
         $this->filter = $filter;
