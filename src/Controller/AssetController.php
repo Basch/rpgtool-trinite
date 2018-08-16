@@ -38,7 +38,6 @@ class AssetController extends GenericItemController
      */
     public function listMaster() { return parent::listMaster(); }
 
-
     /**
      * @Route("/atout/{itemSlug}", name="asset.show")
      */

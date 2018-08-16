@@ -80,13 +80,13 @@ class FilterService
         if( !$character ){
             $character = $this->userData->getCharacter();
         }
-dump( $this->userData->getCampaign() );
+
         $list = $this->em->getRepository( FilterCharacter::class )->findBy( [
             'item_type' => $class,
             'playerCharacter' => $character,
             'campaign' => $this->userData->getCampaign(),
         ] );
-dump( $list );
+
         return Utils::ArrayToCollection( $list );
     }
 
@@ -110,36 +110,39 @@ dump( $list );
     }
 
     public function getItem( FilterCharacter $filter ): FiltrableItemInterface {
-        //dump( $filter->getItemType() . ' - ' . $filter->getItemId() );
         /** @var FiltrableItemInterface $item */
         $item = $this->em->getRepository( $filter->getItemType() )->find( $filter->getItemId() );
         return $item;
     }
 
+    private function getFilterByItemAndCharacter( FiltrableItemInterface $item, PlayerCharacter $character = null ): ?FilterCharacter {
+        $class = $this->parser->getClass( $item );
+        if( !$character ){
+            $character = $this->userData->getCharacter();
+        }
+
+        /** @var FilterCharacter $filter */
+        $filter = $this->em->getRepository( FilterCharacter::class )->findOneBy( [ 'item_id' => $item->getId(), 'item_type' => $class, 'playerCharacter' => $character ] );
+        return $filter;
+
+    }
 
     public function hasItem( FiltrableItemInterface $item, PlayerCharacter $character = null ): bool {
-        $class = $this->parser->getClass( $item );
 
-        $filter = $this->em->getRepository( $class )->findOneBy( $item->getId() );
+        $filter = $this->getFilterByItemAndCharacter( $item, $character );
 
+        if( !$filter ) return false;
 
-        return false;
+        return $filter->getOwned();
     }
 
     public function viewItem( FiltrableItemInterface $item, PlayerCharacter $character = null ): bool {
 
-        $class = $this->parser->getClass( $item );
-        $filters = $this->getFilterListFromCharacter( $class , $character );
-        $getItem = $this->getItemFunctionName( $class, $filters->first() );
-        if( !$getItem ) return false;
+        $filter = $this->getFilterByItemAndCharacter( $item, $character );
 
-        foreach( $filters as $filter ){
-            if( $filter->$getItem()->getId() == $item->getId() && ( $filter->getOwned() || $filter->getVisible() ) ){
-                return true;
-            }
-        }
+        if( !$filter ) return false;
 
-        return false;
+        return $filter->getOwned() || $filter->getVisible();
     }
 
     private function getItemFunctionName( string $class, FilterCharacterInterface $filter ) {

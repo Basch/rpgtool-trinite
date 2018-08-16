@@ -5,16 +5,20 @@ namespace App\Controller;
 use App\Service\FilterService;
 use App\Service\UserDataService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Templating\EngineInterface;
 
 abstract class MainController extends Controller
 {
     protected $userData;
     protected $filter;
+    protected $engine;
 
-    public function __construct( UserDataService $userData, FilterService $filter )
+    public function __construct( UserDataService $userData, FilterService $filter, EngineInterface $engine )
     {
         $this->userData = $userData;
         $this->filter = $filter;
+        $this->engine = $engine;
+
     }
 
     protected function controlPlayer() {

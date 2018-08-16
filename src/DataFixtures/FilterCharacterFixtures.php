@@ -24,14 +24,13 @@ class FilterCharacterFixtures extends Fixture implements DependentFixtureInterfa
 
         $classes = [ Asset::class, Aura::class, Verse::class, Report::class ];
 
+        /** @var FiltrableItemInterface[][] $items */
         $items = [];
         foreach( $classes as $class ){
             $items[ $class ] = $manager->getRepository( $class )->findAll();
         }
 
-        foreach( $characters as $character ) foreach( $items as $class => $array ) foreach ( $array as $item ){
-
-            /** @var FiltrableItemInterface $item */
+        foreach( $characters as $character ) foreach( $items as $class => $array ) foreach ( $array as $item ) if( $character->getCampaign()->getMaster() === $item->getCreator() ) {
 
             $filterCharacter = new FilterCharacter();
             $filterCharacter

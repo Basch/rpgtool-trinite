@@ -22,9 +22,13 @@ abstract class GenericItemController extends MainController
         return strtolower($this->getClassName());
     }
 
-    protected function getTemplate( string $template )
+    protected function getTemplate( string $template ): string
     {
-
+        $test = 'pages/'.$this->getClassNameToLower().'/' . $template . '.html.twig';
+        if( $this->engine->exists( $test ) ){
+            return $test;
+        }
+        return 'pages/default/' . $template . '.html.twig';
     }
 
     protected function getItem( string $itemSlug ): FiltrableItemInterface {
@@ -57,7 +61,7 @@ abstract class GenericItemController extends MainController
 
         $items = $this->filter->getVisibleItems( $this->getClass() );
 
-        return $this->render('pages/'.$this->getClassNameToLower().'/list.player.html.twig', [
+        return $this->render( $this->getTemplate( 'list.player' ), [
             'items' => $items,
         ]);
     }
@@ -68,7 +72,7 @@ abstract class GenericItemController extends MainController
 
         $items = $this->getDoctrine()->getRepository( $this->getClass() )->findBy( [ 'creator' => $this->getUser() ] );
 
-        return $this->render('pages/'.$this->getClassNameToLower().'/list.master.html.twig', [
+        return $this->render($this->getTemplate( 'list.master' ), [
             'items' => $items,
         ]);
     }
@@ -77,7 +81,7 @@ abstract class GenericItemController extends MainController
     {
         if( $error = $this->control() ) { return $error; }
 
-        if( $this->userData->isMaster() ){
+        if( $this->userData->isMaster() ){ // TODO: checker si l'item est de la bonne campagne et checker si le joueur est le createur de l'item
             return $this->editItem( $itemSlug, $request );
         }
         else {
@@ -99,7 +103,7 @@ abstract class GenericItemController extends MainController
             return $this->redirectToRoute($this->getClassNameToLower().'.list');
         }
 
-        return $this->render('pages/'.$this->getClassNameToLower().'/show.player.html.twig', [
+        return $this->render($this->getTemplate( 'show.player' ), [
             'item' => $item,
         ]);
 
@@ -147,10 +151,12 @@ abstract class GenericItemController extends MainController
             ]);
         }
 
-        return $this->render('pages/'.$this->getClassNameToLower().'/show.master.html.twig', [
+        return $this->render($this->getTemplate( 'show.master' ), [
             'item' => $item,
             'form' => $form->createView(),
         ]);
 
     }
+
+
 }

@@ -9,6 +9,8 @@ use App\Entity\User;
 interface FiltrableItemInterface
 {
 
+    public const USER_CREATABLE = false;
+
     public function getId();
     public function getSlug();
 

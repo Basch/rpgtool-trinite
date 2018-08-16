@@ -10,6 +10,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Report extends FiltrableItem
 {
+
+    public const USER_CREATABLE = true;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

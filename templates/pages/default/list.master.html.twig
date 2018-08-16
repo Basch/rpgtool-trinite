@@ -9,14 +9,14 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Atouts</h1>
+        <h1>Objet</h1>
 
         <p><a href="{{ path('asset.new') }}" class="btn btn-success" >Nouveau</a></p>
 
         Liste des atouts
         <ul>
         {% for asset in items %}
-            <li><code><a href="{{ path('asset.show', { 'itemSlug': asset.slug }) }}">{{ asset.name }}</a></code></li>
+            <li><code><a href="{{ path('asset.show', { 'itemSlug': asset.slug }) }}">{{ asset }}</a></code></li>
         {% endfor %}
         </ul>
 
