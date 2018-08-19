@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Entities;
 
 use App\Entity\Adam;
 use App\Entity\PlayerCharacter;
 use App\Entity\Verse;
+use App\Form\Rights\RightsType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,15 +15,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VerseType extends MainType
+class VerseType extends GenericType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         /** @var Verse $verse */
         $verse = $options['data'];
-
-        $campaign = $this->userData->getCampaign();
 
         $builder
             ->add('name', TextType::class, [
@@ -60,31 +59,10 @@ class VerseType extends MainType
                 'label' => 'Adam',
             ])
 
-            ->add('owners', EntityType::class, [
-                'label' => 'Possédé par',
-                'class' => PlayerCharacter::class,
-                'choices' => $campaign->getCharacters(),
+            ->add('rights', RightsType::class, [
+                'data' => $verse,
                 'mapped' => false,
-                'multiple' => true,
-                'expanded' => false,
-                'required' => false,
-                'data' => $this->filter->getOwners( $verse ),
-                'attr' => [
-                    'data-select' => 'select2',
-                ]
-            ])
-            ->add('viewers', EntityType::class, [
-                'label' => 'Visible par',
-                'class' => PlayerCharacter::class,
-                'choices' => $campaign->getCharacters(),
-                'mapped' => false,
-                'multiple' => true,
-                'expanded' => false,
-                'required' => false,
-                'data' => $this->filter->getViewers( $verse ),
-                'attr' => [
-                    'data-select' => 'select2',
-                ]
+                'label' => false,
             ])
             ->add( 'save', SubmitType::class, [
                 'label' => 'Enregistrer',

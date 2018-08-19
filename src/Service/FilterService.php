@@ -101,7 +101,7 @@ class FilterService
         $return =  new ArrayCollection();
         foreach( $filters as $filter ){
             $item = $this->getItem( $filter );
-            if( $filter->getVisible() || $filter->getOwned() || $item->getOwner() == $this->userData->getCharacter() ){
+            if( $filter->getVisible() || $filter->getOwned() || $item->getWriter() == $this->userData->getCharacter() ){
                 $return->add( $this->getItem( $filter ) );
             }
         }
@@ -160,6 +160,7 @@ class FilterService
 
     public function updateFilter( FiltrableItemInterface $item ) {
 
+        dump($item);
         $this->em->persist( $item );
         $this->em->flush();
 

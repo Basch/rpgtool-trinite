@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Aura;
-use App\Form\AuraType;
+use App\Form\Entities\AuraType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 

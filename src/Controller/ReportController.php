@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Report;
-use App\Form\ReportType;
+use App\Form\Entities\ReportType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 

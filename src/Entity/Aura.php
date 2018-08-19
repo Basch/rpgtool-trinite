@@ -46,14 +46,11 @@ class Aura extends FiltrableItem
      */
     private $sign;
 
-    public function __construct()
+    public function getName()
     {
+        return $this->getSign() ? $this->getSign()->getName() : "";
     }
 
-    public function __toString()
-    {
-        return 'Aura : '.$this->getSign()->getName();
-    }
 
     public function getId()
     {

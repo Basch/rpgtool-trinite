@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Entities;
 
 use App\Entity\Asset;
 use App\Entity\FireBlade;
 use App\Entity\PlayerCharacter;
+use App\Form\Rights\RightsType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -12,15 +13,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AssetType extends MainType
+class AssetType extends GenericType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         /** @var Asset $asset */
         $asset = $options['data'];
-
-        $campaign = $this->userData->getCampaign();
 
         $builder
             ->add('name', TextType::class, [
@@ -36,31 +35,10 @@ class AssetType extends MainType
                 'class' => FireBlade::class,
                 'label' => 'Epée de feu',
             ])
-            ->add('owners', EntityType::class, [
-                'label' => 'Possédé par',
-                'class' => PlayerCharacter::class,
-                'choices' => $campaign->getCharacters(),
+            ->add('rights', RightsType::class, [
+                'data' => $asset,
                 'mapped' => false,
-                'multiple' => true,
-                'expanded' => false,
-                'required' => false,
-                'data' => $this->filter->getOwners( $asset ),
-                'attr' => [
-                    'data-select' => 'select2',
-                ]
-            ])
-            ->add('viewers', EntityType::class, [
-                'label' => 'Visible par',
-                'class' => PlayerCharacter::class,
-                'choices' => $campaign->getCharacters(),
-                'mapped' => false,
-                'multiple' => true,
-                'expanded' => false,
-                'required' => false,
-                'data' => $this->filter->getViewers( $asset ),
-                'attr' => [
-                    'data-select' => 'select2',
-                ]
+                'label' => false,
             ])
             ->add( 'save', SubmitType::class, [
                 'label' => 'Enregistrer',

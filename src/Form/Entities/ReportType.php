@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Entities;
 
 use App\Entity\PlayerCharacter;
 use App\Entity\Report;
+use App\Form\Rights\RightsType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -12,15 +13,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ReportType extends MainType
+class ReportType extends GenericType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         /** @var Report $report */
         $report = $options['data'];
-
-        $campaign = $this->userData->getCampaign();
 
         $builder
             ->add('title', TextType::class, [
@@ -32,18 +31,10 @@ class ReportType extends MainType
             ->add('text', TextareaType::class, [
                 'label' => 'Karma',
             ])
-            ->add('viewers', EntityType::class, [
-                'label' => 'Visible par',
-                'class' => PlayerCharacter::class,
-                'choices' => $campaign->getCharacters(),
+            ->add('rights', RightsType::class, [
+                'data' => $report,
                 'mapped' => false,
-                'multiple' => true,
-                'expanded' => false,
-                'required' => false,
-                'data' => $this->filterPlayer->getViewers( $report ),
-                'attr' => [
-                    'data-select' => 'select2',
-                ]
+                'label' => false,
             ])
             ->add( 'save', SubmitType::class, [
                 'label' => 'Enregistrer',

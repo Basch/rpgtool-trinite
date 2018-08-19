@@ -46,15 +46,6 @@ class Asset extends FiltrableItem
      */
     private $fireBlade;
 
-
-    public function __construct()
-    {
-    }
-
-    public function __toString()
-    {
-        return $this->getName();
-    }
     
     public function getId()
     {

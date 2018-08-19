@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Verse;
-use App\Form\VerseType;
+use App\Form\Entities\VerseType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 

@@ -10,15 +10,17 @@ interface FiltrableItemInterface
 {
 
     public const USER_CREATABLE = false;
+    public const BE_OWNED = true;
 
     public function getId();
     public function getSlug();
+    public function getName();
 
     public function getCreator(): ?User;
     public function setCreator(?User $creator);
 
-    public function getOwner(): ?PlayerCharacter;
-    public function setOwner(?PlayerCharacter $owner);
+    public function getWriter(): ?PlayerCharacter;
+    public function setWriter(?PlayerCharacter $owner);
 
 
 }

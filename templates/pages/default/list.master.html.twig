@@ -11,7 +11,7 @@
         Liste
         <ul>
         {% for item in items %}
-            <li><code><a href="{{ path( route ~ '.show', { 'itemSlug': item.slug }) }}">{{ item }}</a></code></li>
+            <li><a href="{{ path( route ~ '.show', { 'itemSlug': item.slug }) }}">{{ item }}</a></li>
         {% endfor %}
         </ul>
 

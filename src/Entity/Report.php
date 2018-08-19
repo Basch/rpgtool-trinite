@@ -12,6 +12,7 @@ class Report extends FiltrableItem
 {
 
     public const USER_CREATABLE = true;
+    public const BE_OWNED = false;
 
     /**
      * @ORM\Id()
@@ -47,11 +48,6 @@ class Report extends FiltrableItem
     private $dateGame;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PlayerCharacter", inversedBy="reports")
-     */
-    private $writer;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Campaign", inversedBy="reports")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -63,11 +59,7 @@ class Report extends FiltrableItem
     private $text;
 
 
-    public function __construct()
-    {
-    }
-
-    public function __toString()
+    public function getName()
     {
         return $this->getTitle();
     }
@@ -132,18 +124,6 @@ class Report extends FiltrableItem
     public function setDateGame(\DateTimeInterface $dateGame): self
     {
         $this->dateGame = $dateGame;
-
-        return $this;
-    }
-
-    public function getWriter(): ?PlayerCharacter
-    {
-        return $this->writer;
-    }
-
-    public function setWriter(?PlayerCharacter $writer): self
-    {
-        $this->writer = $writer;
 
         return $this;
     }

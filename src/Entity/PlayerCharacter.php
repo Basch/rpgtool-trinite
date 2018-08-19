@@ -56,15 +56,6 @@ class PlayerCharacter
      */
     private $filters;
 
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="writer")
-     */
-    private $reports;
-
-
-
-
     public function __construct()
     {
         $this->characterZodiacs = new ArrayCollection();
@@ -218,37 +209,6 @@ class PlayerCharacter
             // set the owning side to null (unless already changed)
             if ($filter->getPlayerCharacter() === $this) {
                 $filter->setPlayerCharacter(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Report[]
-     */
-    public function getReports(): Collection
-    {
-        return $this->reports;
-    }
-
-    public function addReport(Report $report): self
-    {
-        if (!$this->reports->contains($report)) {
-            $this->reports[] = $report;
-            $report->setWriter($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReport(Report $report): self
-    {
-        if ($this->reports->contains($report)) {
-            $this->reports->removeElement($report);
-            // set the owning side to null (unless already changed)
-            if ($report->getWriter() === $this) {
-                $report->setWriter(null);
             }
         }
 

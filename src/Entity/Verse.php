@@ -74,15 +74,6 @@ class Verse extends FiltrableItem
     private $adam;
 
 
-    public function __construct()
-    {
-    }
-
-    public function __toString()
-    {
-        return $this->getName();
-    }
-
     public function getId()
     {
         return $this->id;

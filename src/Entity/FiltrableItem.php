@@ -16,7 +16,16 @@ abstract class FiltrableItem implements FiltrableItemInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PlayerCharacter")
      */
-    protected $owner;
+    protected $writer;
+
+
+    public function __toString()
+    {
+        if( $this->getId() > 0 )
+            return $this->getName();
+        else
+            return "Nouveau";
+    }
 
     public function getCreator(): ?User
     {
@@ -30,14 +39,14 @@ abstract class FiltrableItem implements FiltrableItemInterface
         return $this;
     }
 
-    public function getOwner(): ?PlayerCharacter
+    public function getWriter(): ?PlayerCharacter
     {
-        return $this->owner;
+        return $this->writer;
     }
 
-    public function setOwner(?PlayerCharacter $owner)
+    public function setWriter(?PlayerCharacter $writer)
     {
-        $this->owner = $owner;
+        $this->writer = $writer;
 
         return $this;
     }

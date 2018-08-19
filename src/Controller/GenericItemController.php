@@ -96,7 +96,7 @@ abstract class GenericItemController extends MainController
             return $this->redirectToRoute($this->getClassNameToLower().'.list');
         }
 
-        if( $this->userData->isMaster() || $item->getOwner() == $this->userData->getCharacter() ){ // TODO: checker si l'item est de la bonne campagne et checker si le joueur est le createur de l'item
+        if( $this->userData->isMaster() || $item->getWriter() == $this->userData->getCharacter() ){ // TODO: checker si l'item est de la bonne campagne et checker si le joueur est le createur de l'item
             return $this->editItem( $itemSlug, $request );
         }
         else {
@@ -150,7 +150,7 @@ abstract class GenericItemController extends MainController
 
         $item->setCreator( $this->getUser() );
         if( $this->userData->isPlayer() ) {
-            $item->setOwner( $this->userData->getCharacter() );
+            $item->setWriter( $this->userData->getCharacter() );
         }
 
         return $this->formItem( $item, $request );
@@ -169,7 +169,7 @@ abstract class GenericItemController extends MainController
             return $this->redirectToRoute($this->getClassNameToLower().'.list');
         }
 
-        if( !$this->userData->isMaster() && $item->getOwner() != $this->userData->getCharacter() ){
+        if( !$this->userData->isMaster() && $item->getWriter()->getId() != $this->userData->getCharacter()->getId() ){
             $this->addFlash(
                 'warning',
                 'Vous n\'avez pas les droits suffisant pour créer un objet de ce type.'
@@ -193,8 +193,8 @@ abstract class GenericItemController extends MainController
             $data = $request->request->get( $this->getClassNameToLower() );
 
             $this->filter->updateFilter( $item );
-            $this->filter->updateOwners( $item, $data['owners'] ?? [] );
-            $this->filter->updateViewers( $item, $data['viewers'] ?? [] );
+            $this->filter->updateOwners( $item, $data['rights']['owners'] ?? [] );
+            $this->filter->updateViewers( $item, $data['rights']['viewers'] ?? [] );
 
             $em->persist( $item );
             $em->flush();

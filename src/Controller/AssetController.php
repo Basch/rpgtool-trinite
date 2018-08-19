@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Asset;
-use App\Form\AssetType;
+use App\Form\Entities\AssetType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
