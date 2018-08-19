@@ -31,7 +31,7 @@ abstract class GenericItemController extends MainController
         return 'pages/default/' . $template . '.html.twig';
     }
 
-    protected function getItem( string $itemSlug ): FiltrableItemInterface {
+    protected function getItem( string $itemSlug ): ?FiltrableItemInterface {
         /** @var FiltrableItemInterface $item */
         $item = $this->getDoctrine()->getRepository( $this->getClass() )->findOneBy( ['slug' => $itemSlug] );
         return $item;
@@ -61,8 +61,12 @@ abstract class GenericItemController extends MainController
 
         $items = $this->filter->getVisibleItems( $this->getClass() );
 
+        /** @var FiltrableItemInterface $class */ // TODO : Voir pour type en static
+        $class = $this->getClass();
         return $this->render( $this->getTemplate( 'list.player' ), [
             'items' => $items,
+            'userCreatable' => $class::USER_CREATABLE,
+            'route' => $this->getClassNameToLower(),
         ]);
     }
 
@@ -72,8 +76,9 @@ abstract class GenericItemController extends MainController
 
         $items = $this->getDoctrine()->getRepository( $this->getClass() )->findBy( [ 'creator' => $this->getUser() ] );
 
-        return $this->render($this->getTemplate( 'list.master' ), [
+        return $this->render( $this->getTemplate( 'list.master' ), [
             'items' => $items,
+            'route' => $this->getClassNameToLower(),
         ]);
     }
 
@@ -81,7 +86,17 @@ abstract class GenericItemController extends MainController
     {
         if( $error = $this->control() ) { return $error; }
 
-        if( $this->userData->isMaster() ){ // TODO: checker si l'item est de la bonne campagne et checker si le joueur est le createur de l'item
+        $item = $this->getItem( $itemSlug );
+
+        if( !$item ) {
+            $this->addFlash(
+                'warning',
+                'Cet objet est inexistant.'
+            );
+            return $this->redirectToRoute($this->getClassNameToLower().'.list');
+        }
+
+        if( $this->userData->isMaster() || $item->getOwner() == $this->userData->getCharacter() ){ // TODO: checker si l'item est de la bonne campagne et checker si le joueur est le createur de l'item
             return $this->editItem( $itemSlug, $request );
         }
         else {
@@ -95,6 +110,14 @@ abstract class GenericItemController extends MainController
 
         if( $error = $this->controlPlayer() ) { return $error; }
 
+        if( !$item ) {
+            $this->addFlash(
+                'warning',
+                'Cet objet est inexistant.'
+            );
+            return $this->redirectToRoute($this->getClassNameToLower().'.list');
+        }
+
         if( !$this->filter->viewItem( $item ) ) {
             $this->addFlash(
                 'warning',
@@ -103,7 +126,8 @@ abstract class GenericItemController extends MainController
             return $this->redirectToRoute($this->getClassNameToLower().'.list');
         }
 
-        return $this->render($this->getTemplate( 'show.player' ), [
+
+        return $this->render( $this->getTemplate( 'show.player' ), [
             'item' => $item,
         ]);
 
@@ -112,23 +136,52 @@ abstract class GenericItemController extends MainController
     public function addItem( Request $request ) {
 
         $class = $this->getClass();
+
         /** @var FiltrableItemInterface $item */
         $item = new $class();
+
+        if( !$this->userData->isMaster() && !$item::USER_CREATABLE ){
+            $this->addFlash(
+                'warning',
+                'Vous n\'avez pas les droits suffisant pour créer un objet de ce type.'
+            );
+            return $this->redirectToRoute('home');
+        }
+
         $item->setCreator( $this->getUser() );
+        if( $this->userData->isPlayer() ) {
+            $item->setOwner( $this->userData->getCharacter() );
+        }
 
         return $this->formItem( $item, $request );
     }
 
     public function editItem( string $itemSlug, Request $request )
     {
+
         $item = $this->getItem( $itemSlug );
 
+        if( !$item ) {
+            $this->addFlash(
+                'warning',
+                'Cet objet est inexistant.'
+            );
+            return $this->redirectToRoute($this->getClassNameToLower().'.list');
+        }
+
+        if( !$this->userData->isMaster() && $item->getOwner() != $this->userData->getCharacter() ){
+            $this->addFlash(
+                'warning',
+                'Vous n\'avez pas les droits suffisant pour créer un objet de ce type.'
+            );
+            return $this->redirectToRoute('home');
+        }
         return $this->formItem( $item, $request );
     }
 
     protected function formItem( FiltrableItemInterface $item, Request $request ) {
 
-        if( $error = $this->controlMaster() ) { return $error; }
+
 
         $form = $this->createForm( $this->getEditForm(), $item );
 
@@ -151,7 +204,7 @@ abstract class GenericItemController extends MainController
             ]);
         }
 
-        return $this->render($this->getTemplate( 'show.master' ), [
+        return $this->render( $this->getTemplate( 'show.master' ), [
             'item' => $item,
             'form' => $form->createView(),
         ]);

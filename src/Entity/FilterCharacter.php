@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use App\Model\FilterCharacterInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FilterCharacterRepository")
  */
-class FilterCharacter implements FilterCharacterInterface
+class FilterCharacter
 {
     /**
      * @ORM\Id()

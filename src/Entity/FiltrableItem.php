@@ -41,4 +41,8 @@ abstract class FiltrableItem implements FiltrableItemInterface
 
         return $this;
     }
+
+    public function getUserCreatable() {
+        return self::USER_CREATABLE;
+    }
 }

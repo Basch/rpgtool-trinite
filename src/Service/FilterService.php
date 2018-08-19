@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\Campaign;
 use App\Entity\FilterCharacter;
 use App\Entity\PlayerCharacter;
-use App\Model\FilterCharacterInterface;
 use App\Model\FiltrableItemInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -25,7 +24,7 @@ class FilterService
     }
 
     /**
-     * @return ArrayCollection|FilterCharacterInterface[]
+     * @return ArrayCollection|FilterCharacter[]
      */
     public function getFilterListFromCampaign( FiltrableItemInterface $item, Campaign $campaign = null ): Collection
     {
@@ -74,7 +73,7 @@ class FilterService
 
 
     /**
-     * @return ArrayCollection|FilterCharacterInterface[]
+     * @return ArrayCollection|FilterCharacter[]
      */
     public function getFilterListFromCharacter( string $class, PlayerCharacter $character = null ): ?Collection{
         if( !$character ){
@@ -101,17 +100,17 @@ class FilterService
 
         $return =  new ArrayCollection();
         foreach( $filters as $filter ){
-            if( $filter->getVisible() || $filter->getOwned() ){
+            $item = $this->getItem( $filter );
+            if( $filter->getVisible() || $filter->getOwned() || $item->getOwner() == $this->userData->getCharacter() ){
                 $return->add( $this->getItem( $filter ) );
             }
         }
-        dump( $return );
         return $return;
     }
 
     public function getItem( FilterCharacter $filter ): FiltrableItemInterface {
         /** @var FiltrableItemInterface $item */
-        $item = $this->em->getRepository( $filter->getItemType() )->find( $filter->getItemId() );
+        $item = $this->em->getRepository( $filter->getItemType() )->find( $filter->getItemId() ); // TODO : Eviter requette
         return $item;
     }
 
@@ -145,7 +144,7 @@ class FilterService
         return $filter->getOwned() || $filter->getVisible();
     }
 
-    private function getItemFunctionName( string $class, FilterCharacterInterface $filter ) {
+    private function getItemFunctionName( string $class, FilterCharacter $filter ) {
         $function_name = 'get'.$class;
         if( !is_callable( [ $filter, $function_name ]) ) { return null; }
 

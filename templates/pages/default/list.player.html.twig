@@ -12,10 +12,12 @@
     <div class="example-wrapper">
         <h1>Objet</h1>
 
-        Liste des atouts
+        {% if userCreatable %}<p><a href="{{ path( route ~ '.new') }}" class="btn btn-success" >Nouveau</a></p>{% endif %}
+
+        Liste
         <ul>
-            {% for asset in items %}
-                <li><code><a href="{{ path('asset.show', { 'itemSlug': asset.slug }) }}">{{ asset }}</a></code>{{ filter.hasItem( asset ) ? ' possédé' }}</li>
+            {% for item in items %}
+                <li><code><a href="{{ path( route ~ '.show', { 'itemSlug': item.slug }) }}">{{ item }}</a></code>{{ filter.hasItem( item ) ? ' possédé' }}</li>
             {% endfor %}
         </ul>
 
