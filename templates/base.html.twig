@@ -1,15 +1,30 @@
 {% extends 'core.html.twig' %}
 
-
-    {% block body %}
-        {% block top_container %}
-            {% include 'block/navbar.block.html.twig' %}
-            {% include 'block/flashbag.block.html.twig' %}
-            {% include 'block/sidebar.block.html.twig' %}
-        {% endblock %}
-        <div class="container">
-            {% block container %}
-            {% endblock %}
-        </div>
+    {% block stylesheets %}
+        {{ parent() }}
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Playfair+Display+SC" rel="stylesheet">
+        <link href="{{ asset('css/book.css') }}" rel="stylesheet">
     {% endblock %}
 
+    {% block body %}
+
+        {#<div class="body d-flex align-items-stretch">#}
+            {#<div class="container d-flex align-items-stretch">#}
+                {#<div class="page flex-fill">#}
+
+
+            <div class="container">
+                {% include 'block/sidebar.block.html.twig' %}
+                <div class="page">
+                    {% block top_container %}
+                        {% include 'block/navbar.block.html.twig' %}
+                        {% include 'block/flashbag.block.html.twig' %}
+                    {% endblock %}
+
+                    {% block container %}
+                    {% endblock %}
+
+                </div>
+            </div>
+
+    {% endblock %}

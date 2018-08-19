@@ -31,8 +31,8 @@ abstract class GenericItemController extends MainController
         return 'pages/default/' . $template . '.html.twig';
     }
 
-    protected function getItem( string $itemSlug ): FiltrableItemInterface {
-        /** @var FiltrableItemInterface $item */
+    protected function getItem( string $itemSlug ): ?FiltrableItemInterface {
+        /** @var FiltrableItemInterface|null $item */
         $item = $this->getDoctrine()->getRepository( $this->getClass() )->findOneBy( ['slug' => $itemSlug] );
         return $item;
     }
@@ -95,7 +95,7 @@ abstract class GenericItemController extends MainController
 
         if( $error = $this->controlPlayer() ) { return $error; }
 
-        if( !$this->filter->viewItem( $item ) ) {
+        if( !$item || !$this->filter->viewItem( $item ) ) {
             $this->addFlash(
                 'warning',
                 'Votre personnage ne peut pas voir cet objet.'

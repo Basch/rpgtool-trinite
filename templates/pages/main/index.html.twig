@@ -3,27 +3,23 @@
 {% block title %}Hello!{% endblock %}
 
 {% block container %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
+
     <h1>Bienvenue </h1>
 
     Campagnes Maitrisées:
     <ul>
         {% for campaign in mastered_campaigns %}
-            <li><code><a href="{{ path('main.campaign.index', { 'campaignSlug' : campaign.slug }) }}">{{ campaign.name }}</a></code></li>
+            <li><a href="{{ path('main.campaign.index', { 'campaignSlug' : campaign.slug }) }}">{{ campaign.name }}</a></li>
         {% endfor %}
     </ul>
     Personnages Joués:
     <ul>
     {% for campaign in played_campaigns %}
         {% for character in campaign.characters if character.user.id == app.user.id %}
-            <li><span class="text-monospace">{{ campaign.name }} : </span> <code><a href="{{ path('player.character.index', { 'characterSlug' : character.slug }) }}">{{ character.name }}</a></code></li>
+            <li>{{ campaign.name }} : <a href="{{ path('player.character.index', { 'characterSlug' : character.slug }) }}">{{ character.name }}</a></li>
         {% endfor %}
     {% endfor %}
     </ul>
-</div>
+
 {% endblock %}

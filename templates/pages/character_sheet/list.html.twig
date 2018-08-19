@@ -15,7 +15,7 @@
         Liste des personnages
         <ul>
             {% for character in campaign.characters %}
-                <li><code><a href="{{ path('master.character.index', { 'characterSlug' : character.slug }) }}">{{ character.name }}</a></code></li>
+                <li><a href="{{ path('master.character.index', { 'characterSlug' : character.slug }) }}">{{ character.name }}</a></li>
             {% endfor %}
         </ul>
 

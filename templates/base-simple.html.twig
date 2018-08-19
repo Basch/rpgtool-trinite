@@ -1,0 +1,15 @@
+{% extends 'core.html.twig' %}
+
+
+    {% block body %}
+        {% block top_container %}
+            {% include 'block/navbar.block.html.twig' %}
+            {% include 'block/flashbag.block.html.twig' %}
+            {% include 'block/sidebar.block.html.twig' %}
+        {% endblock %}
+        <div class="container">
+            {% block container %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
