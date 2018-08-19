@@ -84,8 +84,6 @@ class Aura extends FiltrableItem
         return $this;
     }
 
-   
-
     public function getSlug(): string
     {
         return $this->slug;

@@ -13,6 +13,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestController extends MainController
 {
 
+    /**
+     * @Route("/demo", name="demo")
+     */
+    public function demo() {
+
+        $this->userData->clear();
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        return $this->render('demo.html.twig', [
+            'mastered_campaigns' => $user->getMasteredCampaigns(),
+            'played_campaigns' => $user->getPlayedCampaigns(),
+        ]);
+    }
 
     /**
      * @Route("/test", name="test")

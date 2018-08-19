@@ -1,0 +1,44 @@
+{% extends 'core.html.twig' %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Playfair+Display+SC" rel="stylesheet">
+        <link href="{{ asset('css/book.css') }}" rel="stylesheet">
+    {% endblock %}
+
+    {% block body %}
+        {% block top_container %}
+        {% endblock %}
+        <div class="body d-flex align-items-stretch">
+            <div class="container d-flex align-items-stretch">
+                <div class="page flex-fill">
+                    {% include 'block/navbar.block.html.twig' %}
+                    {% include 'block/flashbag.block.html.twig' %}
+                    {% include 'block/sidebar.block.html.twig' %}
+                {% block container %}
+
+
+                    <h1>Bienvenue </h1>
+
+                    Campagnes Maitrisées:
+                    <ul>
+                        {% for campaign in mastered_campaigns %}
+                            <li><a href="{{ path('main.campaign.index', { 'campaignSlug' : campaign.slug }) }}">{{ campaign.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    Personnages Joués:
+                    <ul>
+                        {% for campaign in played_campaigns %}
+                            {% for character in campaign.characters if character.user.id == app.user.id %}
+                                <li>{{ campaign.name }} : <a href="{{ path('player.character.index', { 'characterSlug' : character.slug }) }}">{{ character.name }}</a></li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+
+
+
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
