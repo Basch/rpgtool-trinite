@@ -6,12 +6,12 @@
 
         <h1>Objet</h1>
 
-        <p><a href="{{ path('asset.new') }}" class="btn btn-success" >Nouveau</a></p>
+        <p><a href="{{ path( item ~' .new' ) }}" class="btn btn-success" >Nouveau</a></p>
 
         Liste des atouts
         <ul>
-        {% for asset in items %}
-            <li><a href="{{ path('asset.show', { 'itemSlug': asset.slug }) }}">{{ asset }}</a></li>
+        {% for item in items %}
+            <li><a href="{{ path( class ~ '.show', { 'itemSlug': item.slug }) }}">{{ item }}</a></li>
         {% endfor %}
         </ul>
 

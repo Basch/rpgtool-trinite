@@ -63,6 +63,7 @@ abstract class GenericItemController extends MainController
 
         return $this->render( $this->getTemplate( 'list.player' ), [
             'items' => $items,
+            'class' => $this->getClassNameToLower(),
         ]);
     }
 
@@ -74,6 +75,7 @@ abstract class GenericItemController extends MainController
 
         return $this->render($this->getTemplate( 'list.master' ), [
             'items' => $items,
+            'class' => $this->getClassNameToLower(),
         ]);
     }
 

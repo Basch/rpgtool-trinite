@@ -9,8 +9,8 @@
 
         Liste des atouts
         <ul>
-            {% for asset in items %}
-                <li><a href="{{ path('asset.show', { 'itemSlug': asset.slug }) }}">{{ asset }}</a>{{ filter.hasItem( asset ) ? ' possédé' }}</li>
+            {% for item in items %}
+                <li><a href="{{ path( class ~ '.show', { 'itemSlug': item.slug }) }}">{{ item }}</a>{{ filter.hasItem( item ) ? ' possédé' }}</li>
             {% endfor %}
         </ul>
 

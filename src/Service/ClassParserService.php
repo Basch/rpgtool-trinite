@@ -9,8 +9,7 @@ class ClassParserService
 {
     private $em;
 
-    public function __construct( EntityManagerInterface $entityManager )
-    {
+    public function __construct( EntityManagerInterface $entityManager ) {
         $this->em = $entityManager;
     }
 
@@ -21,9 +20,6 @@ class ClassParserService
 
     public function getClass( $object ) {
         if( !is_object( $object )) return '';
-
-        //$entityName = $this->em->getMetadataFactory()->getMetadataFor(get_class($object))->getName();
-        //return $this->parseClass( $entityName );
         return  get_class($object) ;
     }
 }
