@@ -126,7 +126,6 @@ abstract class GenericItemController extends MainController
             return $this->redirectToRoute($this->getClassNameToLower().'.list');
         }
 
-
         return $this->render( $this->getTemplate( 'show.player' ), [
             'item' => $item,
         ]);
@@ -181,11 +180,11 @@ abstract class GenericItemController extends MainController
 
     protected function formItem( FiltrableItemInterface $item, Request $request ) {
 
-
-
         $form = $this->createForm( $this->getEditForm(), $item );
 
-        $form->handleRequest( $request );
+        //$form->handleRequest( $request );
+
+        $form->submit( $request->get( $form->getName()), false );
 
         if ( $form->isSubmitted() && $form->isValid() ) {
             $em = $this->getDoctrine()->getManager();
@@ -193,8 +192,8 @@ abstract class GenericItemController extends MainController
             $data = $request->request->get( $this->getClassNameToLower() );
 
             $this->filter->updateFilter( $item );
-            $this->filter->updateOwners( $item, $data['rights']['owners'] ?? [] );
-            $this->filter->updateViewers( $item, $data['rights']['viewers'] ?? [] );
+            $this->filter->updateOwners( $item, $data['owners'] ?? [] );
+            $this->filter->updateViewers( $item, $data['viewers'] ?? [] );
 
             $em->persist( $item );
             $em->flush();
@@ -210,6 +209,5 @@ abstract class GenericItemController extends MainController
         ]);
 
     }
-
 
 }

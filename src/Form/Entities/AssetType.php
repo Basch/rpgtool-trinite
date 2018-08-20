@@ -34,12 +34,11 @@ class AssetType extends GenericType
             ->add('fireBlade', EntityType::class, [
                 'class' => FireBlade::class,
                 'label' => 'Epée de feu',
-            ])
-            ->add('rights', RightsType::class, [
-                'data' => $asset,
-                'mapped' => false,
-                'label' => false,
-            ])
+            ]);
+
+        parent::buildForm($builder, $options);
+
+        $builder
             ->add( 'save', SubmitType::class, [
                 'label' => 'Enregistrer',
             ])

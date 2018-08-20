@@ -30,11 +30,12 @@ class AuraType extends GenericType
             ->add('breath', TextareaType::class, [
                 'label' => 'Souffle',
             ])
-            ->add('rights', RightsType::class, [
-                'data' => $aura,
-                'mapped' => false,
-                'label' => false,
-            ])
+        ;
+
+        parent::buildForm($builder, $options);
+
+        $builder
+
             ->add( 'save', SubmitType::class, [
                 'label' => 'Enregistrer',
             ])

@@ -27,24 +27,24 @@ abstract class FiltrableItem implements FiltrableItemInterface
             return "Nouveau";
     }
 
-    public function getCreator(): ?User
+    final public function getCreator(): ?User
     {
         return $this->creator;
     }
 
-    public function setCreator(?User $creator)
+    final public function setCreator(?User $creator)
     {
         $this->creator = $creator;
 
         return $this;
     }
 
-    public function getWriter(): ?PlayerCharacter
+    final public function getWriter(): ?PlayerCharacter
     {
         return $this->writer;
     }
 
-    public function setWriter(?PlayerCharacter $writer)
+    final public function setWriter(?PlayerCharacter $writer)
     {
         $this->writer = $writer;
 

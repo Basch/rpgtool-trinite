@@ -161,6 +161,7 @@ class FilterService
     public function updateFilter( FiltrableItemInterface $item ) {
 
         dump($item);
+        $item->setWriter(null);
         $this->em->persist( $item );
         $this->em->flush();
 

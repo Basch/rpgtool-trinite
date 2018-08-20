@@ -20,7 +20,7 @@ interface FiltrableItemInterface
     public function setCreator(?User $creator);
 
     public function getWriter(): ?PlayerCharacter;
-    public function setWriter(?PlayerCharacter $owner);
+    public function setWriter(?PlayerCharacter $writer);
 
 
 }

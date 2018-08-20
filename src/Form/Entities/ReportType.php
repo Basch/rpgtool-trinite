@@ -30,12 +30,11 @@ class ReportType extends GenericType
             ])
             ->add('text', TextareaType::class, [
                 'label' => 'Karma',
-            ])
-            ->add('rights', RightsType::class, [
-                'data' => $report,
-                'mapped' => false,
-                'label' => false,
-            ])
+            ]);
+
+        parent::buildForm($builder, $options);
+
+        $builder
             ->add( 'save', SubmitType::class, [
                 'label' => 'Enregistrer',
             ])

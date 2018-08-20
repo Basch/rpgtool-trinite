@@ -58,12 +58,11 @@ class VerseType extends GenericType
                 'class' => Adam::class,
                 'label' => 'Adam',
             ])
+        ;
 
-            ->add('rights', RightsType::class, [
-                'data' => $verse,
-                'mapped' => false,
-                'label' => false,
-            ])
+        parent::buildForm($builder, $options);
+
+        $builder
             ->add( 'save', SubmitType::class, [
                 'label' => 'Enregistrer',
             ])
