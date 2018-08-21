@@ -19,6 +19,7 @@ class Newspaper extends FiltrableItem
 {
 
     public const USER_CREATABLE = true;
+    public const BE_OWNED = false;
 
     /**
      * @ORM\Id()
