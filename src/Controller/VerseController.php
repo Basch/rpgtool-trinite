@@ -48,7 +48,7 @@ class VerseController extends GenericItemController
     /**
      * @Route("joueur/verset/nouveau", name="verse.new")
      */
-    public function addItem( Request $request ) { return parent::addItem( $request ); }
+    public function addItem( Request $request, $item = null ) { return parent::addItem( $request ); }
 
     /**
      * @Route("joueur/verset/{itemSlug}", name="player.verse.show")

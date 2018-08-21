@@ -1,0 +1,11 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        newspaper_image:
+            uri_prefix: /images/newspaper
+            upload_destination: '%kernel.project_dir%/public/images/newspaper'
+
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true

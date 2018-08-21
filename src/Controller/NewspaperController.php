@@ -2,60 +2,60 @@
 
 namespace App\Controller;
 
-use App\Entity\Asset;
-use App\Form\Entities\AssetType;
+use App\Entity\Newspaper;
+use App\Form\Entities\NewspaperType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AssetController extends GenericItemController
+class NewspaperController extends GenericItemController
 {
 
     protected function getEditForm(): string {
-        return AssetType::class;
+        return NewspaperType::class;
     }
 
     protected function getClass(): string {
-        return Asset::class;
+        return Newspaper::class;
     }
 
     /**
-     * @Route("/atout", name="asset")
+     * @Route("/journal", name="newspaper")
      */
     public function main() { return parent::main(); }
 
     /**
-     * @Route("/atout/liste", name="asset.list")
+     * @Route("/journal/liste", name="newspaper.list")
      */
     public function list() { return parent::list(); }
 
     /**
-     * @Route("joueur/atout/liste", name="player.asset.list")
+     * @Route("joueur/journal/liste", name="player.newspaper.list")
      */
     public function listPlayer() { return parent::listPlayer(); }
 
     /**
-     * @Route("meneur/atout/liste", name="master.asset.list")
+     * @Route("meneur/journal/liste", name="master.newspaper.list")
      */
     public function listMaster() { return parent::listMaster(); }
 
     /**
-     * @Route("/atout/{itemSlug}", name="asset.show")
+     * @Route("/journal/{itemSlug}", name="newspaper.show")
      */
     public function show( string $itemSlug, Request $request ) { return parent::show( $itemSlug, $request );}
 
     /**
-     * @Route("joueur/atout/nouveau", name="asset.new")
+     * @Route("joueur/journal/nouveau", name="newspaper.new")
      */
     public function addItem( Request $request, $item = null ) { return parent::addItem( $request ); }
 
 
     /**
-     * @Route("joueur/atout/{itemSlug}", name="player.asset.show")
+     * @Route("joueur/journal/{itemSlug}", name="player.newspaper.show")
      */
     public function showItem( string $itemSlug ) { return parent::showItem( $itemSlug ); }
 
     /**
-     * @Route("maitre/atout/{itemSlug}", name="master.asset.show")
+     * @Route("maitre/journal/{itemSlug}", name="master.newspaper.show")
      */
     public function editItem( string $itemSlug, Request $request )
     {

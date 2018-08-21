@@ -8,7 +8,6 @@ use App\Service\FilterService;
 use App\Service\UserDataService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,7 +28,7 @@ abstract class GenericType extends AbstractType
         $item = $options['data'];
 
         $campaign = $this->userData->getCampaign();
-        $choices = $campaign->getCharacters();
+        $choices = clone $campaign->getCharacters();
 
         if( $item->getWriter() === $this->userData->getCharacter() ){
             $choices->removeElement( $item->getWriter() );

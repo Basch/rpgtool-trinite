@@ -4,8 +4,6 @@ namespace App\Form\Entities;
 
 use App\Entity\Asset;
 use App\Entity\FireBlade;
-use App\Entity\PlayerCharacter;
-use App\Form\Rights\RightsType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Asset extends FiltrableItem
 {
 
-    public const USER_CREATABLE = true;
+    public const USER_CREATABLE = false;
 
     /**
      * @ORM\Id()

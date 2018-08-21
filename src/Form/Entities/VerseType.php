@@ -3,9 +3,7 @@
 namespace App\Form\Entities;
 
 use App\Entity\Adam;
-use App\Entity\PlayerCharacter;
 use App\Entity\Verse;
-use App\Form\Rights\RightsType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

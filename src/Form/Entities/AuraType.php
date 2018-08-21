@@ -4,7 +4,6 @@ namespace App\Form\Entities;
 
 use App\Entity\Aura;
 use App\Entity\Zodiac;
-use App\Form\Rights\RightsType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
