@@ -168,7 +168,7 @@ abstract class GenericItemController extends MainController
             return $this->redirectToRoute($this->getClassNameToLower().'.list');
         }
 
-        if( !$this->userData->isMaster() && $item->getWriter()->getId() != $this->userData->getCharacter()->getId() ){
+        if( !$this->userData->isMaster() && (! $item->getWriter() || $item->getWriter()->getId() != $this->userData->getCharacter()->getId() ) ){
             $this->addFlash(
                 'warning',
                 'Vous n\'avez pas les droits suffisant pour créer un objet de ce type.'
@@ -182,14 +182,16 @@ abstract class GenericItemController extends MainController
 
         $form = $this->createForm( $this->getEditForm(), $item );
 
-        //$form->handleRequest( $request );
-
-        $form->submit( $request->get( $form->getName()), false );
+        $form->submit( $request->get( $form->getName()), true );
 
         if ( $form->isSubmitted() && $form->isValid() ) {
+
             $em = $this->getDoctrine()->getManager();
 
             $data = $request->request->get( $this->getClassNameToLower() );
+
+            $em->persist( $item );
+            $em->flush();
 
             $this->filter->updateFilter( $item );
             $this->filter->updateOwners( $item, $data['owners'] ?? [] );

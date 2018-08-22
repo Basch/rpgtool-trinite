@@ -61,7 +61,6 @@ class PlayerCharacter
         $this->characterZodiacs = new ArrayCollection();
         $this->characterSkills = new ArrayCollection();
         $this->filters = new ArrayCollection();
-        $this->reports = new ArrayCollection();
     }
 
     public function __toString()

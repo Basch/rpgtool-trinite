@@ -15,6 +15,7 @@ abstract class FiltrableItem implements FiltrableItemInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PlayerCharacter")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $writer;
 

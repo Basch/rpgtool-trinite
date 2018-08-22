@@ -160,10 +160,8 @@ class FilterService
 
     public function updateFilter( FiltrableItemInterface $item ) {
 
-        dump($item);
-        $item->setWriter(null);
-        $this->em->persist( $item );
-        $this->em->flush();
+        //dump($item);
+        //$item->setWriter(null);
 
         $campaign = $this->userData->getCampaign();
         $characters = $campaign->getCharacters();
