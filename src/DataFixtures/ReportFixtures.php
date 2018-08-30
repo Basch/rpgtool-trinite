@@ -2,6 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Campaign;
+use App\Entity\PlayerCharacter;
+use App\Entity\Report;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -11,33 +15,31 @@ class ReportFixtures extends Fixture implements DependentFixtureInterface
 
     public function load( ObjectManager $manager )
     {
-//        $campaigns_data = CampaignData::$DATA;
-//        foreach( ReportData::$DATA as $data ) foreach ( $campaigns_data as $campaign_data ) {
-//            $report = new Report();
-//
-//            /** @var Adam $adam */
-//            $adam = $this->getReference( 'adam-'.$data['adam_id'] );
-//
-//            /** @var Campaign $campaign */
-//            $campaign = $this->getReference('campaign-'. $campaign_data['id'] );
-//
-//            /*$report
-//                ->setCampaign( $campaign )
-//                ->setName( $data['name'] )
-//                ->setQuote( $data['quote'] )
-//                ->setKarma( $data['karma'] )
-//                ->setDuration( $data['duration'] )
-//                ->setVerseRange( $data['verseRange'] )
-//                ->setArea( $data['area'] )
-//                ->setStackable( $data['stackable'] )
-//                ->setDescription( $data['description'] )
-//                ->setAdam( $adam );
-//
-//            $manager->persist( $report );
-//            $manager->flush();
-//
-//            $this->addReference('report-'. $campaign_data['id'] .'-'.$data['id'], $report);*/
-//        }
+        /** @var Campaign[] $campaigns */
+        $campaigns = $manager->getRepository( Campaign::class )->findAll();
+
+        /** @var PlayerCharacter[] $characters */
+        $characters = $manager->getRepository( PlayerCharacter::class )->findAll();
+
+        foreach( $characters as $character ) foreach ( $campaigns as $campaign ) {
+            $report = new Report();
+
+            $report
+                ->setTitle( ' Rapport de '.$character->getName() )
+                ->setText( 'yolo' )
+                ->setDateGame( new \DateTime() )
+                ->setCampaign( $campaign )
+                ->setWriter( $character )
+                ->setCreator( $character->getUser() )
+                ;
+
+
+            $manager->persist( $report );
+
+
+        }
+
+        $manager->flush();
     }
 
     public function getDependencies()

@@ -2,7 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Data\CampaignData;
 use App\DataFixtures\Data\CharacterData;
+use App\DataFixtures\Data\MainData;
+use App\DataFixtures\Data\UserData;
 use App\Entity\Asset;
 use App\Entity\Aura;
 use App\Entity\Campaign;
@@ -17,25 +20,26 @@ class CharacterFixtures extends Fixture implements DependentFixtureInterface
 
     public function load( ObjectManager $manager )
     {
+        /** @var User[] $users */
+        $users = $manager->getRepository( User::class )->findAll();
 
-        foreach ( CharacterData::$DATA as $data ) {
+        /** @var Campaign[] $campaigns */
+        $campaigns = $manager->getRepository( Campaign::class )->findAll();
 
-            /** @var User $user */
-            $user = $this->getReference( 'user-' . $data['user_id'] );
+        foreach ( $users as $user ) foreach( $campaigns as $campaign ) {
 
-            /** @var Campaign $campaign */
-            $campaign = $this->getReference( 'campaign-' . $data['campaign_id'] );
+            if( $user === $campaign->getMaster() ) continue;
+
+            $name = substr( $user->getUsername(),0,3 ) . substr( $campaign->getMaster()->getUsername(), 0,3 ) . substr($campaign->getName(),-1);
 
             $character = new PlayerCharacter();
             $character
-                ->setName( $data['name'] )
+                ->setName( $name )
                 ->setUser( $user )
                 ->setCampaign( $campaign );
 
 
             $manager->persist( $character );
-
-            $this->setReference( 'character-'.$data['id'], $character );
         }
 
         $manager->flush();

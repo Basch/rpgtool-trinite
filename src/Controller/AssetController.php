@@ -41,7 +41,7 @@ class AssetController extends GenericItemController
     /**
      * @Route("/atout/{itemSlug}", name="asset.show")
      */
-    public function show( string $itemSlug, Request $request ) { return parent::show( $itemSlug, $request );}
+    public function show( string $itemSlug, Request $request ) { return parent::show( $itemSlug, $request ); }
 
     /**
      * @Route("joueur/atout/nouveau", name="asset.new")

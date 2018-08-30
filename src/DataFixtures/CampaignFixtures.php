@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\DataFixtures\Data\CampaignData;
+use App\DataFixtures\Data\MainData;
+use App\DataFixtures\Data\UserData;
 use App\Entity\Campaign;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -14,20 +16,23 @@ class CampaignFixtures extends Fixture implements DependentFixtureInterface
 
     public function load( ObjectManager $manager )
     {
-        foreach( CampaignData::$DATA as $data ){
+        foreach( UserData::$DATA as $d_user ){
 
             /** @var User $master */
-            $master = $this->getReference( 'user-'.$data['master_id'] );
+            $master = $this->getReference( 'user-'.$d_user['id'] );
 
-            $campaign = new Campaign();
-            $campaign
-                ->setName( $data['name'] )
-                ->setMaster( $master );
+            for( $i = 1 ; $i <= MainData::NBR_CAMPAIGN_PER_USER ; $i++ ) {
 
-            $manager->persist( $campaign );
+                $campaign = new Campaign();
+                $campaign
+                    ->setName( 'Campagne de '.$master->getUsername().' '.$i )
+                    ->setMaster( $master );
+
+                $manager->persist( $campaign );
 
 
-            $this->addReference('campaign-'.$data['id'], $campaign);
+                $this->addReference( 'campaign-' . $d_user['id'] .'-'. $i, $campaign );
+            }
         }
 
         $manager->flush();

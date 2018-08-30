@@ -19,6 +19,12 @@ abstract class FiltrableItem implements FiltrableItemInterface
      */
     protected $writer;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campaign")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $campaign;
+
 
     public function __toString()
     {
@@ -48,6 +54,18 @@ abstract class FiltrableItem implements FiltrableItemInterface
     final public function setWriter(?PlayerCharacter $writer)
     {
         $this->writer = $writer;
+
+        return $this;
+    }
+
+    public function getCampaign(): ?Campaign
+    {
+        return $this->campaign;
+    }
+
+    public function setCampaign(?Campaign $campaign): self
+    {
+        $this->campaign = $campaign;
 
         return $this;
     }

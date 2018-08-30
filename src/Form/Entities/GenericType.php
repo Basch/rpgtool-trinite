@@ -29,7 +29,7 @@ abstract class GenericType extends AbstractType
         $item = $options['data'];
 
         $campaign = $this->userData->getCampaign();
-        $choices = $campaign->getCharacters();
+        $choices = clone $campaign->getCharacters();
 
         if( $item->getWriter() === $this->userData->getCharacter() ){
             $choices->removeElement( $item->getWriter() );

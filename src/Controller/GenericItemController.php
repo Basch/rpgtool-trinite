@@ -182,13 +182,17 @@ abstract class GenericItemController extends MainController
 
         $form = $this->createForm( $this->getEditForm(), $item );
 
-        $form->submit( $request->get( $form->getName()), true );
+        $form->handleRequest( $request );
 
         if ( $form->isSubmitted() && $form->isValid() ) {
 
             $em = $this->getDoctrine()->getManager();
 
             $data = $request->request->get( $this->getClassNameToLower() );
+
+            if( $item::CAMPAIGN_RELATED ) {
+                $item->setCampaign( $this->userData->getCampaign() );
+            }
 
             $em->persist( $item );
             $em->flush();

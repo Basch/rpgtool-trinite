@@ -26,10 +26,10 @@ class ReportType extends GenericType
                 'label' => 'Titre',
             ])
             ->add('dateGame', DateType::class, [
-                'label' => 'Citation',
+                'label' => 'Date',
             ])
             ->add('text', TextareaType::class, [
-                'label' => 'Karma',
+                'label' => 'Texte',
             ]);
 
         parent::buildForm($builder, $options);

@@ -32,7 +32,6 @@ class FilterCharacter
      */
     private $playerCharacter;
 
-    
 
     /**
      * @ORM\Column(type="boolean")

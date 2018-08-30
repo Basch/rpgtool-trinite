@@ -13,6 +13,7 @@ class Report extends FiltrableItem
 
     public const USER_CREATABLE = true;
     public const BE_OWNED = false;
+    public const CAMPAIGN_RELATED = true;
 
     /**
      * @ORM\Id()
@@ -47,17 +48,18 @@ class Report extends FiltrableItem
      */
     private $dateGame;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Campaign", inversedBy="reports")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $campaign;
+
 
     /**
      * @ORM\Column(type="text")
      */
     private $text;
 
+    public function __construct()
+    {
+        $this->setDateCreated( new \DateTime() );
+        $this->setDateModified( new \DateTime() );
+    }
 
     public function getName()
     {
@@ -124,18 +126,6 @@ class Report extends FiltrableItem
     public function setDateGame(\DateTimeInterface $dateGame): self
     {
         $this->dateGame = $dateGame;
-
-        return $this;
-    }
-
-    public function getCampaign(): ?Campaign
-    {
-        return $this->campaign;
-    }
-
-    public function setCampaign(?Campaign $campaign): self
-    {
-        $this->campaign = $campaign;
 
         return $this;
     }

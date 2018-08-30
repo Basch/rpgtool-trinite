@@ -41,17 +41,10 @@ class Campaign
      */
     private $characters;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="campaign")
-     */
-    private $reports;
-
 
     public function __construct()
     {
-        $this->Players = new ArrayCollection();
         $this->characters = new ArrayCollection();
-        $this->reports = new ArrayCollection();
     }
 
     public function __toString()
@@ -138,35 +131,6 @@ class Campaign
         return $this;
     }
 
-    /**
-     * @return Collection|Report[]
-     */
-    public function getReports(): Collection
-    {
-        return $this->reports;
-    }
 
-    public function addReport(Report $report): self
-    {
-        if (!$this->reports->contains($report)) {
-            $this->reports[] = $report;
-            $report->setCampaign($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReport(Report $report): self
-    {
-        if ($this->reports->contains($report)) {
-            $this->reports->removeElement($report);
-            // set the owning side to null (unless already changed)
-            if ($report->getCampaign() === $this) {
-                $report->setCampaign(null);
-            }
-        }
-
-        return $this;
-    }
 
 }
