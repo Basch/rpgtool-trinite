@@ -48,7 +48,10 @@ class ReportController extends GenericItemController
     /**
      * @Route("joueur/rapport/nouveau", name="report.new")
      */
-    public function addItem( Request $request ) { return parent::addItem( $request ); }
+    public function addItem( Request $request, $item = null ) {
+
+        return parent::addItem( $request );
+    }
 
     /**
      * @Route("joueur/rapport/{itemSlug}", name="player.report.show")

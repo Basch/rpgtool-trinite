@@ -2,37 +2,38 @@
 
 namespace App\Form\Entities;
 
-use App\Entity\Asset;
-use App\Entity\FireBlade;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Newspaper;
+use App\Entity\Report;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class AssetType extends GenericType
+class NewspaperType extends GenericType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var Asset $asset */
-        $asset = $options['data'];
+        /** @var Newspaper $newspaper */
+        $newspaper = $options['data'];
 
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'Nom'
+            ->add('title', TextType::class, [
+                'label' => 'Titre',
             ])
-            ->add('color', TextType::class, [
-                'label' => 'Couleur',
+            ->add('text', TextareaType::class, [
+                'label' => 'Karma',
             ])
-            ->add('description', TextareaType::class, [
-                'label' => 'Description',
-            ])
-            ->add('fireBlade', EntityType::class, [
-                'class' => FireBlade::class,
-                'label' => 'Epée de feu',
-            ]);
+            ->add('imageFile', VichFileType::class, [
+            'required' => false,
+            'allow_delete' => true,
+            'download_label' => 'newspaper',
+            'download_uri' => true,
+            //'image_uri' => true,
+        ]);;
 
         parent::buildForm($builder, $options);
 
@@ -46,7 +47,7 @@ class AssetType extends GenericType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Asset::class,
+            'data_class' => Newspaper::class,
         ]);
     }
 }

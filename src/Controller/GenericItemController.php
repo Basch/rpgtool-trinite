@@ -132,12 +132,14 @@ abstract class GenericItemController extends MainController
 
     }
 
-    public function addItem( Request $request ) {
+    public function addItem( Request $request, $item = null ) {
 
         $class = $this->getClass();
 
-        /** @var FiltrableItemInterface $item */
-        $item = new $class();
+        if( $this->get( ClassParserService::class )->getClass( $item ) != $class ) {
+            /** @var FiltrableItemInterface $item */
+            $item = new $class();
+        }
 
         if( !$this->userData->isMaster() && !$item::USER_CREATABLE ){
             $this->addFlash(
@@ -203,6 +205,11 @@ abstract class GenericItemController extends MainController
 
             $em->persist( $item );
             $em->flush();
+
+            $this->addFlash(
+                'success',
+                'L\'objet a été correctement ajouté/modifié.'
+            );
 
             return $this->redirectToRoute('master.'.$this->getClassNameToLower().'.show', [
                 'itemSlug' => $item->getSlug()

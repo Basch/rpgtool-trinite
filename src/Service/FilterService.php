@@ -101,7 +101,7 @@ class FilterService
         $return =  new ArrayCollection();
         foreach( $filters as $filter ){
             $item = $this->getItem( $filter );
-            if( $filter->getVisible() || $filter->getOwned() || $item->getWriter() == $this->userData->getCharacter() ){
+            if( $filter->getVisible() || $filter->getOwned() || $item->getWriter() === $this->userData->getCharacter() ){
                 $return->add( $this->getItem( $filter ) );
             }
         }
@@ -144,24 +144,10 @@ class FilterService
         return $filter->getOwned() || $filter->getVisible();
     }
 
-    private function getItemFunctionName( string $class, FilterCharacter $filter ) {
-        $function_name = 'get'.$class;
-        if( !is_callable( [ $filter, $function_name ]) ) { return null; }
-
-        return $function_name;
-    }
-
-//    private function getListFunctionName( string $class, PlayerCharacter $character ) {
-//        $function_name = 'getFilter'.$class.'s';
-//        if( !is_callable( [ $character, $function_name ]) ) { return null; }
-//
-//        return $function_name;
-//    }
-
     public function updateFilter( FiltrableItemInterface $item ) {
 
-        //dump($item);
-        //$item->setWriter(null);
+        $this->em->persist( $item );
+        $this->em->flush();
 
         $campaign = $this->userData->getCampaign();
         $characters = $campaign->getCharacters();

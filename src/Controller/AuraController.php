@@ -48,7 +48,7 @@ class AuraController extends GenericItemController
     /**
      * @Route("joueur/aura/nouveau", name="aura.new")
      */
-    public function addItem( Request $request ) { return parent::addItem( $request ); }
+    public function addItem( Request $request, $item = null ) { return parent::addItem( $request ); }
 
     /**
      * @Route("joueur/aura/{itemSlug}", name="player.aura.show")

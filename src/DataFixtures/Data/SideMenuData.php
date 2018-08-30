@@ -35,9 +35,16 @@ class SideMenuData
             'player' => true,
         ],
         [
-            'id' => 8,
+            'id' => 5,
             'title' => 'Rapports',
             'route' => 'report',
+            'master' => true,
+            'player' => true,
+        ],
+        [
+            'id' => 6,
+            'title' => 'Journaux',
+            'route' => 'newspaper',
             'master' => true,
             'player' => true,
         ],
