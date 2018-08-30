@@ -104,7 +104,7 @@ abstract class GenericItemController extends MainController
             return $this->redirectToRoute($this->getClassNameToLower().'.list');
         }
 
-        if( $this->userData->isMaster() /*|| $item->getWriter() === $this->userData->getCharacter()*/ ){ // TODO: checker si l'item est de la bonne campagne et checker si le joueur est le createur de l'item
+        if( $this->userData->isMaster() && !$item->getWriter() ){ // TODO: checker si l'item est de la bonne campagne et checker si le joueur est le createur de l'item
             return $this->editItem( $itemSlug, $request );
         }
         else {
@@ -116,7 +116,7 @@ abstract class GenericItemController extends MainController
     {
         $item = $this->getItem( $itemSlug );
 
-        if( $error = $this->controlPlayer() ) { return $error; }
+        if( $error = $this->control() ) { return $error; }
 
         if( !$item ) {
             $this->addFlash(
@@ -126,7 +126,7 @@ abstract class GenericItemController extends MainController
             return $this->redirectToRoute($this->getClassNameToLower().'.list');
         }
 
-        if( !$this->filter->viewItem( $item ) && $item->getWriter() !== $this->userData->getCharacter() ) {
+        if( !$this->filter->viewItem( $item ) && $item->getWriter() !== $this->userData->getCharacter() && !$this->userData->isMaster() ) {
             $this->addFlash(
                 'warning',
                 'Votre personnage ne peut pas voir cet objet.'
