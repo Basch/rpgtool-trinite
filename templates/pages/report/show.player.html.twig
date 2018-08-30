@@ -5,7 +5,10 @@
 {% block container %}
     {% set character = user.character %}
 
-    <div class="example-wrapper">
+    {% if item.writer == user.character %}
+        <a href="{{  path( 'master.' ~ route ~ '.show', { 'itemSlug': item.slug }) }}" class="btn btn-success" > éditer </a>
+    {% endif %}
+
         <h1>{{ item }}</h1>
 
         <p>Titre : {{ item.title }}</p>

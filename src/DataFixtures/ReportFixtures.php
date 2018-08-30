@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 use App\Entity\Campaign;
 use App\Entity\PlayerCharacter;
 use App\Entity\Report;
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -21,7 +20,8 @@ class ReportFixtures extends Fixture implements DependentFixtureInterface
         /** @var PlayerCharacter[] $characters */
         $characters = $manager->getRepository( PlayerCharacter::class )->findAll();
 
-        foreach( $characters as $character ) foreach ( $campaigns as $campaign ) {
+        foreach( $characters as $character ) foreach ( $campaigns as $campaign )
+        if ( $campaign->getCharacters()->contains( $character ) ){
             $report = new Report();
 
             $report

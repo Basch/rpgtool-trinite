@@ -30,7 +30,9 @@ class FilterCharacterFixtures extends Fixture implements DependentFixtureInterfa
             $items[ $class ] = $manager->getRepository( $class )->findAll();
         }
 
-        foreach( $characters as $character ) foreach( $items as $class => $array ) foreach ( $array as $item ) if( $character->getCampaign()->getMaster() === $item->getCreator() ) {
+        foreach( $characters as $character ) foreach( $items as $class => $array ) foreach ( $array as $item )
+            if( !$item->getWriter() && $character->getCampaign()->getMaster() === $item->getCreator() ||
+                $item->getWriter() && $character->getCampaign() === $item->getCampaign() ) {
 
             $filterCharacter = new FilterCharacter();
             $filterCharacter

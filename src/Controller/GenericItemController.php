@@ -74,7 +74,15 @@ abstract class GenericItemController extends MainController
     {
         if( $error = $this->controlMaster() ) { return $error; }
 
-        $items = $this->getDoctrine()->getRepository( $this->getClass() )->findBy( [ 'creator' => $this->getUser() ] );
+        /** @var FiltrableItemInterface $class */ // TODO : Voir pour type en static
+        $class = $this->getClass();
+
+        if( $class::CAMPAIGN_RELATED ) {
+            $items = $this->getDoctrine()->getRepository( $this->getClass() )->findBy( [ 'campaign' => $this->userData->getCampaign() ] );
+        }
+        else {
+            $items = $this->getDoctrine()->getRepository( $this->getClass() )->findBy( [ 'creator' => $this->getUser() ] );
+        }
 
         return $this->render( $this->getTemplate( 'list.master' ), [
             'items' => $items,
@@ -96,7 +104,7 @@ abstract class GenericItemController extends MainController
             return $this->redirectToRoute($this->getClassNameToLower().'.list');
         }
 
-        if( $this->userData->isMaster() || $item->getWriter() == $this->userData->getCharacter() ){ // TODO: checker si l'item est de la bonne campagne et checker si le joueur est le createur de l'item
+        if( $this->userData->isMaster() /*|| $item->getWriter() === $this->userData->getCharacter()*/ ){ // TODO: checker si l'item est de la bonne campagne et checker si le joueur est le createur de l'item
             return $this->editItem( $itemSlug, $request );
         }
         else {
@@ -118,7 +126,7 @@ abstract class GenericItemController extends MainController
             return $this->redirectToRoute($this->getClassNameToLower().'.list');
         }
 
-        if( !$this->filter->viewItem( $item ) ) {
+        if( !$this->filter->viewItem( $item ) && $item->getWriter() !== $this->userData->getCharacter() ) {
             $this->addFlash(
                 'warning',
                 'Votre personnage ne peut pas voir cet objet.'
@@ -128,6 +136,7 @@ abstract class GenericItemController extends MainController
 
         return $this->render( $this->getTemplate( 'show.player' ), [
             'item' => $item,
+            'route' => $this->getClassNameToLower(),
         ]);
 
     }
@@ -211,7 +220,7 @@ abstract class GenericItemController extends MainController
                 'L\'objet a été correctement ajouté/modifié.'
             );
 
-            return $this->redirectToRoute('master.'.$this->getClassNameToLower().'.show', [
+            return $this->redirectToRoute($this->getClassNameToLower().'.show', [
                 'itemSlug' => $item->getSlug()
             ]);
         }

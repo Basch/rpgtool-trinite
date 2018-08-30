@@ -18,8 +18,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Newspaper extends FiltrableItem
 {
 
-    public const USER_CREATABLE = true;
+    public const USER_CREATABLE = false;
     public const BE_OWNED = false;
+    public const CAMPAIGN_RELATED = true;
 
     /**
      * @ORM\Id()
