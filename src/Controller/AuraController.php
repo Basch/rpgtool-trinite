@@ -31,32 +31,32 @@ class AuraController extends GenericItemController
     public function list() { return parent::list(); }
 
     /**
-     * @Route("joueur/aura/liste", name="player.aura.list")
+     * @Route("joueur/aura/liste", name="aura.list.player")
      */
     public function listPlayer() { return parent::listPlayer(); }
 
     /**
-     * @Route("meneur/aura/liste", name="master.aura.list")
+     * @Route("meneur/aura/liste", name="aura.list.master")
      */
     public function listMaster() { return parent::listMaster(); }
 
     /**
-     * @Route("/aura/{itemSlug}", name="aura.show")
+     * @Route("/aura/{itemSlug}", name="aura.item")
      */
-    public function show( string $itemSlug, Request $request ) { return parent::show( $itemSlug, $request ); }
+    public function item( string $itemSlug, Request $request ) { return parent::item( $itemSlug, $request ); }
 
     /**
-     * @Route("joueur/aura/nouveau", name="aura.new")
+     * @Route("nouveau/aura", name="aura.new")
      */
-    public function addItem( Request $request, $item = null ) { return parent::addItem( $request ); }
+    public function newItem( Request $request, $item = null ) { return parent::newItem( $request ); }
 
     /**
-     * @Route("joueur/aura/{itemSlug}", name="player.aura.show")
+     * @Route("voir/aura/{itemSlug}", name="aura.show")
      */
     public function showItem( string $itemSlug ) { return parent::showItem( $itemSlug ); }
 
     /**
-     * @Route("maitre/aura/{itemSlug}", name="master.aura.show")
+     * @Route("modifier/aura/{itemSlug}", name="aura.edit")
      */
     public function editItem( string $itemSlug, Request $request ) { return parent::editItem( $itemSlug, $request ); }
 }

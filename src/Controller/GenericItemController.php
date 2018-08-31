@@ -38,14 +38,14 @@ abstract class GenericItemController extends MainController
     }
 
     public function main() {
-        if( $error = $this->control() ) { return $error; }
 
+        if( $error = $this->access->isConnected() ) return $this->doRedirect( $error );
         return $this->list();
     }
 
     public function list()
     {
-        if( $error = $this->control() ) { return $error; }
+        if( $error = $this->access->isConnected() ) return $this->doRedirect( $error );
 
         if( $this->userData->isMaster() ){
             return $this->listMaster();
@@ -57,7 +57,7 @@ abstract class GenericItemController extends MainController
 
     public function listPlayer()
     {
-        if( $error = $this->controlPlayer() ) { return $error; }
+        if( $error = $this->access->isPlayer() ) return $this->doRedirect( $error );
 
         $items = $this->filter->getVisibleItems( $this->getClass() );
 
@@ -72,7 +72,7 @@ abstract class GenericItemController extends MainController
 
     public function listMaster()
     {
-        if( $error = $this->controlMaster() ) { return $error; }
+        if( $error = $this->access->isMaster() ) return $this->doRedirect( $error );
 
         /** @var FiltrableItemInterface $class */ // TODO : Voir pour type en static
         $class = $this->getClass();
@@ -90,19 +90,12 @@ abstract class GenericItemController extends MainController
         ]);
     }
 
-    public function show( string $itemSlug, Request $request )
+    public function item( string $itemSlug, Request $request )
     {
-        if( $error = $this->control() ) { return $error; }
-
         $item = $this->getItem( $itemSlug );
 
-        if( !$item ) {
-            $this->addFlash(
-                'warning',
-                'Cet objet est inexistant.'
-            );
-            return $this->redirectToRoute($this->getClassNameToLower().'.list');
-        }
+        if( $error = $this->access->isConnected() ) return $this->doRedirect( $error );
+        if( $error = $this->access->checkItem( $item ) ) return $this->doRedirect( $error );
 
         if( $this->userData->isMaster() && !$item->getWriter() ){ // TODO: checker si l'item est de la bonne campagne et checker si le joueur est le createur de l'item
             return $this->editItem( $itemSlug, $request );
@@ -116,32 +109,17 @@ abstract class GenericItemController extends MainController
     {
         $item = $this->getItem( $itemSlug );
 
-        if( $error = $this->control() ) { return $error; }
+        if( $error = $this->access->isConnected() ) return $this->doRedirect( $error );
+        if( $error = $this->access->showItem( $item ) ) return $this->doRedirect( $error );
 
-        if( !$item ) {
-            $this->addFlash(
-                'warning',
-                'Cet objet est inexistant.'
-            );
-            return $this->redirectToRoute($this->getClassNameToLower().'.list');
-        }
-
-        if( !$this->filter->viewItem( $item ) && $item->getWriter() !== $this->userData->getCharacter() && !$this->userData->isMaster() ) {
-            $this->addFlash(
-                'warning',
-                'Votre personnage ne peut pas voir cet objet.'
-            );
-            return $this->redirectToRoute($this->getClassNameToLower().'.list');
-        }
-
-        return $this->render( $this->getTemplate( 'show.player' ), [
+        return $this->render( $this->getTemplate( 'show.item' ), [
             'item' => $item,
             'route' => $this->getClassNameToLower(),
         ]);
 
     }
 
-    public function addItem( Request $request, $item = null ) {
+    public function newItem( Request $request, $item = null ) {
 
         $class = $this->getClass();
 
@@ -150,13 +128,7 @@ abstract class GenericItemController extends MainController
             $item = new $class();
         }
 
-        if( !$this->userData->isMaster() && !$item::USER_CREATABLE ){
-            $this->addFlash(
-                'warning',
-                'Vous n\'avez pas les droits suffisant pour créer un objet de ce type.'
-            );
-            return $this->redirectToRoute('home');
-        }
+        if( $error = $this->access->addItem( $item ) ) return $this->doRedirect( $error );
 
         $item->setCreator( $this->getUser() );
         if( $this->userData->isPlayer() ) {
@@ -170,22 +142,8 @@ abstract class GenericItemController extends MainController
     {
 
         $item = $this->getItem( $itemSlug );
+        if( $error = $this->access->editItem( $item ) ) return $this->doRedirect( $error );
 
-        if( !$item ) {
-            $this->addFlash(
-                'warning',
-                'Cet objet est inexistant.'
-            );
-            return $this->redirectToRoute($this->getClassNameToLower().'.list');
-        }
-
-        if( !$this->userData->isMaster() && (! $item->getWriter() || $item->getWriter()->getId() != $this->userData->getCharacter()->getId() ) ){
-            $this->addFlash(
-                'warning',
-                'Vous n\'avez pas les droits suffisant pour créer un objet de ce type.'
-            );
-            return $this->redirectToRoute('home');
-        }
         return $this->formItem( $item, $request );
     }
 
@@ -225,7 +183,7 @@ abstract class GenericItemController extends MainController
             ]);
         }
 
-        return $this->render( $this->getTemplate( 'show.master' ), [
+        return $this->render( $this->getTemplate( 'form.item' ), [
             'item' => $item,
             'form' => $form->createView(),
         ]);

@@ -5,7 +5,7 @@
 {% block container %}
 
     {% if item.writer == user.character %}
-        <a href="{{  path( 'master.' ~ route ~ '.show', { 'itemSlug': item.slug }) }}" class="btn btn-success" > éditer </a>
+        <a href="{{  path( route ~ '.edit', { 'itemSlug': item.slug }) }}" class="btn btn-success" > éditer </a>
     {% endif %}
 
         <h1>{{ item }}</h1>

@@ -31,32 +31,32 @@ class VerseController extends GenericItemController
     public function list() { return parent::list(); }
 
     /**
-     * @Route("joueur/verset/liste", name="player.verse.list")
+     * @Route("joueur/verset/liste", name="verse.list.player")
      */
     public function listPlayer() { return parent::listPlayer(); }
 
     /**
-     * @Route("meneur/verset/liste", name="master.verse.list")
+     * @Route("meneur/verset/liste", name="verse.list.master")
      */
     public function listMaster() { return parent::listMaster(); }
 
     /**
-     * @Route("/verset/{itemSlug}", name="verse.show")
+     * @Route("/verset/{itemSlug}", name="verse.item")
      */
-    public function show( string $itemSlug, Request $request ) { return parent::show( $itemSlug, $request ); }
+    public function item( string $itemSlug, Request $request ) { return parent::item( $itemSlug, $request ); }
 
     /**
-     * @Route("joueur/verset/nouveau", name="verse.new")
+     * @Route("nouveau/verset", name="verse.new")
      */
-    public function addItem( Request $request, $item = null ) { return parent::addItem( $request ); }
+    public function newItem( Request $request, $item = null ) { return parent::newItem( $request ); }
 
     /**
-     * @Route("joueur/verset/{itemSlug}", name="player.verse.show")
+     * @Route("voir/verset/{itemSlug}", name="verse.show")
      */
     public function showItem( string $itemSlug ) { return parent::showItem( $itemSlug ); }
 
     /**
-     * @Route("maitre/verset/{itemSlug}", name="master.verse.show")
+     * @Route("modifier/verset/{itemSlug}", name="verse.edit")
      */
     public function editItem( string $itemSlug, Request $request ) { return parent::editItem( $itemSlug, $request ); }
 }

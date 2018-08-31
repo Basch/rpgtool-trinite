@@ -5,7 +5,12 @@
 {% block container %}
     {% set character = user.character %}
 
-        <h1>{{ item }}</h1>
+    {% if item.writer == user.character %}
+        <a href="{{  path( route ~ '.edit', { 'itemSlug': item.slug }) }}" class="btn btn-success" > éditer </a>
+    {% endif %}
+
+
+    <h1>{{ item }}</h1>
 
         <p>Nom : {{ item.name }}</p>
         <p>Citation :<br> {{ item.quote }}</p>

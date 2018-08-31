@@ -31,35 +31,35 @@ class ReportController extends GenericItemController
     public function list() { return parent::list(); }
 
     /**
-     * @Route("joueur/rapport/liste", name="player.report.list")
+     * @Route("joueur/rapport/liste", name="report.list.player")
      */
     public function listPlayer() { return parent::listPlayer(); }
 
     /**
-     * @Route("meneur/rapport/liste", name="master.report.list")
+     * @Route("meneur/rapport/liste", name="report.list.master")
      */
     public function listMaster() { return parent::listMaster(); }
 
     /**
-     * @Route("/rapport/{itemSlug}", name="report.show")
+     * @Route("/rapport/{itemSlug}", name="report.item")
      */
-    public function show( string $itemSlug, Request $request ) { return parent::show( $itemSlug, $request ); }
+    public function item( string $itemSlug, Request $request ) { return parent::item( $itemSlug, $request ); }
 
     /**
-     * @Route("joueur/rapport/nouveau", name="report.new")
+     * @Route("nouveau/rapport", name="report.new")
      */
-    public function addItem( Request $request, $item = null ) {
+    public function newItem( Request $request, $item = null ) {
 
-        return parent::addItem( $request );
+        return parent::newItem( $request );
     }
 
     /**
-     * @Route("joueur/rapport/{itemSlug}", name="player.report.show")
+     * @Route("voir/rapport/{itemSlug}", name="report.show")
      */
     public function showItem( string $itemSlug ) { return parent::showItem( $itemSlug ); }
 
     /**
-     * @Route("maitre/rapport/{itemSlug}", name="master.report.show")
+     * @Route("modifier/rapport/{itemSlug}", name="report.edit")
      */
     public function editItem( string $itemSlug, Request $request ) { return parent::editItem( $itemSlug, $request ); }
 

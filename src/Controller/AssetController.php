@@ -29,33 +29,33 @@ class AssetController extends GenericItemController
     public function list() { return parent::list(); }
 
     /**
-     * @Route("joueur/atout/liste", name="player.asset.list")
+     * @Route("joueur/atout/liste", name="asset.list.player")
      */
     public function listPlayer() { return parent::listPlayer(); }
 
     /**
-     * @Route("meneur/atout/liste", name="master.asset.list")
+     * @Route("meneur/atout/liste", name="asset.list.master")
      */
     public function listMaster() { return parent::listMaster(); }
 
     /**
-     * @Route("/atout/{itemSlug}", name="asset.show")
+     * @Route("/atout/{itemSlug}", name="asset.item")
      */
-    public function show( string $itemSlug, Request $request ) { return parent::show( $itemSlug, $request ); }
+    public function item( string $itemSlug, Request $request ) { return parent::item( $itemSlug, $request ); }
 
     /**
-     * @Route("joueur/atout/nouveau", name="asset.new")
+     * @Route("nouveau/atout", name="asset.new")
      */
-    public function addItem( Request $request, $item = null ) { return parent::addItem( $request ); }
+    public function newItem( Request $request, $item = null ) { return parent::newItem( $request ); }
 
 
     /**
-     * @Route("joueur/atout/{itemSlug}", name="player.asset.show")
+     * @Route("voir/atout/{itemSlug}", name="asset.show")
      */
     public function showItem( string $itemSlug ) { return parent::showItem( $itemSlug ); }
 
     /**
-     * @Route("maitre/atout/{itemSlug}", name="master.asset.show")
+     * @Route("modifier/atout/{itemSlug}", name="asset.edit")
      */
     public function editItem( string $itemSlug, Request $request )
     {

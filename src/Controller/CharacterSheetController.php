@@ -12,7 +12,7 @@ class CharacterSheetController extends MainController
      * @Route("/feuille-de-personnage", name="character-sheet")
      */
     public function main() {
-        if( $error = $this->control() ) { return $error; }
+        if( $error = $this->access->isConnected() ) return $this->doRedirect( $error );
 
         if( $this->userData->isPlayer() ) {
             return $this->show( $this->userData->getCharacter() );
@@ -26,7 +26,7 @@ class CharacterSheetController extends MainController
      */
     public function list()
     {
-        if( $error = $this->controlMaster() ) { return $error; }
+        if( $error = $this->access->isMaster() ) return $this->doRedirect( $error );
 
         return $this->render('pages/character_sheet/list.html.twig', [
             'campaign' => $this->userData->getCampaign(),

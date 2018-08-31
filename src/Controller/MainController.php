@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Object\RedirectResponse;
+use App\Service\AccessService;
 use App\Service\FilterService;
 use App\Service\UserDataService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,50 +14,29 @@ abstract class MainController extends Controller
     protected $userData;
     protected $filter;
     protected $engine;
+    protected $access;
 
-    public function __construct( UserDataService $userData, FilterService $filter, EngineInterface $engine )
+    public function __construct( UserDataService $userData, FilterService $filter, AccessService $access, EngineInterface $engine )
     {
         $this->userData = $userData;
         $this->filter = $filter;
+        $this->access = $access;
         $this->engine = $engine;
-
     }
 
-    protected function controlPlayer() {
+    protected function doRedirect( RedirectResponse $redirectResponse ){
 
-        if( !$this->userData->isPlayer() ){
+        if( $flash = $redirectResponse->getFlash() ){
             $this->addFlash(
-                'warning',
-                'Vous devez être joueur pour acceder à cette page.'
+                $flash->getType(),
+                $flash->getMessage()
             );
-            return $this->redirectToRoute('home');
         }
 
-        return null;
+        return $this->redirectToRoute(
+            $redirectResponse->getRoute(),
+            $redirectResponse->getArguments()
+        );
     }
 
-    protected function controlMaster() {
-
-        if( !$this->userData->isMaster() ){
-            $this->addFlash(
-                'warning',
-                'Vous devez être maitre de jeu pour acceder à cette page.'
-            );
-            return $this->redirectToRoute('home');
-        }
-
-        return null;
-    }
-
-    protected function control() {
-        if( !$this->userData->isMaster() && !$this->userData->isPlayer() ){
-            $this->addFlash(
-                'warning',
-                'Vous devez choisir une campagne ou un personnage pour pouvoir acceder à cette page.'
-            );
-            return $this->redirectToRoute('home');
-        }
-
-        return null;
-    }
 }

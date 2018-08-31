@@ -79,7 +79,7 @@ class FilterService
         if( !$character ){
             $character = $this->userData->getCharacter();
         }
-dump( $character );
+
         $list = $this->em->getRepository( FilterCharacter::class )->findBy( [
             'item_type' => $class,
             'playerCharacter' => $character,
@@ -95,7 +95,7 @@ dump( $character );
     public function getVisibleItems( string $class, PlayerCharacter $character = null ): ?Collection{
 
         $filters = $this->getFilterListFromCharacter( $class, $character );
-dump( $filters );
+
         if( !$filters || $filters->isEmpty() ) return null;
 
         $return =  new ArrayCollection();
