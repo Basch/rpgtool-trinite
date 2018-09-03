@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use App\Model\FiltrableItemInterface;
 use Doctrine\ORM\Mapping as ORM;
 

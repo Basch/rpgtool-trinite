@@ -4,5 +4,7 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes: ['bootstrap_4_layout.html.twig']
     globals:
-        user: '@App\Service\UserDataService'
-        filter: '@App\Service\FilterService'
+        srv: '@App\Service\TwigService'
+#        srv.user: '@App\Service\UserDataService'
+#        srv.filter: '@App\Service\FilterService'
+#        srv.comment: '@App\Service\CommentService'

@@ -108,4 +108,18 @@ class AccessService
         }
         return null;
     }
+
+    public function addComment( FiltrableItemInterface $item ): ?RedirectResponse {
+
+        if( $error = $this->showItem( $item ) ) return $error;
+
+        if( !$item::COMMENTABLE ){
+            $flash = new FlashResponse(
+                'warning',
+                'Cet objet ne peut être commenté.'
+            );
+            return new RedirectResponse( 'home', [], $flash );
+        }
+        return null;
+    }
 }

@@ -2,12 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\DataFixtures\Data\CampaignData;
-use App\DataFixtures\Data\CharacterData;
-use App\DataFixtures\Data\MainData;
-use App\DataFixtures\Data\UserData;
-use App\Entity\Asset;
-use App\Entity\Aura;
 use App\Entity\Campaign;
 use App\Entity\PlayerCharacter;
 use App\Entity\User;

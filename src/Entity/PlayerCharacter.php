@@ -56,11 +56,17 @@ class PlayerCharacter
      */
     private $filters;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="writer")
+     */
+    private $writedComments;
+
     public function __construct()
     {
         $this->characterZodiacs = new ArrayCollection();
         $this->characterSkills = new ArrayCollection();
         $this->filters = new ArrayCollection();
+        $this->writedComments = new ArrayCollection();
     }
 
     public function __toString()
@@ -208,6 +214,37 @@ class PlayerCharacter
             // set the owning side to null (unless already changed)
             if ($filter->getPlayerCharacter() === $this) {
                 $filter->setPlayerCharacter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getWritedComments(): Collection
+    {
+        return $this->writedComments;
+    }
+
+    public function addWritedComment(Comment $writedComment): self
+    {
+        if (!$this->writedComments->contains($writedComment)) {
+            $this->writedComments[] = $writedComment;
+            $writedComment->setWriter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWritedComment(Comment $writedComment): self
+    {
+        if ($this->writedComments->contains($writedComment)) {
+            $this->writedComments->removeElement($writedComment);
+            // set the owning side to null (unless already changed)
+            if ($writedComment->getWriter() === $this) {
+                $writedComment->setWriter(null);
             }
         }
 

@@ -3,7 +3,7 @@
 {% block title %}Hello!{% endblock %}
 
 {% block container %}
-    {% set character = user.character %}
+    {% set character = srv.user.character %}
 
         <h1>Objet</h1>
 
@@ -12,7 +12,7 @@
         Liste
         <ul>
             {% for item in items %}
-                <li><a href="{{ path( route ~ '.show', { 'itemSlug': item.slug }) }}">{{ item }}</a>{{ filter.hasItem( item ) ? ' possédé' }}</li>
+                <li><a href="{{ path( route ~ '.show', { 'itemSlug': item.slug }) }}">{{ item }}</a>{{ srv.filter.hasItem( item ) ? ' possédé' }}</li>
             {% endfor %}
         </ul>
 

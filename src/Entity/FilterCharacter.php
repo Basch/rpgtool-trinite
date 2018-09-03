@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FilterCharacterRepository")
  */
-class FilterCharacter
+class FilterCharacter extends ItemLink
 {
     /**
      * @ORM\Id()
@@ -16,15 +16,7 @@ class FilterCharacter
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $item_id;
 
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     */
-    private $item_type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PlayerCharacter", inversedBy="filters")
@@ -57,28 +49,6 @@ class FilterCharacter
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getItemId() :int
-    {
-        return $this->item_id;
-    }
-
-    public function setItemId( int $item_id ) :self
-    {
-        $this->item_id = $item_id;
-        return $this;
-    }
-
-    public function getItemType() :string
-    {
-        return $this->item_type;
-    }
-
-    public function setItemType( $item_type ) :self
-    {
-        $this->item_type = $item_type;
-        return $this;
     }
 
     public function getPlayerCharacter(): ?PlayerCharacter

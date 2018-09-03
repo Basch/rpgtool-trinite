@@ -34,7 +34,7 @@ class FilterService
             'campaign' => $campaign
         ] );
 
-        return Utils::ArrayToCollection( $list );
+        return new ArrayCollection( $list );
     }
 
     public function getOwners( FiltrableItemInterface $item, Campaign $campaign = null ): Collection
@@ -86,7 +86,7 @@ class FilterService
             'campaign' => $this->userData->getCampaign(),
         ] );
 
-        return Utils::ArrayToCollection( $list );
+        return new ArrayCollection( $list );
     }
 
     /**
@@ -166,11 +166,11 @@ class FilterService
                 $filter = new FilterCharacter();
                 $filter
                     ->setCampaign( $campaign )
-                    ->setItemType( $this->parser->getClass( $item ) )
-                    ->setItemId( $item->getId() )
                     ->setCharacter( $character )
                     ->setVisible( false )
-                    ->setOwned( false );
+                    ->setOwned( false )
+                    ->setItemType( $this->parser->getClass( $item ) )
+                    ->setItemId( $item->getId() )
                 ;
                 $this->em->persist( $filter );
             }

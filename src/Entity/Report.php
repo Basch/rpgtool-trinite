@@ -14,6 +14,7 @@ class Report extends FiltrableItem
     public const USER_CREATABLE = true;
     public const BE_OWNED = false;
     public const CAMPAIGN_RELATED = true;
+    public const COMMENTABLE = true;
 
     /**
      * @ORM\Id()

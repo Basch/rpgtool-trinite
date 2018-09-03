@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Model\FiltrableItemInterface;
 use App\Service\ClassParserService;
 use Symfony\Component\HttpFoundation\Request;
@@ -140,7 +142,6 @@ abstract class GenericItemController extends MainController
 
     public function editItem( string $itemSlug, Request $request )
     {
-
         $item = $this->getItem( $itemSlug );
         if( $error = $this->access->editItem( $item ) ) return $this->doRedirect( $error );
 
@@ -188,6 +189,45 @@ abstract class GenericItemController extends MainController
             'form' => $form->createView(),
         ]);
 
+    }
+
+    protected function addComment( string $itemSlug, Request $request ) {
+
+        $item = $this->getItem( $itemSlug );
+
+        if( $error = $this->access->isConnected() ) return $this->doRedirect( $error );
+        if( $error = $this->access->addComment( $item ) ) return $this->doRedirect( $error );
+
+        $comment = new Comment();
+
+        $form = $this->createForm( CommentType::class, $comment );
+
+        $form->handleRequest( $request );
+
+        if ( $form->isSubmitted() && $form->isValid() ) {
+
+            $comment
+                ->setWriter( $this->userData->getCharacter() )
+                ->setItemType( $this->get( ClassParserService::class )->getClass( $item ) )
+                ->setItemId( $item->getId() );
+
+            $this->getDoctrine()->getManager()->persist( $comment );
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash(
+                'success',
+                'Commentaire Ajouté'
+            );
+
+            return $this->redirectToRoute($this->getClassNameToLower().'.show', [
+                'itemSlug' => $item->getSlug()
+            ]);
+        }
+
+        return $this->render( $this->getTemplate( 'form.item' ), [
+            'item' => $item,
+            'form' => $form->createView(),
+        ]);
     }
 
 }

@@ -63,4 +63,9 @@ class ReportController extends GenericItemController
      */
     public function editItem( string $itemSlug, Request $request ) { return parent::editItem( $itemSlug, $request ); }
 
+    /**
+     * @Route("rapport/{itemSlug}/commenter", name="report.comment")
+     */
+    public function addComment( string $itemSlug, Request $request ) { return parent::addComment( $itemSlug, $request ); }
+
 }

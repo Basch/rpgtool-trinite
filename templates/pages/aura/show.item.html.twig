@@ -4,7 +4,7 @@
 
 {% block container %}
 
-    {% if item.writer == user.character %}
+    {% if item.writer == srv.user.character %}
         <a href="{{  path( route ~ '.edit', { 'itemSlug': item.slug }) }}" class="btn btn-success" > éditer </a>
     {% endif %}
 

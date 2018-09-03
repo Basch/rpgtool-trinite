@@ -13,6 +13,7 @@ interface FiltrableItemInterface
     public const USER_CREATABLE = false;
     public const CAMPAIGN_RELATED = false;
     public const BE_OWNED = true;
+    public const COMMENTABLE = false;
 
     public function getId();
     public function getSlug();

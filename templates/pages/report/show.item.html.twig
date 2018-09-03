@@ -3,9 +3,9 @@
 {% block title %}Hello!{% endblock %}
 
 {% block container %}
-    {% set character = user.character %}
+    {% set character = srv.user.character %}
 
-    {% if item.writer == user.character %}
+    {% if item.writer == srv.user.character %}
         <a href="{{  path( route ~ '.edit', { 'itemSlug': item.slug }) }}" class="btn btn-success" > éditer </a>
     {% endif %}
 
@@ -13,5 +13,10 @@
 
         <p>Titre : {{ item.title }}</p>
         <p>{{ item.text }}</p>
+
+    <a href="{{  path( route ~ '.edit', { 'itemSlug': item.slug }) }}" class="btn btn-success" > commenter </a>
+    {% for comment in srv.comment.fromItem( item ) %}
+        <p>{{ comment.writer.name }}<br>{{ comment.text }}</p>
+    {% endfor %}
 
 {% endblock %}
