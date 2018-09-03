@@ -61,7 +61,7 @@ abstract class GenericItemController extends MainController
     {
         if( $error = $this->access->isPlayer() ) return $this->doRedirect( $error );
 
-        $items = $this->filter->getVisibleItems( $this->getClass() );
+        $items = $this->filter->getPlayerVisibleItems( $this->getClass() );
 
         /** @var FiltrableItemInterface $class */ // TODO : Voir pour type en static
         $class = $this->getClass();

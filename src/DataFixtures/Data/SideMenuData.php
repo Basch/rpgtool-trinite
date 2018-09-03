@@ -48,6 +48,20 @@ class SideMenuData
             'master' => true,
             'player' => true,
         ],
+        [
+            'id' => 7,
+            'title' => 'PNJ',
+            'route' => 'nonplayercharacter',
+            'master' => true,
+            'player' => true,
+        ],
+        [
+            'id' => 8,
+            'title' => 'Lieux',
+            'route' => 'location',
+            'master' => true,
+            'player' => true,
+        ],
 
     ];
 }

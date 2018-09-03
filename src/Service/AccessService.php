@@ -80,6 +80,14 @@ class AccessService
             );
             return new RedirectResponse( 'home', [], $flash );
         }
+
+        if( $item::CAMPAIGN_RELATED && $this->userData->getCampaign() !== $item->getCampaign() ) {
+            $flash = new FlashResponse(
+                'warning',
+                'Votre personnage ne peut pas voir cet objet (campagne).'
+            );
+            return new RedirectResponse( 'home', [], $flash );
+        }
         return null;
     }
 

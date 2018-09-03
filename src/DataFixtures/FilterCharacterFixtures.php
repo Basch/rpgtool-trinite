@@ -5,6 +5,9 @@ namespace App\DataFixtures;
 use App\Entity\Asset;
 use App\Entity\Aura;
 use App\Entity\FilterCharacter;
+use App\Entity\Location;
+use App\Entity\Newspaper;
+use App\Entity\NonPlayerCharacter;
 use App\Entity\PlayerCharacter;
 use App\Entity\Report;
 use App\Entity\Verse;
@@ -22,7 +25,7 @@ class FilterCharacterFixtures extends Fixture implements DependentFixtureInterfa
         $characters = $manager->getRepository( PlayerCharacter::class )->findAll();
 
 
-        $classes = [ Asset::class, Aura::class, Verse::class, Report::class ];
+        $classes = [ Asset::class, Aura::class, Verse::class, Report::class, Newspaper::class, NonPlayerCharacter::class, Location::class ];
 
         /** @var FiltrableItemInterface[][] $items */
         $items = [];

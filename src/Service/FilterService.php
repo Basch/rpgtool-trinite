@@ -92,7 +92,7 @@ class FilterService
     /**
      * @return Collection|FiltrableItemInterface[]
      */
-    public function getVisibleItems( string $class, PlayerCharacter $character = null ): ?Collection{
+    public function getPlayerVisibleItems( string $class, PlayerCharacter $character = null ): ?Collection{
 
         $filters = $this->getFilterListFromCharacter( $class, $character );
 
@@ -101,6 +101,9 @@ class FilterService
         $return =  new ArrayCollection();
         foreach( $filters as $filter ){
             $item = $this->getItem( $filter );
+
+            if( $item::CAMPAIGN_RELATED && $this->userData->getCampaign() !== $item->getCampaign() ) continue;
+
             if( $filter->getVisible() || $filter->getOwned() || $item->getWriter() === $this->userData->getCharacter() ){
                 $return->add( $this->getItem( $filter ) );
             }
