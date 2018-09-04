@@ -12,12 +12,12 @@
             {#<div class="container d-flex align-items-stretch">#}
                 {#<div class="page flex-fill">#}
 
-
+        {% include 'block/navbar.block.html.twig' %}
             <div class="container">
-                {% include 'block/sidebar.block.html.twig' %}
+                {% include 'block/bookmarks.block.html.twig' %}
                 <div class="page">
                     {% block top_container %}
-                        {% include 'block/navbar.block.html.twig' %}
+
                         {% include 'block/flashbag.block.html.twig' %}
                     {% endblock %}
 

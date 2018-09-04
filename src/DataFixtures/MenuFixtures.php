@@ -2,24 +2,25 @@
 
 namespace App\DataFixtures;
 
-use App\DataFixtures\Data\SideMenuData;
-use App\Entity\SideMenu;
+use App\DataFixtures\Data\MenuData;
+use App\Entity\Menu;
 use App\Entity\Zodiac;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class SideMenuFixtures extends Fixture
+class MenuFixtures extends Fixture
 {
 
 
 
     public function load( ObjectManager $manager )
     {
-        foreach( SideMenuData::$DATA as $data ){
-            $sideMenu = new SideMenu();
+        foreach( MenuData::$DATA as $data ){
+            $sideMenu = new Menu();
             $sideMenu
                 ->setTitle( $data['title'] )
                 ->setRoute( $data['route'] )
+                ->setIcon( $data['icon'] )
                 ->setMaster( $data['master'] )
                 ->setPlayer( $data['player'] );
 

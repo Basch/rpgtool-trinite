@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Entity\Campaign;
 use App\Entity\PlayerCharacter;
-use App\Entity\SideMenu;
+use App\Entity\Menu;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -81,7 +81,7 @@ class UserDataService
     }
 
     /**
-     * @return ArrayCollection|SideMenu[]|null
+     * @return ArrayCollection|Menu[]|null
      */
     public function getMenu() {
         switch ( $this->session->get('type' )){
@@ -95,16 +95,16 @@ class UserDataService
     }
 
     /**
-     * @return ArrayCollection|SideMenu[]
+     * @return ArrayCollection|Menu[]
      */
     public function getPlayerMenu() {
-        return $this->em->getRepository( SideMenu::class )->findBy( ['player' => true ] );
+        return $this->em->getRepository( Menu::class )->findBy( ['player' => true ] );
     }
 
     /**
-     * @return ArrayCollection|SideMenu[]
+     * @return ArrayCollection|Menu[]
      */
     public function getMasterMenu() {
-        return $this->em->getRepository( SideMenu::class )->findBy( ['master' => true ] );
+        return $this->em->getRepository( Menu::class )->findBy( ['master' => true ] );
     }
 }

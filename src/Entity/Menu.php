@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SideMenuRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\MenuRepository")
  */
-class SideMenu
+class Menu
 {
     /**
      * @ORM\Id()
@@ -35,6 +35,11 @@ class SideMenu
      * @ORM\Column(type="boolean")
      */
     private $player;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $icon;
 
     public function getId()
     {
@@ -85,6 +90,18 @@ class SideMenu
     public function setPlayer(bool $player): self
     {
         $this->player = $player;
+
+        return $this;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(string $icon): self
+    {
+        $this->icon = $icon;
 
         return $this;
     }

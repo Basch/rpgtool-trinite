@@ -3,13 +3,14 @@
 namespace App\DataFixtures\Data;
 
 
-class SideMenuData
+class MenuData
 {
     public static $DATA = [
         [
             'id' => 1,
             'title' => 'Feuille de personnage',
             'route' => 'character-sheet',
+            'icon' => 'file-alt',
             'master' => true,
             'player' => true,
         ],
@@ -17,6 +18,7 @@ class SideMenuData
             'id' => 2,
             'title' => 'Atouts',
             'route' => 'asset',
+            'icon' => '',
             'master' => true,
             'player' => true,
         ],
@@ -24,6 +26,7 @@ class SideMenuData
             'id' => 3,
             'title' => 'Auras',
             'route' => 'aura',
+            'icon' => '',
             'master' => true,
             'player' => true,
         ],
@@ -31,6 +34,7 @@ class SideMenuData
             'id' => 4,
             'title' => 'Versets',
             'route' => 'verse',
+            'icon' => '',
             'master' => true,
             'player' => true,
         ],
@@ -38,6 +42,7 @@ class SideMenuData
             'id' => 5,
             'title' => 'Rapports',
             'route' => 'report',
+            'icon' => '',
             'master' => true,
             'player' => true,
         ],
@@ -45,6 +50,7 @@ class SideMenuData
             'id' => 6,
             'title' => 'Journaux',
             'route' => 'newspaper',
+            'icon' => '',
             'master' => true,
             'player' => true,
         ],
@@ -52,6 +58,7 @@ class SideMenuData
             'id' => 7,
             'title' => 'PNJ',
             'route' => 'nonplayercharacter',
+            'icon' => '',
             'master' => true,
             'player' => true,
         ],
@@ -59,6 +66,7 @@ class SideMenuData
             'id' => 8,
             'title' => 'Lieux',
             'route' => 'location',
+            'icon' => '',
             'master' => true,
             'player' => true,
         ],

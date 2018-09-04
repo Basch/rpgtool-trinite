@@ -16,10 +16,20 @@ body {
     left: 0;
 }
 
+
+/** Font Form **/
+
+.form-control {
+    background-color: unset;
+}
+
+
+
 .container {
+    position: relative;
     background-image: url("../pictures/backgrounds/brown-leather-2.png");
     margin-top: 30px;
-    /*margin-bottom: 100px;*/
+    margin-bottom: 50px;
     padding: 15px;
     border: 2px solid;
     border-color: rgba( 135,76,52,0.3) rgba( 61,36,26,0.4) rgba( 31,17,10,0.6) rgba( 61,36,26,0.4);
@@ -28,17 +38,69 @@ body {
 .page {
     box-shadow: inset 0 0 50px 0 rgba(138,124,100,0.85);
     background-image: url("../pictures/backgrounds/paper-2.jpg");
-    padding: 20px;
+    padding: 50px 20px 20px 20px;
     min-height: 85vh;
 }
+.bo-bookmarks a {
+    color : gold;
+    /*background-image: url("../pictures/backgrounds/paper-2.jpg");*/
+    border-radius: 0 0 25px 5px/0 0 5px 25px;
+   /* box-shadow: inset 0 0 40px 0 rgba(138,124,100,0.85);*/
+
+    margin-left: 4px;
+    margin-bottom: 10px;
+    text-align: right;
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    position: relative;
+    top: -150px;
+    transition: all 0.3s;
+    z-index: 1000;
+    height: 200px;
+
+    background: #fb0f0e;
+
+    background: -moz-linear-gradient(top, #fb0f0e 0%,  #c90309 100%);
+    background: -webkit-linear-gradient(top, #fb0f0e 0%,#c90309 100%);
+    background: linear-gradient(to bottom, #fb0f0e 0%,#c90309 100%);
+
+    -webkit-box-shadow: 0 0 15px 0 rgba(50, 50, 50, 0.50);
+    -moz-box-shadow: 0 0 15px 0 rgba(50, 50, 50, 0.50);
+    box-shadow: 0 0 15px 0 rgba(50, 50, 50, 0.50);
+
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fb0f0e', endColorstr='#c90309',GradientType=0 );
+}
+
+.bo-bookmarks div {
+    margin-left: 4px;
+    width: 60px;
+    height: 12px;
+    position: absolute;
+    z-index: 1100;
+    /*border: 1px solid blue;*/
+    background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.3) 50%,rgba(255,255,255,0) 100%);
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.3) 50%,rgba(255,255,255,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=0 );
+}
+.bo-bookmarks a:hover {
+    top: 0;
+}
+/*
+.bo-bookmarks li a {
+    color : gold;
+}
+*/
+.bo-bookmarks a i {
+    margin: 15px 0 10px 0;
+    transform: rotate(-90deg);
+    font-size: x-large;
+}
+
 
 .bo-bookmarks {
-    margin-left: 10px;
-}
-.bo-bookmarks li {
-    background-image: url("../pictures/backgrounds/paper-2.jpg");
-    box-shadow: inset 0 0 40px 0 rgba(138,124,100,0.85);
-    border-top-left-radius : 20px 40%;
-    border-top-right-radius : 20px 40%;
-    margin-right: 3px;
+    position: absolute;
+    top: 8px;
+    margin-left: 6px;
+    overflow: hidden;
 }
