@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block container %}
+
+    {% if item.writer == srv.user.character %}
+        <a href="{{  path( route ~ '.edit', { 'itemSlug': item.slug }) }}" class="btn btn-success" > éditer </a>
+    {% endif %}
+
+        <h1>{{ item }}</h1>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block container %}
+
+        <h1>Objet</h1>
+
+        <p><a href="{{ path( route ~ '.new' ) }}" class="btn btn-success" >Nouveau</a></p>
+
+        Liste
+        <ul>
+        {% for item in items %}
+            <li><a href="{{ path( route ~ '.show', { 'itemSlug': item.slug }) }}">{{ item }}</a></li>
+        {% endfor %}
+        </ul>
+
+{% endblock %}

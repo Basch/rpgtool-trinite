@@ -39,12 +39,12 @@ class FilterCharacterFixtures extends Fixture implements DependentFixtureInterfa
 
             $filterCharacter = new FilterCharacter();
             $filterCharacter
+                ->setOwned( $item->getId() % 2 == 0 && $item::BE_OWNED )
+                ->setVisible( true )
                 ->setCharacter( $character )
                 ->setCampaign( $character->getCampaign() )
                 ->setItemId( $item->getId() )
-                ->setItemType( $class )
-                ->setOwned( false )
-                ->setVisible( true );
+                ->setItemType( $class );
 
             $manager->persist( $filterCharacter );
 

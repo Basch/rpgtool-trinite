@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block container %}
+    {% set character = srv.user.character %}
+
+    <h1>Atouts</h1>
+
+    {% if userCreatable %}<p><a href="{{ path( route ~ '.new') }}" class="btn btn-success" >Nouveau</a></p>{% endif %}
+
+
+    {% for item in items %}
+        <div class="bo-post-it">
+        <a href="{{ path( route ~ '.show', { 'itemSlug': item.slug }) }}">{{ item }}</a>{{ srv.filter.hasItem( item ) ? ' possédé' }}
+        </div>
+    {% endfor %}
+
+
+{% endblock %}
