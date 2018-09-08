@@ -22,6 +22,7 @@ abstract class MainController extends Controller
         $this->filter = $filter;
         $this->access = $access;
         $this->engine = $engine;
+        srand( 1 );
     }
 
     protected function doRedirect( RedirectResponse $redirectResponse ){

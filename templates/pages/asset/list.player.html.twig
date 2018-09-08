@@ -10,11 +10,11 @@
     {% if userCreatable %}<p><a href="{{ path( route ~ '.new') }}" class="btn btn-success" >Nouveau</a></p>{% endif %}
 
 
-    {% for item in items %}
-        <div class="bo-post-it">
-        <a href="{{ path( route ~ '.show', { 'itemSlug': item.slug }) }}">{{ item }}</a>{{ srv.filter.hasItem( item ) ? ' possédé' }}
-        </div>
-    {% endfor %}
+    {% for item in items -%}
+            <a class="bo-label" style="transform: rotate({{- rotate( item.id ) }}deg);" href="{{ path( route ~ '.show', { 'itemSlug': item.slug }) }}">{{ item -}}
+                {%- if srv.filter.hasItem( item ) %}<span>possédé</span>{% endif -%}
+            </a>
+    {%- endfor %}
 
 
 {% endblock %}
