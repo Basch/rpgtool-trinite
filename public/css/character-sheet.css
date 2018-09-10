@@ -1,0 +1,73 @@
+
+.cs-sheet {
+    /*font-size: small;*/
+    position: relative;
+}
+
+.cs-sheet .col-1, .cs-sheet .col-2, .cs-sheet .col-3, .cs-sheet .col-4, .cs-sheet .col-5, .cs-sheet .col-6,
+.cs-sheet .col-7, .cs-sheet .col-8, .cs-sheet .col-9, .cs-sheet .col-10,.cs-sheet .col-11,.cs-sheet .col-12 {
+    padding-right: 0;
+    padding-left: 0;
+}
+.cs-sheet .row {
+    margin: 0;
+}
+.cs-sheet > div:first-child {
+    position: relative;
+}
+.cs-sheet > div:first-child > div {
+    position: relative;
+    background: white;
+    transform: rotate(0.5deg);
+    padding: 20px;
+    -webkit-box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.5);
+    -moz-box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.5);
+}
+
+.cs-sheet > div:first-child > div:before {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 200px;
+    height: 50px;
+    background-image: url("../pictures/tape/tape-1.png");
+    background-size: cover;
+    top: -25px;
+    left: 50%;
+    transform: translate( -50%, 0 ) rotate( -8deg);
+}
+
+.cs-trinite {
+    width : 150px;
+}
+
+.cs-trinite h4 {
+    text-align: center;
+}
+
+.cs-brown {
+    background-color: #edece7 ;
+}
+
+.cs-cell-title {
+    outline: 2px solid #5f5f5f;
+    outline-offset: -1px;
+    background: #1c546d;
+    color: white;
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cs-row-content div {
+    outline: 2px solid #5f5f5f;
+    outline-offset: -1px;
+}
+
+.cs-row-content:nth-child(even) div{
+    background: #e6ebf1;
+}
+
+.cs-row-content:nth-child(odd) div{
+    background: white;
+}
