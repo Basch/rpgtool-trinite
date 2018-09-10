@@ -8,7 +8,7 @@ class MenuData
     public static $DATA = [
         [
             'id' => 1,
-            'title' => 'Feuille de personnage',
+            'title' => 'Personnage',
             'route' => 'character-sheet',
             'icon' => 'clipboard-list ',
             'master' => true,

@@ -4,7 +4,7 @@
 
 {% block container %}
     <div class="row cs-sheet">
-        <div class="col-md-6" >
+        <div class="col-md-12" >
             <div class="d-flex justify-content-around">
                 <div>Identité : </div>
                 <div>Métier : </div>
@@ -14,16 +14,16 @@
                 {% for characterZodiac in characterSheet.characterZodiacs %}
                     {% set title = loop.first or loop.index == 7 %}
                     <div class="row justify-content-end">
-                        <div class="col-6 cs-cell-title">
+                        <div class="col-4 cs-cell-title pl-1">
                             {{ characterZodiac.zodiac.name|upper  }}
                         </div>
                         <div class="col-1 cs-cell-title">
                         </div>
-                        <div class="col-1 {{ title ? 'cs-cell-title' }} ml-1">
-                            {{ title ? 'B.' }}
+                        <div class="col-2 text-center {{ title ? 'cs-cell-title' }} ml-1">
+                            {{ title ? 'Base' }}
                         </div>
-                        <div class="col-1 {{ title ? 'cs-cell-title' }} ml-1">
-                            {{ title ? 'V.' }}
+                        <div class="col-2 text-center {{ title ? 'cs-cell-title' }} ml-1">
+                            {{ title ? 'Valeur' }}
                         </div>
                     </div>
                     {% for characterSkill in characterSheet.characterSkills  if characterSkill.skill.zodiac == characterZodiac.zodiac %}
@@ -33,16 +33,16 @@
                                     {{ characterZodiac.level }}
                                 </div>
                             {% endif %}
-                            <div class="col-6">
+                            <div class="col-4 pl-2">
                                 {{ characterSkill.skill.name|capitalize }}{{ characterSkill.skill.domainRelated ? '*' }}
                             </div>
                             <div class="col-1 text-center">
                                 {{ characterSkill.skill.open ? 'o' : 'f' }}
                             </div>
-                            <div class="col-1 text-center ml-1">
+                            <div class="col-2 text-center ml-1">
                                 {{ characterSkill.level }}
                             </div>
-                            <div class="col-1 text-center ml-1">
+                            <div class="col-2 text-center ml-1">
                                 {{ characterSkill.level + characterZodiac.level }}
                             </div>
                         </div>
@@ -55,10 +55,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="ml-2">
                 <div class="row">
-                    <div class="col-6 cs-brown">
+                    <div class="col-6 ">
                         <div class="row" >
                             <div class="col-12" >
                                 <h4>Theme astral</h4>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="col-12 cs-brown">
+                        <div class="col-12 ">
                             <div class="row">
                                 <div class="col-12" >
                                     <h4>Vie antérieure</h4>
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 cs-brown">
+                        <div class="col-12 ">
                             <div class="row">
                                 <div class="col-12" >
                                     <h4>Experience</h4>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <div class="col-12 cs-brown">
+                        <div class="col-12 ">
                             <div class="row">
                                 <div class="col-12" >
                                     <h4>Le grand livre</h4>
@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 cs-brown">
+                        <div class="col-12 ">
                             <div class="row">
                                 <div class="col-12">
                                     <h4>Le zodiaque</h4>
@@ -170,7 +170,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4 cs-brown">
+                    <div class="col-4 ">
                         <div class="row">
                             <div class="col-12">
                             <h4>La lame-soeur</h4>
