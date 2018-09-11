@@ -8,19 +8,20 @@
 {% endblock %}
 
 {% block container %}
+    <div class="d-flex justify-content-around">
+        <div>Identité : {{ characterSheet.name }}</div>
+        <div>Métier : </div>
+    </div>
     <div class="row cs-sheet">
         <div class="col-md-12" >
-            <div>
-                <div class="d-flex justify-content-around">
-                    <div>Identité : </div>
-                    <div>Métier : </div>
-                </div>
-                <div class="row cs-brown p-4">
-                    <div class="col-6">
+            <div class="cs-page-a">
+                <div class="row cs-dark-green">
+                    <h3>COMPÉTENCES</h3>
+                    <div class="col-lg-6">
                     {% for characterZodiac in characterSheet.characterZodiacs %}
                         {% set title = loop.first or loop.index == 7 %}
                         <div class="row justify-content-end">
-                            <div class="col-4 cs-cell-title pl-1">
+                            <div class="col-4 cs-cell-title pl-2">
                                 {{ characterZodiac.zodiac.name|upper  }}
                             </div>
                             <div class="col-1 cs-cell-title">
@@ -39,10 +40,10 @@
                                         {{ characterZodiac.level }}
                                     </div>
                                 {% endif %}
-                                <div class="col-4 pl-2">
+                                <div class="col-4 pl-2 cs-typped-font">
                                     {{ characterSkill.skill.name|capitalize }}{{ characterSkill.skill.domainRelated ? '*' }}
                                 </div>
-                                <div class="col-1 text-center">
+                                <div class="col-1 text-center cs-typped-font">
                                     {{ characterSkill.skill.open ? 'o' : 'f' }}
                                 </div>
                                 <div class="col-2 text-center ml-1">
@@ -55,22 +56,33 @@
                         {% endfor %}
                         {% if loop.index == 6 %}
                     </div>
-                    <div class="col-6">
+                    <div class="col-lg-6">
                         {% endif %}
                     {% endfor %}
                     </div>
                 </div>
-                <div class="row cs-brown mt-4 p-4">
+                <div class="row cs-dark-green mt-4">
+                    <h3>COMPÉTENCES</h3>
                 </div>
+                <div class="row mt-4 d-flex justify-content-between">
+                    <div class="col-5 pr-4">
+                        <div class="cs-dark-green p-4">
+                            <h3>RESSOURCES</h3>
+                        </div>
+                    </div>
+                    <div class="col-7 cs-dark-green p-4"><h3>LIGNES DE VIE</h3></div>
+                </div>
+
             </div>
         </div>
         <div class="col-md-12">
-            <div class="ml-2">
+            <div class="cs-page-b mt-5">
                 <div class="row">
-                    <div class="col-6 ">
-                        <div class="row" >
+                    <div class="col-6 pr-4">
+                        <div class="row cs-brown" >
+                            <h3>Theme astral</h3>
                             <div class="col-12" >
-                                <h4>Theme astral</h4>
+
                                 Archétype : ............<br>
                                 Affinité : .............<br>
                             </div>
@@ -89,22 +101,15 @@
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="col-12 ">
-                            <div class="row">
-                                <div class="col-12" >
-                                    <h4>Vie antérieure</h4>
-                                    .......................................
-                                </div>
-                            </div>
+                        <div class="col-12 cs-brown" >
+                            <h3>Vie antérieure</h3>
+                            .......................................
                         </div>
-                        <div class="col-12 ">
-                            <div class="row">
-                                <div class="col-12" >
-                                    <h4>Experience</h4>
-                                    .......................................
-                                </div>
-                            </div>
+                        <div class="col-12 cs-brown mt-4" >
+                            <h3>Experience</h3>
+                            .......................................
                         </div>
+
                     </div>
                 </div>
                 <div class="b-red d-flex justify-content-between align-items-center" style="height: 400px;">

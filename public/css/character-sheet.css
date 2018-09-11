@@ -4,6 +4,11 @@
     position: relative;
 }
 
+.cs-typped-font {
+    font-family: "Optima Nova", Verdana, serif;
+    font-weight: 300;
+}
+
 .cs-sheet .col-1, .cs-sheet .col-2, .cs-sheet .col-3, .cs-sheet .col-4, .cs-sheet .col-5, .cs-sheet .col-6,
 .cs-sheet .col-7, .cs-sheet .col-8, .cs-sheet .col-9, .cs-sheet .col-10,.cs-sheet .col-11,.cs-sheet .col-12 {
     padding-right: 0;
@@ -15,7 +20,7 @@
 .cs-sheet > div:first-child {
     position: relative;
 }
-.cs-sheet > div:first-child > div {
+.cs-page-a {
     position: relative;
     background: white;
     transform: rotate(0.5deg);
@@ -25,7 +30,7 @@
     box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.5);
 }
 
-.cs-sheet > div:first-child > div:before {
+.cs-page-a:before {
     position: absolute;
     content: '';
     display: block;
@@ -46,8 +51,66 @@
     text-align: center;
 }
 
+.cs-dark-green {
+     position: relative;
+     background-color: #edece7;
+     padding: 58px 24px 24px 24px;
+ }
+
+.cs-dark-green h3 {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    font-family: Avenir, Arial, Helvetica, sans-serif;
+    color: #1c546d;
+    font-size: 26px;
+}
+
+.cs-dark-green h3::before {
+    position: relative;
+    content: "\f14a";
+    color: white;
+    display: inline-block;
+    height: 50px;
+    width: 40px;
+    top: 7px;
+    left: -5px;
+    background: #1c546d;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 34px;
+    font-family: "Font Awesome 5 Free";
+}
+
 .cs-brown {
-    background-color: #edece7 ;
+    position: relative;
+    background-color: #d9d0c8;
+    padding: 58px 24px 24px 24px;
+}
+
+.cs-brown h3 {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    font-family: Avenir, Arial, Helvetica, sans-serif;
+    color: #aa502b;
+    font-size: 26px;
+}
+
+.cs-brown h3::before {
+    position: relative;
+    content: "\f14a";
+    color: white;
+    display: inline-block;
+    height: 50px;
+    width: 40px;
+    top: 7px;
+    left: -5px;
+    background: #aa502b;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 34px;
+    font-family: "Font Awesome 5 Free";
 }
 
 .cs-cell-title {
@@ -70,4 +133,15 @@
 
 .cs-row-content:nth-child(odd) div{
     background: white;
+}
+
+.cs-page-b {
+    position: relative;
+    left:-5px;
+    background: #f0eade;
+    transform: rotate(-0.3deg);
+    padding: 20px;
+    -webkit-box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.5);
+    -moz-box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.5);
 }
