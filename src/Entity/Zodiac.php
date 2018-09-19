@@ -31,18 +31,12 @@ class Zodiac
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CharacterZodiac", mappedBy="zodiac", orphanRemoval=true)
-     */
-    private $characterZodiacs;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="zodiac", orphanRemoval=true)
      */
     private $skills;
 
     public function __construct()
     {
-        $this->characterZodiacs = new ArrayCollection();
         $this->skills = new ArrayCollection();
     }
 
@@ -80,37 +74,6 @@ class Zodiac
     }
 
     /**
-     * @return Collection|CharacterZodiac[]
-     */
-    public function getCharacterZodiacs(): Collection
-    {
-        return $this->characterZodiacs;
-    }
-
-    public function addCharacterZodiac(CharacterZodiac $characterZodiac): self
-    {
-        if (!$this->characterZodiacs->contains($characterZodiac)) {
-            $this->characterZodiacs[] = $characterZodiac;
-            $characterZodiac->setZodiac($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCharacterZodiac(CharacterZodiac $characterZodiac): self
-    {
-        if ($this->characterZodiacs->contains($characterZodiac)) {
-            $this->characterZodiacs->removeElement($characterZodiac);
-            // set the owning side to null (unless already changed)
-            if ($characterZodiac->getZodiac() === $this) {
-                $characterZodiac->setZodiac(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Skill[]
      */
     public function getSkills(): Collection
@@ -140,5 +103,6 @@ class Zodiac
 
         return $this;
     }
+
 
 }

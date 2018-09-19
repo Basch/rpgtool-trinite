@@ -8,6 +8,8 @@ use App\Entity\Report;
 use App\Entity\User;
 use App\Entity\Verse;
 use App\Model\FiltrableItemInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends MainController

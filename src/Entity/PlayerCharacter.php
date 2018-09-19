@@ -20,11 +20,6 @@ class PlayerCharacter
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CharacterZodiac", mappedBy="character", orphanRemoval=true)
-     */
-    private $characterZodiacs;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="characters", cascade={"persist"})
      */
     private $user;
@@ -61,12 +56,30 @@ class PlayerCharacter
      */
     private $writedComments;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Zodiac")
+     */
+    private $archetype;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Zodiac")
+     * @ORM\JoinTable(name="player_character_ascendant")
+     */
+    private $ascendants;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Zodiac")
+     * @ORM\JoinTable(name="player_character_descendant")
+     */
+    private $descendants;
+
     public function __construct()
     {
-        $this->characterZodiacs = new ArrayCollection();
         $this->characterSkills = new ArrayCollection();
         $this->filters = new ArrayCollection();
         $this->writedComments = new ArrayCollection();
+        $this->ascendants = new ArrayCollection();
+        $this->descendants = new ArrayCollection();
     }
 
     public function __toString()
@@ -77,37 +90,6 @@ class PlayerCharacter
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection|CharacterZodiac[]
-     */
-    public function getCharacterZodiacs(): Collection
-    {
-        return $this->characterZodiacs;
-    }
-
-    public function addCharacterZodiac(CharacterZodiac $characterZodiac): self
-    {
-        if (!$this->characterZodiacs->contains($characterZodiac)) {
-            $this->characterZodiacs[] = $characterZodiac;
-            $characterZodiac->setCharacter($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCharacterZodiac(CharacterZodiac $characterZodiac): self
-    {
-        if ($this->characterZodiacs->contains($characterZodiac)) {
-            $this->characterZodiacs->removeElement($characterZodiac);
-            // set the owning side to null (unless already changed)
-            if ($characterZodiac->getCharacter() === $this) {
-                $characterZodiac->setCharacter(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getUser(): ?User
@@ -151,6 +133,12 @@ class PlayerCharacter
         }
 
         return $this;
+    }
+
+    public function getCharacterSkill( Skill $skill ): CharacterSkill {
+        return $this->getCharacterSkills()->filter( function( CharacterSkill $characterSkill ) use ( $skill ) {
+           return $characterSkill->getSkill() === $skill;
+        })->first();
     }
 
     public function getCampaign(): ?Campaign
@@ -249,6 +237,97 @@ class PlayerCharacter
         }
 
         return $this;
+    }
+
+    public function getArchetype(): ?Zodiac
+    {
+        return $this->archetype;
+    }
+
+    public function setArchetype(?Zodiac $archetype): self
+    {
+        $this->archetype = $archetype;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Zodiac[]
+     */
+    public function getAscendants(): Collection
+    {
+        return $this->ascendants;
+    }
+
+    public function addAscendant(Zodiac $ascendant): self
+    {
+        if (!$this->ascendants->contains($ascendant) && $this->ascendants->count() < 2 ) {
+            $this->ascendants[] = $ascendant;
+        }
+
+        return $this;
+    }
+
+    public function removeAscendant(Zodiac $ascendant): self
+    {
+        if ($this->ascendants->contains($ascendant)) {
+            $this->ascendants->removeElement($ascendant);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Zodiac[]
+     */
+    public function getDescendants(): Collection
+    {
+        return $this->descendants;
+    }
+
+    public function addDescendant(Zodiac $descendant): self
+    {
+        if (!$this->descendants->contains($descendant) && $this->descendants->count() < 3 ) {
+            $this->descendants[] = $descendant;
+        }
+
+        return $this;
+    }
+
+    public function removeDescendant(Zodiac $descendant): self
+    {
+        if ($this->descendants->contains($descendant)) {
+            $this->descendants->removeElement($descendant);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Zodiac[]
+     */
+    public function listZodiacs():Collection {
+        $zodiacs = new ArrayCollection();
+        $zodiacs->add( $this->getArchetype() );
+        foreach ( $this->getAscendants() as $descendant ){
+            $zodiacs->add( $descendant );
+        }
+        foreach ( $this->getDescendants() as $descendant ){
+            $zodiacs->add( $descendant );
+        }
+        return $zodiacs;
+    }
+
+    public function getZodiacLevel( Zodiac $zodiac ): int {
+        if( $this->archetype === $zodiac ) return 6;
+        if( $this->ascendants->contains( $zodiac ) ) return 4;
+        if( $this->descendants->contains( $zodiac) ) return 2;
+        return 0;
+    }
+
+    public function getSkillLevel( Skill $skill ): int {
+        $z_level = $this->getZodiacLevel( $skill->getZodiac() );
+
     }
 
 

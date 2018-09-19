@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PlayerCharacter;
+use App\Entity\Zodiac;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CharacterSheetController extends MainController
@@ -40,8 +41,11 @@ class CharacterSheetController extends MainController
      */
     public function show( PlayerCharacter $characterSheet )
     {
+        $zodiacs = $this->getDoctrine()->getRepository( Zodiac::class )->findAll();
+
         return $this->render( 'pages/character_sheet/show.html.twig', [
             'characterSheet' => $characterSheet,
+            'zodiacs' => $zodiacs,
         ] );
     }
 }

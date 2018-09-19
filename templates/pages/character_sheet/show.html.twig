@@ -1,3 +1,5 @@
+{# @var characterSheet \App\Entity\PlayerCharacter #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Feuille de personnage{% endblock %}
@@ -8,6 +10,7 @@
 {% endblock %}
 
 {% block container %}
+
     <div class="d-flex justify-content-around">
         <div>Identité : {{ characterSheet.name }}</div>
         <div>Métier : </div>
@@ -18,11 +21,11 @@
                 <div class="row cs-dark-green">
                     <h3>COMPÉTENCES</h3>
                     <div class="col-lg-6">
-                    {% for characterZodiac in characterSheet.characterZodiacs %}
+                    {% for zodiac in zodiacs %}
                         {% set title = loop.first or loop.index == 7 %}
                         <div class="row justify-content-end">
                             <div class="col-4 cs-cell-title pl-2">
-                                {{ characterZodiac.zodiac.name|upper  }}
+                                {{ zodiac.name|upper  }}
                             </div>
                             <div class="col-1 cs-cell-title">
                             </div>
@@ -33,24 +36,24 @@
                                 {{ title ? 'Valeur' }}
                             </div>
                         </div>
-                        {% for characterSkill in characterSheet.characterSkills  if characterSkill.skill.zodiac == characterZodiac.zodiac %}
+                        {% for characterSkill in characterSheet.characterSkills  if characterSkill.skill.zodiac == zodiac %}
                             <div class="row cs-row-content justify-content-end ">
                                 {% if loop.index == 2 %}
-                                    <div class="col-1 text-center mr-1 cs-b">
-                                        {{ characterZodiac.level }}
+                                    <div class="col-1 text-center mr-1 cs-b cs-hw">
+                                        {{ characterSheet.zodiacLevel( zodiac ) }}
                                     </div>
                                 {% endif %}
-                                <div class="col-4 pl-2 cs-typped-font">
+                                <div class="col-4 pl-2">
                                     {{ characterSkill.skill.name|capitalize }}{{ characterSkill.skill.domainRelated ? '*' }}
                                 </div>
-                                <div class="col-1 text-center cs-typped-font">
+                                <div class="col-1 text-center">
                                     {{ characterSkill.skill.open ? 'o' : 'f' }}
                                 </div>
-                                <div class="col-2 text-center ml-1">
-                                    {{ characterSkill.level }}
+                                <div class="col-2 text-center ml-1 cs-hw">
+                                    <a href="#" >-</a> {{ characterSkill.level }} <a href="#" >+</a>
                                 </div>
-                                <div class="col-2 text-center ml-1">
-                                    {{ characterSkill.level + characterZodiac.level }}
+                                <div class="col-2 text-center ml-1 cs-hw">
+                                    {{ characterSheet|skillTotal( characterSkill.skill ) }}
                                 </div>
                             </div>
                         {% endfor %}
@@ -62,7 +65,7 @@
                     </div>
                 </div>
                 <div class="row cs-dark-green mt-4">
-                    <h3>COMPÉTENCES</h3>
+                    <h3>DOMAINES*</h3>
                 </div>
                 <div class="row mt-4 d-flex justify-content-between">
                     <div class="col-5 pr-4">
@@ -82,20 +85,27 @@
                         <div class="row cs-brown" >
                             <h3>Theme astral</h3>
                             <div class="col-12" >
+                            <ul>
+                                <li>Archétype :<span class="cs-hw cs-sub cs-sub-15">{{ characterSheet.archetype.name }}</span></li>
+                                <li>Affinité : <span class="cs-hw cs-sub cs-sub-15"></span></li>
+                            </ul>
+                            </div>
+                            <div class="col-6" >
+                                <ul>
+                                    <li>Ascendants :</li>
+                                    {% for ascendant in characterSheet.ascendants %}
+                                        <li class="cs-hw cs-sub">{{ ascendant.name }}</li>
+                                    {% endfor %}
+                                </ul>
 
-                                Archétype : ............<br>
-                                Affinité : .............<br>
                             </div>
                             <div class="col-6" >
-                                Ascendants :<br>
-                                ..........<br>
-                                ..........
-                            </div>
-                            <div class="col-6" >
-                                Descendants :<br>
-                                ..........<br>
-                                ..........<br>
-                                ..........
+                                <ul>
+                                    <li>Descendants :</li>
+                                    {% for descendant in characterSheet.descendants %}
+                                        <li class="cs-hw cs-sub">{{ descendant.name }}</li>
+                                    {% endfor %}
+                                </ul>
                             </div>
 
                         </div>
@@ -112,20 +122,20 @@
 
                     </div>
                 </div>
-                <div class="b-red d-flex justify-content-between align-items-center" style="height: 400px;">
+                <div class="cs-trinite-sheet d-flex justify-content-between align-items-center" >
 
-                    <div class="cs-trinite b-red">
+                    <div class="cs-trinite">
                         <h4>Deva</h4>
                         Choeur : ............<br>
                         Karma : .............<br>
                         Dette : ............<br>
                         Crédits : .............<br>
                     </div>
-                    <div class="cs-trinite align-self-end b-red">
+                    <div class="cs-trinite align-self-end">
                         <h4>Adam'</h4>
                         Karma : ............<br>
                     </div>
-                    <div class="cs-trinite b-red">
+                    <div class="cs-trinite">
                         <h4>Archonte</h4>
                         Légion : ............<br>
                         Karma : .............<br>
@@ -136,43 +146,43 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <div class="col-12 ">
-                            <div class="row">
-                                <div class="col-12" >
-                                    <h4>Le grand livre</h4>
-                                </div>
-                                <div class="col-6" >
-                                    Versets de lumiere :<br>
-                                    ....................<br>
-                                    ....................<br>
-                                    ....................<br>
-                                    ....................<br>
-                                    ....................<br>
-                                </div>
-                                <div class="col-6" >
-                                    Versets de tenebres :<br>
-                                    ....................<br>
-                                    ....................<br>
-                                    ....................<br>
-                                    ....................<br>
-                                    ....................<br>
-                                </div>
+                        <div class="col-12 pr-4">
+                            <div class="row cs-brown " >
+                            <h3>Le grand livre</h3>
+
+                            <div class="col-6" >
+                                <ul>
+                                    <li>Versets de lumiere :</li>
+                                    {# @var verse \App\Entity\Verse #}
+                                    {% for verse in characterSheet|itemsOwned('Verse') if verse.karma %}
+                                        <li class="cs-hw cs-sub" >{{ verse.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-6" >
+                                <ul>
+                                    <li>Versets de tenebre :</li>
+                                    {# @var verse \App\Entity\Verse #}
+                                    {% for verse in characterSheet|itemsOwned('Verse') if not verse.karma %}
+                                        <li class="cs-hw cs-sub" >{{ verse.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                             </div>
                         </div>
-                        <div class="col-12 ">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h4>Le zodiaque</h4>
-                                </div>
+                        <div class="col-12 pt-4 pr-4">
+                            <div class="row cs-brown">
+                                <h3>Le zodiaque</h3>
                                 <div class="col-4">Auras</div>
                                 <div class="col-2">Corps</div>
                                 <div class="col-2">Main</div>
                                 <div class="col-2">Epee</div>
                                 <div class="col-2">Oeuil</div>
 
-                                {% for i in 0..4 %}
+                                {# @var aura \App\Entity\Aura #}
+                                {% for aura in characterSheet|itemsOwned('Aura') %}
 
-                                <div class="col-4">..............</div>
+                                <div class="col-4 cs-hw cs-sub">{{ aura.name }}</div>
                                 <div class="col-2">O</div>
                                 <div class="col-2">O</div>
                                 <div class="col-2">O</div>
@@ -185,23 +195,28 @@
                         </div>
                     </div>
                     <div class="col-4 ">
-                        <div class="row">
+                        <div class="row cs-brown">
+                            <h3>La lame-soeur</h3>
                             <div class="col-12">
-                            <h4>La lame-soeur</h4>
-                                Messager : ...........<br>
-                                Degats : 4<br>
-                                Description :<br>
-                                .......................<br>
-                                .......................<br>
-                                .......................<br>
-                                .......................<br>
-                                <br>
-                                Atouts<br>
-                                .......................<br>
-                                .......................<br>
-                                .......................<br>
-                                .......................<br>
+                            Messager : ...........<br>
+                            Degats : 4<br>
+                            Description :<br>
+                            .......................<br>
+                            .......................<br>
+                            .......................<br>
+                            .......................<br>
+                            <br>
                             </div>
+                            <div class="col-12">
+                            <ul>
+                                <li>Atouts :</li>
+                                {# @var asset \App\Entity\Asset #}
+                                {% for asset in characterSheet|itemsOwned('Asset') %}
+                                    <li class="cs-hw cs-sub">{{ asset.name }}</li>
+                                {% endfor %}
+                            </ul>
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -24,9 +24,12 @@ class CharacterSkillFixtures extends Fixture implements DependentFixtureInterfac
 
         foreach( $characters as $character ) foreach( $skills as $skill ){
 
+            $level = rand( -3, 4);
+            if( $level < 0 ) $level = 0;
+
             $characterSkill = new CharacterSkill();
             $characterSkill
-                ->setLevel( 0 )
+                ->setLevel( $level )
                 ->setSkill( $skill )
                 ->setCharacter( $character );
 

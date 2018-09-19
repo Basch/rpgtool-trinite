@@ -111,6 +111,28 @@ class FilterService
         return $return;
     }
 
+    /**
+     * @return Collection|FiltrableItemInterface[]
+     */
+    public function getPlayerOwnedItems( string $class, PlayerCharacter $character = null ): ?Collection{
+
+        $filters = $this->getFilterListFromCharacter( $class, $character );
+
+        if( !$filters || $filters->isEmpty() ) return null;
+
+        $return =  new ArrayCollection();
+        foreach( $filters as $filter ){
+            $item = $this->getItem( $filter );
+
+            if( $item::CAMPAIGN_RELATED && $this->userData->getCampaign() !== $item->getCampaign() ) continue;
+
+            if( $filter->getOwned() ){
+                $return->add( $this->getItem( $filter ) );
+            }
+        }
+        return $return;
+    }
+
     public function getItem( FilterCharacter $filter ): FiltrableItemInterface {
         /** @var FiltrableItemInterface $item */
         $item = $this->em->getRepository( $filter->getItemType() )->find( $filter->getItemId() ); // TODO : Eviter requette

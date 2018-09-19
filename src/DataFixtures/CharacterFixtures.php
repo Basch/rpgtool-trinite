@@ -5,12 +5,14 @@ namespace App\DataFixtures;
 use App\Entity\Campaign;
 use App\Entity\PlayerCharacter;
 use App\Entity\User;
+use App\Entity\Zodiac;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class CharacterFixtures extends Fixture implements DependentFixtureInterface
 {
+    private $z_index = 1;
 
     public function load( ObjectManager $manager )
     {
@@ -19,6 +21,8 @@ class CharacterFixtures extends Fixture implements DependentFixtureInterface
 
         /** @var Campaign[] $campaigns */
         $campaigns = $manager->getRepository( Campaign::class )->findAll();
+
+
 
         foreach ( $users as $user ) foreach( $campaigns as $campaign ) {
 
@@ -30,7 +34,14 @@ class CharacterFixtures extends Fixture implements DependentFixtureInterface
             $character
                 ->setName( $name )
                 ->setUser( $user )
-                ->setCampaign( $campaign );
+                ->setCampaign( $campaign )
+                ->setArchetype( $this->getZodiac() )
+                ->addAscendant( $this->getZodiac() )
+                ->addAscendant( $this->getZodiac() )
+                ->addDescendant( $this->getZodiac() )
+                ->addDescendant( $this->getZodiac() )
+                ->addDescendant( $this->getZodiac() )
+            ;
 
 
             $manager->persist( $character );
@@ -39,10 +50,17 @@ class CharacterFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
+    public function getZodiac():Zodiac {
+        $this->z_index += 5;
+        if( $this->z_index > 12 ) $this->z_index -= 12;
+
+        return $this->getReference('zodiac-'.$this->z_index );
+    }
+
     public function getDependencies()
     {
         return array(
-            AssetFixtures::class,
+            ZodiacFixtures::class,
             UserFixtures::class,
             CampaignFixtures::class,
         );
