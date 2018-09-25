@@ -325,10 +325,4 @@ class PlayerCharacter
         return 0;
     }
 
-    public function getSkillLevel( Skill $skill ): int {
-        $z_level = $this->getZodiacLevel( $skill->getZodiac() );
-
-    }
-
-
 }

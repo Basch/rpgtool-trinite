@@ -5,7 +5,7 @@ namespace App\Twig;
 
 use App\Entity\PlayerCharacter;
 use App\Entity\Skill;
-use App\Service\Math\StatisticsService;
+use App\Service\Math\CharacterSheetService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -14,7 +14,7 @@ class CharacterStatsExtension extends AbstractExtension
 
     private $stats;
 
-    public function __construct( StatisticsService $stats )
+    public function __construct( CharacterSheetService $stats )
     {
         $this->stats = $stats;
     }

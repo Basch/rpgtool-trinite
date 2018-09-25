@@ -40,7 +40,7 @@
                             <div class="row cs-row-content justify-content-end ">
                                 {% if loop.index == 2 %}
                                     <div class="col-1 text-center mr-1 cs-b cs-hw">
-                                        {{ characterSheet.zodiacLevel( zodiac ) }}
+                                        <span id="zodiac-{{ zodiac.id }}" >{{ characterSheet.zodiacLevel( zodiac ) }}</span>
                                     </div>
                                 {% endif %}
                                 <div class="col-4 pl-2">
@@ -50,10 +50,12 @@
                                     {{ characterSkill.skill.open ? 'o' : 'f' }}
                                 </div>
                                 <div class="col-2 text-center ml-1 cs-hw">
-                                    <a href="#" >-</a> {{ characterSkill.level }} <a href="#" >+</a>
+                                    <a href="#" class="cs-skill-button" data-skill-id="{{ characterSkill.skill.id }}" data-zodiac-id="{{ zodiac.id }}" data-skill-act="sub" >-</a>
+                                    <span id="skill-{{ characterSkill.skill.id }}">{{ characterSkill.level }}</span>
+                                    <a href="#" class="cs-skill-button" data-skill-id="{{ characterSkill.skill.id }}" data-zodiac-id="{{ zodiac.id }}" data-skill-act="add" >+</a>
                                 </div>
                                 <div class="col-2 text-center ml-1 cs-hw">
-                                    {{ characterSheet|skillTotal( characterSkill.skill ) }}
+                                    <span id="skill-total-{{ characterSkill.skill.id }}">{{ characterSheet|skillTotal( characterSkill.skill ) }}</span>
                                 </div>
                             </div>
                         {% endfor %}
@@ -226,4 +228,9 @@
 
 
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/character-sheet.js') }}"></script>
 {% endblock %}
