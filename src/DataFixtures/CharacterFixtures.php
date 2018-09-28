@@ -41,6 +41,7 @@ class CharacterFixtures extends Fixture implements DependentFixtureInterface
                 ->addDescendant( $this->getZodiac() )
                 ->addDescendant( $this->getZodiac() )
                 ->addDescendant( $this->getZodiac() )
+                ->setExperience( rand( 20, 30 ))
             ;
 
 

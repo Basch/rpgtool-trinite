@@ -11,6 +11,18 @@
 
 {% block container %}
 
+
+    Skill : base souhaitée / 2+<br>
+    Ressource : base souhaitée * 2<br>
+    Domaine jusqu'au 10eme: 2pt <br>
+    Domaine a partir du 11eme: 4pt si 11 ou +<br>
+    Karma : base souhaitée * 2<br>
+    Aura ascendant :  6pt<br>
+    Aura descendant : 12pt<br>
+    Paire de verset : 12pt<br>
+    Atout jusqu'au 4eme : 6pt<br>
+    Atout à partir du 5eme : 12pt
+
     <div class="d-flex justify-content-around">
         <div>Identité : {{ characterSheet.name }}</div>
         <div>Métier : </div>
@@ -40,7 +52,7 @@
                             <div class="row cs-row-content justify-content-end ">
                                 {% if loop.index == 2 %}
                                     <div class="col-1 text-center mr-1 cs-b cs-hw">
-                                        <span id="zodiac-{{ zodiac.id }}" >{{ characterSheet.zodiacLevel( zodiac ) }}</span>
+                                        <span id="data-zodiac-{{ zodiac.id }}" >{{ characterSheet.zodiacLevel( zodiac ) }}</span>
                                     </div>
                                 {% endif %}
                                 <div class="col-4 pl-2">
@@ -51,11 +63,11 @@
                                 </div>
                                 <div class="col-2 text-center ml-1 cs-hw">
                                     <a href="#" class="cs-skill-button" data-skill-id="{{ characterSkill.skill.id }}" data-zodiac-id="{{ zodiac.id }}" data-skill-act="sub" >-</a>
-                                    <span id="skill-{{ characterSkill.skill.id }}">{{ characterSkill.level }}</span>
+                                    <span id="data-skill-{{ characterSkill.skill.id }}">{{ characterSkill.level }}</span>
                                     <a href="#" class="cs-skill-button" data-skill-id="{{ characterSkill.skill.id }}" data-zodiac-id="{{ zodiac.id }}" data-skill-act="add" >+</a>
                                 </div>
                                 <div class="col-2 text-center ml-1 cs-hw">
-                                    <span id="skill-total-{{ characterSkill.skill.id }}">{{ characterSheet|skillTotal( characterSkill.skill ) }}</span>
+                                    <span id="data-skill-total-{{ characterSkill.skill.id }}">{{ characterSheet|skillTotal( characterSkill.skill ) }}</span>
                                 </div>
                             </div>
                         {% endfor %}
@@ -115,11 +127,11 @@
                     <div class="col-6">
                         <div class="col-12 cs-brown" >
                             <h3>Vie antérieure</h3>
-                            .......................................
+                            <span class="cs-hw cs-sub cs-sub-15">Bernard</span>
                         </div>
                         <div class="col-12 cs-brown mt-4" >
                             <h3>Experience</h3>
-                            .......................................
+                            <span id="data-experience" class="cs-hw cs-sub cs-sub-15">{{ characterSheet.experience }}</span>
                         </div>
 
                     </div>
@@ -179,7 +191,7 @@
                                 <div class="col-2">Corps</div>
                                 <div class="col-2">Main</div>
                                 <div class="col-2">Epee</div>
-                                <div class="col-2">Oeuil</div>
+                                <div class="col-2">Oeil</div>
 
                                 {# @var aura \App\Entity\Aura #}
                                 {% for aura in characterSheet|itemsOwned('Aura') %}

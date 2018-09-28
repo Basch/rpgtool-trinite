@@ -73,6 +73,11 @@ class PlayerCharacter
      */
     private $descendants;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $experience;
+
     public function __construct()
     {
         $this->characterSkills = new ArrayCollection();
@@ -323,6 +328,18 @@ class PlayerCharacter
         if( $this->ascendants->contains( $zodiac ) ) return 4;
         if( $this->descendants->contains( $zodiac) ) return 2;
         return 0;
+    }
+
+    public function getExperience(): ?int
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(int $experience): self
+    {
+        $this->experience = $experience;
+
+        return $this;
     }
 
 }
